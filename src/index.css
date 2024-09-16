@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-white font-ezra font-normal text-black;
+}
+
+.blu {
+  color: #f1f2f3;
+}
