@@ -1,7 +1,6 @@
-import React from 'react'
 import AppTextField from '@/common/form/AppTextField'
 import { Button } from '@mui/material'
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import WhatsAppIcon from '@/common/icons/WhatsAppIcon';
 import InstagramIcon from '@/common/icons/InstagramIcon';
 import TwitterIcon from '@/common/icons/TwitterIcon';
@@ -13,6 +12,11 @@ type FormValues = {
 
 const HomeFooter = () => {
   const { handleSubmit, control, formState: { errors } } = useForm<FormValues>();
+
+  const onSubmit = (data: FormValues) => {
+    console.log("submit", data);
+    console.log("errors", errors); // If you want to log the errors
+  };  
 
   return (
     <div className='bg-primaryColorDarker text-white'>
@@ -49,7 +53,7 @@ const HomeFooter = () => {
                 />
 
                 </div>
-                <div> <Button sx={{backgroundColor: 'white', color: 'black', width: '100%'}} fullWidth size='small' >Subscribe</Button></div>
+                <div onClick={handleSubmit(onSubmit)}> <Button sx={{backgroundColor: 'white', color: 'black', width: '100%'}} fullWidth size='small' >Subscribe</Button></div>
               </div>
             </div>
           </div>

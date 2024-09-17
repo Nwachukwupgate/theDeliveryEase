@@ -8,7 +8,7 @@ import home7 from '@/assets/image/home7.png'
 import { Button } from '@mui/material'
 import CardCarousel from './common/carousel/CardCarousel'
 import AppTextField from './common/form/AppTextField'
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import SearchInput from './common/form/SearchInput'
 import ViewIcon from './common/icons/ViewIcon'
 import ScheduledIcon from './common/icons/ScheduledIcon'
@@ -23,6 +23,11 @@ type FormValues = {
 const Home = () => {
   
   const { handleSubmit, control, formState: { errors } } = useForm<FormValues>();
+
+  const onSubmit = (data: FormValues) => {
+    console.log("submit", data);
+    console.log("errors", errors); // If you want to log the errors
+  };  
 
   return (
     <>
@@ -155,17 +160,17 @@ const Home = () => {
             </div>
 
             <div>
-              <AppTextField
-                fullWidth
-                control={control as any}
-                name="firstName"
-                label={<div className="text-[#52525C]">Weight (Kg)</div>}
-                size="small"
-                placeholder="Input Weight"
-              />
+                <AppTextField
+                  fullWidth
+                  control={control as any}
+                  name="firstName"
+                  label={<div className="text-[#52525C]">Weight (Kg)</div>}
+                  size="small"
+                  placeholder="Input Weight"
+                />
             </div>
 
-            <div>
+            <div onClick={handleSubmit(onSubmit)}>
               <Button fullWidth>Estimate</Button>
             </div>
           </div>

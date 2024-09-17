@@ -1,13 +1,13 @@
 import AppErrorBoundary from "@/common/errorComponents/AppErrorBoundary";
 import WelcomeLoader from "@/common/loaders/WelcomeLoader";
 import Layout from "../layout/Layout";
-import { lazy } from "react";
+// import { lazy } from "react";
 import {
     createBrowserRouter,
     RouteObject,
     RouterProvider,
 } from "react-router-dom";
-import routes from "./routes";
+// import routes from "./routes";
 import HomeLayout from "@/layout/HomeLayout";
 import Home from "@/Home";
 
