@@ -4,11 +4,15 @@ import SameDay from '../icons/SameDay';
 import NextDay from '../icons/NextDay';
 import ScheduledIcon from '../icons/ScheduledIcon';
 import ExpressIcon from '../icons/ExpressIcon';
+
 export const deliveryOptions = [
+
+  
+  
     {
         id: '1',
         icon1: <ViewIcon />,
-        icon2: <SameDay />, 
+        icon2: <SameDay  />, 
         title: 'Scheduled Delivery',
         description: 'Our Scheduled delivery service allows you to choose a convenient date and time for your package to be delivered.',
       },

@@ -31,7 +31,7 @@ export const lightTheme = responsiveFontSizes(
         lightActive: "#e8d7f4",
         main: "#b57edc",
         mainHover: "#a371c6",
-        mainActive: "#9165b0",
+        mainActive: "#9165B099",
         dark: "#885fa5",
         darkHover: "#6d4c84",
         darkActive: "#513963",
@@ -112,14 +112,14 @@ export function customizeTheme(theme?: ThemeOptions) {
             height: "40px",
             borderRadius: 18,
             [theme?.breakpoints?.up('md')]: {
-              height: "50px", // height for small screens and up
+              height: "45px", // height for small screens and up
               borderRadius: 20,
               fontSize: "16px",
             },
             [theme.breakpoints.up('lg')]: {
-              height: "60px", // height for medium screens and up
+              height: "50px", // height for medium screens and up
               fontSize: "20px",
-              borderRadius: 22,
+              borderRadius: 30,
             },
           }),
         },
@@ -174,6 +174,7 @@ export function customizeTheme(theme?: ThemeOptions) {
         styleOverrides: {
           root: ({}) => ({
             height: "49px",
+            borderRadius: 100,
             marginTop: "8px",
             "& .MuiOutlinedInput-notchedOutline": {
               "border-color": "rgba(0,0,0,0.1)",
@@ -191,7 +192,7 @@ export function customizeTheme(theme?: ThemeOptions) {
       MuiInputBase: {
         styleOverrides: {
           root: ({ ownerState }) => ({
-            ...(ownerState.disabled && { background: "#EDEEEF !important" }),
+            ...(ownerState.disabled && { background: "inherit !important" }),
           }),
         },
       },

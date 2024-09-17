@@ -54,7 +54,7 @@ const CardCarousel: React.FC = () => {
                         }}
                         modules={[Mousewheel]}
                         mousewheel={true}
-                        className="mySwiper bg-accent-0 lg:h-[18rem] lg:w-[100%] lg:max-w-[70rem] px-8"
+                        className="mySwiper bg-accent-0 h-auto w-full max-w-full lg:h-[18rem] lg:w-[100%] lg:max-w-[80rem] px-8"
                     >
                         {deliveryOptions.map((item, index) => (
                             <SwiperSlide
