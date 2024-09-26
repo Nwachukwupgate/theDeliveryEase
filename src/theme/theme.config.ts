@@ -15,7 +15,8 @@ export const lightTheme = responsiveFontSizes(
       primary: {
         light: "#f4e9f4",
         lightHover: "#efdfee",
-        lightActive: "#ddbcdc",
+        // lightActive: "#ddbcdc",
+        lightActive: "#f7f0f7",
         main: "#92278f",
         mainHover: "#832381",
         mainActive: "#751f72",
@@ -28,7 +29,8 @@ export const lightTheme = responsiveFontSizes(
       success: {
         light: "#f8f2fc",
         lightHover: "#f4ecfa",
-        lightActive: "#e8d7f4",
+        // lightActive: "#e8d7f4",
+        lightActive: "#f4e9fa",
         main: "#b57edc",
         mainHover: "#a371c6",
         mainActive: "#9165B099",

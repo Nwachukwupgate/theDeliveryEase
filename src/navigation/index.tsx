@@ -1,13 +1,13 @@
 import AppErrorBoundary from "@/common/errorComponents/AppErrorBoundary";
 import WelcomeLoader from "@/common/loaders/WelcomeLoader";
 import Layout from "../layout/Layout";
-// import { lazy } from "react";
+import { lazy } from "react";
 import {
     createBrowserRouter,
     RouteObject,
     RouterProvider,
 } from "react-router-dom";
-// import routes from "./routes";
+import routes from "./routes";
 import HomeLayout from "@/layout/HomeLayout";
 import Home from "@/Home";
 
@@ -16,10 +16,12 @@ type ExtendedRouteObject = RouteObject & {
   anonymousOnly?: boolean;
 };
 
-// const Signup = lazy(() => import("@/pages/RegisterPage"));
-// const Login = lazy(() => import("@/pages/LoginPage"));
-// const ForgotPassword = lazy(() => import("@/pages/ForgotPasswordPage"));
-// const ResetPassword = lazy(() => import("@/pages/ResetPasswordPage"));
+const Signup = lazy(() => import("@/pages/SignUp"));
+const Login = lazy(() => import("@/pages/Login"));
+const VerifyEmail = lazy(() => import("@/pages/VerifyEmail"));
+const ForgotPassword = lazy(() => import("@/pages/ForgotPassword"));
+const ResetPassword = lazy(() => import("@/pages/ResetPassword"));
+const AdminLogin = lazy(() => import("@/pages/Admin/Login"));
 // const ManagerDashBoard = lazy(() => import("@/pages/ManagerDashboard"));
 // const ManagerManageUsers = lazy(() => import("@/pages/ManagerManageUsers"));
 // const CreateFacility = lazy(() => import("@/pages/CreateFacility"));
@@ -152,36 +154,42 @@ const protectedRoutes: ExtendedRouteObject[] = [
 ];
 
 const unAuthenticatedOnlyRoute: ExtendedRouteObject[] = [
-//   {
-//     path: routes.LOGIN,
-//     element: <Login />,
-//     anonymousOnly: true,
-//     // errorElement: <ErrorBoundary />,
-//   },
-//   {
-//     path: routes.REGISTER_PAGE,
-//     element: <Signup />,
-//     anonymousOnly: true,
-//     // errorElement: <ErrorBoundary />,
-//   },
-//   {
-//     path: routes.FORGOT_PASSWORD_PAGE,
-//     element: <ForgotPassword />,
-//     anonymousOnly: true,
-//     // errorElement: <ErrorBoundary />,
-//   },
-//   {
-//     path: routes.RESET_PASSWORD_PAGE,
-//     element: <ResetPassword />,
-//     anonymousOnly: true,
-//     // errorElement: <ErrorBoundary />,
-//   },
-//   {
-//     path: routes.FORGOT_PASSWORD_PAGE,
-//     element: <ForgotPassword />,
-//     anonymousOnly: true,
-//     // errorElement: <ErrorBoundary />,
-//   },
+  {
+    path: routes.REGISTER_PAGE,
+    element: <Signup />,
+    anonymousOnly: true,
+    // errorElement: <ErrorBoundary />,
+  },
+  {
+    path: routes.LOGIN,
+    element: <Login />,
+    anonymousOnly: true,
+    // errorElement: <ErrorBoundary />,
+  },
+  {
+    path: routes.FORGOT_PASSWORD_PAGE,
+    element: <ForgotPassword />,
+    anonymousOnly: true,
+    // errorElement: <ErrorBoundary />,
+  },
+  {
+    path: routes.RESET_PASSWORD_PAGE,
+    element: <ResetPassword />,
+    anonymousOnly: true,
+    // errorElement: <ErrorBoundary />,
+  },
+  {
+    path: routes.VERIFY_EMAIL,
+    element: <VerifyEmail />,
+    anonymousOnly: true,
+    // errorElement: <ErrorBoundary />,
+  },
+  {
+    path: routes.AdminRoute.ADMIN_LOGIN,
+    element: <AdminLogin />,
+    anonymousOnly: true,
+    // errorElement: <ErrorBoundary />,
+  },
 ];
 
 const unProtectedRoute: ExtendedRouteObject[] = [

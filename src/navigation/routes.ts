@@ -26,12 +26,17 @@ export const parentRoutes = Object.freeze({
     RESISDENT_ACTIVITY_LOG: "/manager/residents/:id/activity-log",
     RESISDENT_INVITE_SENT: "/manager/residents/:id/invite-sent",
   });
+
+  export const AdminRoute = Object.freeze({
+    ADMIN_LOGIN: "/admin/login",
+  })
   
   export default Object.freeze({
     // AUTH
     HOME_PAGE: "/",
     FORGOT_PASSWORD_PAGE: "/forgot-password",
     RESET_PASSWORD_PAGE: "/reset-password",
+    VERIFY_EMAIL: "/verify-email",
     REGISTER_PAGE: "/register",
     LOGIN: "/login",
   
@@ -39,5 +44,6 @@ export const parentRoutes = Object.freeze({
     DASHBOARD_PAGE: parentRoutes.DASHBOARD,
     MANAGER_DASHBOARD: parentRoutes.MANAGER_DASHBOARD,
     managerRoutes,
+    AdminRoute
   });
   
