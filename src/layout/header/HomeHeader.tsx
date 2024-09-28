@@ -37,7 +37,7 @@ const HomeHeader = () => {
         </div>
 
         {/* Mobile Menu open: "block", Menu closed: "hidden" */}
-        <div className={`bg-primaryHoverColorDark opacity-80 md:hidden absolute inset-x-0 z-20 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-white md:mt-0 md:p-0 md:top-0 md:relative md:bg-transparent md:w-auto md:opacity-100 md:translate-x-0 md:items-center ${isOpen ? 'block opacity-100 translate-x-0' : 'hidden opacity-0 -translate-x-full'}`}>
+        <div className={`bg-primaryHoverColorDark opacity-80 md:hidden absolute inset-x-0 z-20 w-full px-6 py-4 transition-all duration-300 ease-in-out md:mt-0 md:p-0 md:top-0 md:relative md:bg-transparent md:w-auto md:opacity-100 md:translate-x-0 md:items-center ${isOpen ? 'block opacity-100 translate-x-0' : 'hidden opacity-0 -translate-x-full'}`}>
           <div className="flex flex-col items-center h-[calc(87vh-30px)] md:h-auto md:flex-row md:mx-6 pt-12 space-y-2">
             <Link className="my-2 text-white transition-colors duration-300 transform border-b-2 border-white px-32 py-4 hover:text-white md:mx-4 md:my-0" to="/">ABOUT</Link>
             <Link className="my-2 text-white transition-colors duration-300 transform border-b-2 border-white px-32 py-4 hover:text-white md:mx-4 md:my-0" to="/shop">SERVICE</Link>
@@ -45,11 +45,9 @@ const HomeHeader = () => {
             <Link className="my-2 text-white transition-colors duration-300 transform border-b-2 border-white px-32 py-4 hover:text-black md:mx-4 md:my-0" to="/about">CONTACT US</Link>
           </div>
           
-          <Link to={routes.LOGIN}>
-            <div className=''>            
+            <Link to={routes.LOGIN}>            
                 <Button fullWidth> Get Started</Button>
-            </div>
-          </Link>
+            </Link>
         </div>
 
 
