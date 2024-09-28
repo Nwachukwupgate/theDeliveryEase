@@ -6,6 +6,8 @@ import { appToast } from "@/utilities/appToast";
 import Icon from '@/assets/image/logo.png';
 import Input from "@/common/form/Input";
 import { Button } from "@mui/material";
+import { Link } from 'react-router-dom'; 
+import routes from '@/navigation/routes';
 
 
 interface SignupReq {
@@ -58,7 +60,7 @@ const ForgotPassword = (): JSX.Element => {
                   </div>
                   
                   <div className="flex justify-center my-4">
-                      <p className="text-sm text-gray-600">Back to <span className="font-bold">Sign In</span></p>
+                      <p className="text-sm text-gray-600">Back to <Link to={routes.LOGIN}><span className="font-bold">Sign In</span></Link> </p>
                   </div>
                     
                                   
