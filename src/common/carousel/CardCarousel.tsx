@@ -42,42 +42,63 @@ const CardCarousel: React.FC = () => {
                 </div>
 
                 {/* For larger screens */}
-                <div className='hidden lg:block pt-12'>
+                <div className='hidden lg:block pt-12 w-full'>
                     <Swiper
-                        slidesPerView={2.1}
+                        // slidesPerView={2.1}
                         spaceBetween={40}
                         breakpoints={{
                             // 768: {
                             //     slidesPerView: 2,
                             //     spaceBetween: 16,
                             // },
+                            1025: {
+                                slidesPerView: 2.1,  // Adjust the number of visible slides
+                                spaceBetween: 30,   // Adjust the space between slides
+                            },
+                            1280: {
+                                slidesPerView: 2.6,   // Increase the number of slides for larger screens
+                                spaceBetween: 40,   // Larger space between slides
+                            },
+                            1780: {
+                                slidesPerView: 3.2,   // Increase the number of slides for larger screens
+                                spaceBetween: 40,   // Larger space between slides
+                            },
                         }}
                         modules={[Mousewheel]}
                         mousewheel={true}
-                        className="mySwiper bg-accent-0 h-auto w-full max-w-full lg:h-[18rem] lg:w-[100%] lg:max-w-[80rem] px-8"
+                        className="mySwiper bg-accent-0 h-auto w-full max-w-full lg:h-[18rem] lg:w-[100%] px-8"
                     >
                         {deliveryOptions.map((item, index) => (
                             <SwiperSlide
                                 key={index}
-                                className='relative rounded-2xl h-full bg-white hover:bg-primaryColorDarker hover:text-white transition-colors duration-300'
-                                style={{
-                                    backgroundRepeat: 'no-repeat',
-                                    backgroundPosition: 'center',
-                                    backgroundSize: 'cover',
-                                    width: '2rem'
-                                }}
+                                // className='relative rounded-2xl h-full bg-white hover:bg-primaryColorDarker hover:text-white transition-colors duration-300'
+                                // style={{
+                                //     backgroundRepeat: 'no-repeat',
+                                //     backgroundPosition: 'center',
+                                //     backgroundSize: 'cover',
+                                //     width: '2rem'
+                                // }}
                             >
-                                <div className='p-8 lg:flex lg:flex-col space-y-12'>
-                                    <div className='flex flex-row justify-between'>
-                                        <div className='hover:text-white transition-colors duration-300'>{item.icon2}</div>
-                                        <div>{item.icon1}</div>
-                                    </div>
-                                    <div>
-                                        <h3 className='text-2xl font-semibold pb-6'>{item.title}</h3>
-                                        <p>{item.description}</p>
+                                <div className='relative rounded-2xl h-full bg-white hover:bg-primaryColorDarker hover:text-white transition-colors duration-300'
+                                    style={{
+                                        backgroundRepeat: 'no-repeat',
+                                        backgroundPosition: 'center',
+                                        backgroundSize: 'cover',
+                                        
+                                    }}
+                                >
+                                    <div className='p-8 bg-accent-0 lg:flex lg:flex-col space-y-12'>
+                                        <div className='flex flex-row justify-between'>
+                                            <div className='hover:text-white transition-colors duration-300'>{item.icon2}</div>
+                                            <div>{item.icon1}</div>
+                                        </div>
+                                        <div>
+                                            <h3 className='text-2xl font-semibold pb-6'>{item.title}</h3>
+                                            <p>{item.description}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </SwiperSlide>
+                            // </SwiperSlide>
                         ))}
                     </Swiper>
                 </div>

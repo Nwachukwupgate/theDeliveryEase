@@ -8,6 +8,8 @@ import Input from "@/common/form/Input";
 import { Button } from "@mui/material";
 import GoogleIcon from "@/common/icons/GoogleIcon";
 import CheckBox from "@/common/form/CheckBox";
+import { Link } from 'react-router-dom'; 
+import routes from '@/navigation/routes';
 
 interface SignupReq {
   firstName: string;
@@ -87,7 +89,7 @@ const SignUp = (): JSX.Element => {
                 </div>
                 <Button fullWidth type="submit" > Create Account</Button>
 
-                <p className="text-center my-4 text-base md:text-lg">Already have an account? <span className="font-bold">Login</span> </p>
+                <p className="text-center my-4 text-base md:text-lg">Already have an account? <Link to={routes.LOGIN}> <span className="font-bold">Login</span> </Link></p>
                 
                 <p className="font-bold text-sm md:text-lg text-center mb-2">Or</p>
 

@@ -8,6 +8,9 @@ import Input from "@/common/form/Input";
 import { Button } from "@mui/material";
 import GoogleIcon from "@/common/icons/GoogleIcon";
 import CheckBox from "@/common/form/CheckBox";
+import { Link } from 'react-router-dom'; 
+import routes from '@/navigation/routes';
+
 
 interface SignupReq {
   email: string;
@@ -64,12 +67,12 @@ const Login = (): JSX.Element => {
 
                     <div className="flex justify-between items-center my-4">
                         <CheckBox id="rememberMe" label="Remember me" register={register} />
-                        <p className="text-sm font-bold text-gray-600">Forget Password</p>
+                        <p className="text-sm font-bold text-gray-600"> <Link to={routes.FORGOT_PASSWORD_PAGE}>Forget Password</Link></p>
                     </div>
 
                     <Button fullWidth type="submit">Sign In</Button>
 
-                    <p className="text-center my-4 text-base md:text-lg">Don't have an account? <span className="font-bold">Sign Up</span> </p>
+                    <p className="text-center my-4 text-base md:text-lg">Don't have an account? <span className="font-bold"> <Link to={routes.REGISTER_PAGE}>Sign Up</Link></span> </p>
                     
                     <p className="font-bold text-sm md:text-lg text-center mb-2">Or</p>
 

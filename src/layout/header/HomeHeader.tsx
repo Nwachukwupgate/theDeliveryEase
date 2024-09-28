@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom'; 
 import { Button } from '@mui/material';
 import Icon from '@/assets/image/logo.png'
+import routes from '@/navigation/routes';
 
 const HomeHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,23 +44,29 @@ const HomeHeader = () => {
             <Link className="my-2 text-white transition-colors duration-300 transform border-b-2 border-white px-32 py-4 hover:text-white md:mx-4 md:my-0" to="/contact">TRACK</Link>
             <Link className="my-2 text-white transition-colors duration-300 transform border-b-2 border-white px-32 py-4 hover:text-black md:mx-4 md:my-0" to="/about">CONTACT US</Link>
           </div>
-
-          <div className=''>
-            <Button fullWidth>Get Started</Button>
-          </div>
+          
+          <Link to={routes.LOGIN}>
+            <div className=''>            
+                <Button fullWidth> Get Started</Button>
+            </div>
+          </Link>
         </div>
 
-        <div className='hidden md:flex'>
-            <Link className="my-2 px-4 border-r border-black text-black transition-colors duration-300 transform hover:text-white md:mx-1 md:my-0" to="/">HOME</Link>
-            <Link className="my-2 px-4 border-r border-black text-black transition-colors duration-300 transform hover:text-white md:my-0" to="/">ABOUT</Link>
-            <Link className="my-2 px-4 border-r border-black text-black transition-colors duration-300 transform hover:text-white md:my-0" to="/shop">SERVICE</Link>
-            <Link className="my-2 px-4 border-r border-black text-black transition-colors duration-300 transform hover:text-white md:my-0" to="/contact">TRACK</Link>
-            <Link className="my-2 px-4 text-black transition-colors duration-300 transform hover:text-white md:my-0" to="/about">CONTACT US</Link>
-        </div>
 
         <div className='hidden md:flex'>
-          <Button fullWidth>Get Started</Button>
+            <Link className="my-2 px-4 border-r border-black text-black transition-colors duration-300 transform hover:text-primaryHoverColorDark md:mx-1 md:my-0" to="/">HOME</Link>
+            <Link className="my-2 px-4 border-r border-black text-black transition-colors duration-300 transform hover:text-primaryHoverColorDark md:my-0" to="/">ABOUT</Link>
+            <Link className="my-2 px-4 border-r border-black text-black transition-colors duration-300 transform hover:text-primaryHoverColorDark md:my-0" to="/shop">SERVICE</Link>
+            <Link className="my-2 px-4 border-r border-black text-black transition-colors duration-300 transform hover:text-primaryHoverColorDark md:my-0" to="/contact">TRACK</Link>
+            <Link className="my-2 px-4 text-black transition-colors duration-300 transform hover:text-primaryHoverColorDark md:my-0" to="/about">CONTACT US</Link>
         </div>
+
+        <Link to={routes.LOGIN} className="hidden md:flex">
+          <Button variant="contained" color="primary">
+            Get Started
+          </Button>
+        </Link>
+
       </div>
     </nav>
   );
