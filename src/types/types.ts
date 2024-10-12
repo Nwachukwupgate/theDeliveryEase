@@ -20,6 +20,10 @@ export interface loginApiRequest {
     password: string;
 }
 
+export interface verifyRequest {
+    code: string;
+}
+
 export interface DeliveryReq {
     name: string;
     recieverName: string;

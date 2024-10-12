@@ -19,12 +19,12 @@ interface ApiError {
   status?: number;
 }
 
-interface ApiSuccess {
-  data?: {
-    message?: string;
-  };
-  status?: number;
-}
+// interface ApiSuccess {
+//   data?: {
+//     message?: string;
+//   };
+//   status?: number;
+// }
 
 interface SignupReq {
   firstName: string;
@@ -49,7 +49,7 @@ const SignUp = (): JSX.Element => {
     formState: { errors },
   } = useForm<SignupReq>({ resolver: joiResolver(schema) });
 
-  const [registerUser, { isLoading, data: apiResponse }] = useRegisterUserMutation();
+  const [registerUser, { isLoading }] = useRegisterUserMutation();
 
   const onSubmit = handleSubmit(async (data) => {
     try {

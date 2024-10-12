@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ApiResponse, Department, RegisterApiRequest, loginApiRequest } from '../types/types';
+import { ApiResponse, Department, RegisterApiRequest, loginApiRequest, verifyRequest } from '../types/types';
 
 
 const api_origin = 'https://deliver.door-steps.pro/api/';
@@ -55,7 +55,16 @@ export const apiSlice = createApi({
         }),
         invalidatesTags: ['User'],
     }),
+
+    verifyEmail: builder.mutation<void, verifyRequest>({
+      query: (userData) => ({
+        url: 'login',
+        method: 'POST',
+        body: userData,
+      }),
+      invalidatesTags: ['User'],
+  }),
   }),
 });
 
-export const { useGetDepartmentsQuery, useRegisterUserMutation, useLoginUserMutation } = apiSlice;
+export const { useGetDepartmentsQuery, useRegisterUserMutation, useLoginUserMutation, useVerifyEmailMutation } = apiSlice;
