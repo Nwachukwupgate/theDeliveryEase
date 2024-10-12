@@ -5,11 +5,12 @@ import { useForm } from "react-hook-form";
 import { appToast } from "@/utilities/appToast";
 import Icon from '@/assets/image/logo.png';
 import Input from "@/common/form/Input";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import GoogleIcon from "@/common/icons/GoogleIcon";
 import CheckBox from "@/common/form/CheckBox";
 import { Link } from 'react-router-dom'; 
 import routes from '@/navigation/routes';
+import { useLoginUserMutation } from "@/api/apiSlice";
 
 
 interface SignupReq {
@@ -31,9 +32,20 @@ const Login = (): JSX.Element => {
     formState: { errors },
   } = useForm<SignupReq>({ resolver: joiResolver(schema) });
 
+  const [loginUser, { isLoading }] = useLoginUserMutation();
+
   const onSubmit = handleSubmit(async (data) => {
-    console.log({ data });
-    appToast.Success("SIGN UP Done");
+    try {
+      const response = await loginUser({
+        email: data.email,
+        password: data.password,
+      }).unwrap();
+  
+      console.log({ response });
+      appToast.Success("SIGN UP Done");
+    } catch (error) {
+      appToast.Error("Sign Up Failed");
+    }
   });
 
   return (
@@ -70,7 +82,21 @@ const Login = (): JSX.Element => {
                         <p className="text-sm font-bold text-gray-600"> <Link to={routes.FORGOT_PASSWORD_PAGE}>Forget Password</Link></p>
                     </div>
 
-                    <Button fullWidth type="submit">Sign In</Button>
+                    <Button 
+                      fullWidth 
+                      type="submit" 
+                      variant="contained"
+                      disabled={isLoading}  // Disable the button while loading
+                    >
+                      {isLoading ? (
+                        <>
+                          <CircularProgress size={24} color="inherit" />  {/* Show spinner */}
+                          &nbsp;Processing...  {/* Optional text update */}
+                        </>
+                      ) : (
+                        'Sign In'
+                      )}
+                    </Button>
 
                     <p className="text-center my-4 text-base md:text-lg">Don't have an account? <span className="font-bold"> <Link to={routes.REGISTER_PAGE}>Sign Up</Link></span> </p>
                     

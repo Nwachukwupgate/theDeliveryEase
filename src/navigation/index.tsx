@@ -22,17 +22,19 @@ const VerifyEmail = lazy(() => import("@/pages/VerifyEmail"));
 const ForgotPassword = lazy(() => import("@/pages/ForgotPassword"));
 const ResetPassword = lazy(() => import("@/pages/ResetPassword"));
 const AdminLogin = lazy(() => import("@/pages/Admin/Login"));
-// const ManagerDashBoard = lazy(() => import("@/pages/ManagerDashboard"));
-// const ManagerManageUsers = lazy(() => import("@/pages/ManagerManageUsers"));
-// const CreateFacility = lazy(() => import("@/pages/CreateFacility"));
-// const InstallationWalkthrough = lazy(
-//   () => import("@/pages/InstallationWalkthrough"),
-// );
-// const FacilityDetail = lazy(() => import("@/pages/FacilityDetails"));
-// const ManagerResidents = lazy(() => import("@/pages/Residents"));
-// const ManagerResidentsDetails = lazy(
-//   () => import("@/pages/ManagerResidentsDetails"),
-// );
+const AdminDashBoard = lazy(() => import("@/pages/Admin"));
+const AdminOrder = lazy(() => import("@/pages/Admin/orders"));
+const AdminService = lazy(() => import("@/pages/Admin/services"));
+const UserDashoard = lazy(() => import("@/pages/Users"))
+const TrackingPage = lazy(() => import("@/pages/Users/tracking"))
+const AddDelivery = lazy(
+  () => import("@/pages/Users/deliveries"),
+);
+const HistoryPage = lazy(() => import("@/pages/Users/history"));
+const ContactPage = lazy(() => import("@/pages/Users/contact"));
+const SettingsPage = lazy(
+  () => import("@/pages/Users/settings"),
+);
 // const LandOwners = lazy(() => import("@/pages/LandOwners"));
 // const ManagerSecurity = lazy(() => import("@/pages/ManagerSecurity"));
 // const ManagerHomeOwnerDetails = lazy(
@@ -61,94 +63,42 @@ const protectedRoutes: ExtendedRouteObject[] = [
     errorElement: <AppErrorBoundary />,
     protected: true,
     children: [
-    //   {
-    //     path: routes.MANAGER_DASHBOARD,
-    //     element: <ManagerDashBoard />,
-    //   },
-    //   {
-    //     path: routes.managerRoutes.MANAGE_USERS,
-    //     element: <ManagerManageUsers />,
-    //   },
-    //   {
-    //     path: routes.managerRoutes.CREATE_FACILITY,
-    //     element: <CreateFacility />,
-    //   },
-    //   {
-    //     path: routes.managerRoutes.INSTALLATION_WALKTHROUGH,
-    //     element: <InstallationWalkthrough />,
-    //   },
-    //   {
-    //     path: routes.managerRoutes.FACILITY_DETAIL,
-    //     element: <FacilityDetail />,
-    //   },
-    //   {
-    //     path: routes.managerRoutes.RESIDENTS,
-    //     element: <ManagerResidents />,
-    //   },
-    //   {
-    //     path: routes.managerRoutes.RESIDENTS_DETAILS,
-    //     element: <ManagerResidentsDetails />,
-    //   },
-    //   {
-    //     path: routes.managerRoutes.HOME_OWNERS,
-    //     element: <LandOwners />,
-    //   },
-    //   {
-    //     path: routes.managerRoutes.SECURITY,
-    //     element: <ManagerSecurity />,
-    //   },
-    //   {
-    //     path: routes.managerRoutes.HOME_OWNER_DETAILS,
-    //     element: <ManagerHomeOwnerDetails />,
-    //   },
-    //   {
-    //     path: routes.managerRoutes.FACILITY_UNITS,
-    //     element: <ManagerFacilityUnits />,
-    //   },
-    //   {
-    //     path: routes.managerRoutes.VENDORS,
-    //     element: <ManagerVendors />,
-    //   },
-    //   {
-    //     path: routes.managerRoutes.FACILITIES,
-    //     element: <ManagerFacility />,
-    //   },
-    //   {
-    //     path: routes.managerRoutes.COMMON_AREAS,
-    //     element: <ManagerCommonArea />,
-    //   },
-    //   {
-    //     path: routes.managerRoutes.ACCOUNT_INFORMATION,
-    //     element: <ManagerAccountInformation />,
-    //   },
-    //   {
-    //     path: routes.managerRoutes.MANAGE_BOOKINGS,
-    //     element: <ManagerManageBookings />,
-    //   },
-    //   {
-    //     path: routes.managerRoutes.CONCIERGE_OFFICER,
-    //     element: <ManagerConciergeOfficer />,
-    //   },
-    //   {
-    //     path: routes.managerRoutes.HOME_OWNER_CHECK_LOGS,
-    //     element: <ManagerOwnerCheckLog />,
-    //   },
-    //   {
-    //     path: routes.managerRoutes.HOME_OWNER_PAYMENT_HISTORY,
-    //     element: <ManagerOwnerPayment />,
-    //   },
-    //   {
-    //     path: routes.managerRoutes.HOME_OWNERS_RESIDENTS,
-    //     element: <ManagerOwnerResident />,
-    //   },
-    //   {
-    //     path: routes.managerRoutes.RESISDENT_ACTIVITY_LOG,
-    //     element: <ManagerResidentActivityLog />,
-    //   },
-    //   {
-    //     path: routes.managerRoutes.RESISDENT_INVITE_SENT,
-    //     element: <ManagerResidentInviteSent />,
-    //   },
+      {
+        path: routes.AdminRoute.ADMIN_DASHBOARD,
+        element: <AdminDashBoard />,
+      },
+      {
+        path: routes.AdminRoute.ADMIN_ORDER,
+        element: <AdminOrder />,
+      },
+      {
+        path: routes.AdminRoute.ADMIN_SERVICES,
+        element: <AdminService />,
+      },
+      {
+        path: routes.usersRoutes.DASHBOARD,
+        element: <UserDashoard />,
+      },
+      {
+        path: routes.usersRoutes.TRACKING,
+        element: <TrackingPage />,
+      },
+      {
+        path: routes.usersRoutes.DELIVERY,
+        element: <AddDelivery />
+      },
+      {
+        path: routes.usersRoutes.HISTORY,
+        element: <HistoryPage />
+      },
+      {
+        path: routes.usersRoutes.CONTACT,
+        element: <ContactPage />
+      },
+      {
+        path: routes.usersRoutes.SETTING,
+        element: <SettingsPage />
+      }
     ],
   },
 ];

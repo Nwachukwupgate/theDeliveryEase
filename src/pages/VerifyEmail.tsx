@@ -38,7 +38,7 @@ const VerifyEmail = (): JSX.Element => {
             <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md lg:max-w-lg">
                 <div className="mb-6">
                 <h1 className="text-2xl font-bold">Email Verification</h1>
-                <p className="text-gray-600">Please enter the code that was sent to yor mail</p>
+                <p className="text-gray-600">Please enter the code that was sent to your mail</p>
                 </div>
 
                 <form onSubmit={onSubmit}> 

@@ -2,8 +2,8 @@
 import React from 'react';
 
 export interface SVGIconProps extends React.SVGProps<SVGSVGElement> {
-  width?: string;
-  height?: string;
+  width?: string | number;
+  height?: string | number;
   viewBox?: string;
   className?: string;
   stroke?: string;

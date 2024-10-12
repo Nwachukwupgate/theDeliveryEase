@@ -6,7 +6,7 @@ type SameDayProps = Partial<SVGIconProps> & {
 
 const SameDay: React.FC<SameDayProps> = ({ stroke= "#330E32", ...props }) => {
   return (
-    <SVGIcon width="34" height="34" viewBox="0 0 34 34" fill="none"    className="w-4 h-4 md:w-6 md:h-6 lg:w-10 lg:h-10" {...props}>
+    <SVGIcon width="34" height="34" viewBox="0 0 34 34" fill="none"    className="w-4 h-4 md:w-6 md:h-6 lg:w-6 lg:h-6" {...props}>
       <path
         d="M4.49084 10.54L17 17.7792L29.4242 10.5825"
         stroke={stroke} /* Use the strokeColor prop */
