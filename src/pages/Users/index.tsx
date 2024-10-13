@@ -34,7 +34,6 @@ const DashboardPage = () => {
 
   const steps: string[] = [
     "Delivery Booked",
-    "Arrived at pick up point",
     "Delivery accepted",
     "Arrived at pick up point",
     "Route to delivery",
