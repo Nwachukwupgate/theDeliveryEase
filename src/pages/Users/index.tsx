@@ -6,6 +6,7 @@ import ScheduledIcon from "../../common/icons/ScheduledIcon";
 import NextDay from "../../common/icons/NextDay";
 import DeliveryCard from "./components/DeliveryCard";
 import ViewIcon from "../../common/icons/ViewIcon";
+import { useGetDashboardQuery } from "@/api/apiSlice";
 
 // Define the type for each step in the delivery process
 interface DeliveryStep {
@@ -28,6 +29,7 @@ interface Delivery {
 
 const DashboardPage = () => {
   // Delivery data type
+  const { data } = useGetDashboardQuery()
   const deliveries: Delivery[] = [
     {
       id: "AZ34KLO",
@@ -94,6 +96,12 @@ const DashboardPage = () => {
           status: "Pending",
           time: "Pending",
         },
+        {
+          label: "Arrived at delivery",
+          location: "Pending",
+          status: "Pending",
+          time: "Pending",
+        },
       ],
       icon: <ExpressIcon />, // Icon for express delivery
       image:
@@ -151,25 +159,25 @@ const DashboardPage = () => {
   };
 
   return (
-    <div className="p-6">
+    <div className="p-3 lg:p-6">
       {/* Dashboard Header */}
       <div className="flex justify-between border-b border-gray-400 mb-12 pb-4">
         <div className="font-bold text-lg">Dashboard</div>
       </div>
 
       {/* Dashboard Cards */}
-      <div className="flex flex-row gap-x-4 w-full">
+      <div className="flex flex-row flex-wrap gap-4 w-full">
         <DashboardCard name="T" title="Total Order" amount="2000" color="#B57EDC" />
         <DashboardCard name="S" title="Successful Order" amount="200" color="#7EDCA4" />
         <DashboardCard name="O" title="Ongoing Order" amount="2000" color="#DF20E3" />
         <DashboardCard name="C" title="Cancelled Order" amount="2000" color="#C31919" />
       </div>
 
-      <div className="grid grid-cols-6 gap-8 mt-10">
+      <div className="grid grid-cols-1 lg:grid-cols-6 gap-8 mt-10">
         <div className="col-span-4">
             {/* Delivery Cards */}
             <div className="">
-                <div className="flex flex-row gap-x-8 justify-center">
+                <div className="flex flex-row flex-wrap gap-8 justify-center">
                 <DeliveryCard
                     icon={<SameDay />}
                     label="Same Day"
@@ -198,7 +206,7 @@ const DashboardPage = () => {
             </div>
 
             {/* Deliveries Section */}
-            <div className="mt-10 bg-white p-8 rounded-lg">
+            <div className="mt-10 bg-white p-4 lg:p-8 rounded-lg">
                 <div className="flex justify-between items-center">
                 <p className="font-bold text-lg">Deliveries</p>
                 <ViewIcon />
@@ -209,7 +217,7 @@ const DashboardPage = () => {
                 {deliveries.map((delivery) => (
                     <div
                     key={delivery.id}
-                    className="flex flex-row justify-between items-center mb-4 py-2 cursor-pointer"
+                    className="flex flex-row justify-between items-center mb-4 lg:py-2 cursor-pointer"
                     onClick={() => handleDeliveryClick(delivery)}
                     >
                     <div className="bg-[#B57EDC] content-center p-2 rounded-full">
@@ -221,9 +229,9 @@ const DashboardPage = () => {
                     <p className="text-sm text-gray-500">{delivery.address}</p>
                     
 
-                    <div className="flex items-center gap-x-6">
+                    <div className="flex items-center gap-x-3 lg:gap-x-6">
                         <img
-                        className="object-cover w-8 h-8 rounded-full"
+                        className="object-cover w-6 lg:w-8 h-6 lg:h-8 rounded-full"
                         src={delivery.image}
                         alt="Delivery"
                         />

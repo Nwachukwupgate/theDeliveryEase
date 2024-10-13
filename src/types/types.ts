@@ -1,4 +1,4 @@
-export interface Department {
+export interface Dashboard {
     id: number;
     name: string;
     // Add any other fields relevant to the department
@@ -37,3 +37,10 @@ export interface DeliveryReq {
     quantity: string; 
     type: string;
 }
+
+export interface ApiError {
+    data?: {
+      message?: string;
+    };
+    status?: number;
+  }

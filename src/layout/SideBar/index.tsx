@@ -1,8 +1,10 @@
 import HomeIcon from "@/common/icons/HomeIcon";
 import Nav from "@/layout/SideBar/Nav"
+import { useSnapshot } from 'valtio';
+import sidebarStore from '@/utilities/sidebarStore';
 
 const SideBar: React.FC = () => {
-  const isActive = false;
+  const { isActive } = useSnapshot(sidebarStore);
   return (
     <aside
       aria-label="sidebar"

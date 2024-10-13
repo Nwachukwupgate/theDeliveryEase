@@ -11,6 +11,9 @@ import CheckBox from "@/common/form/CheckBox";
 import { Link } from 'react-router-dom'; 
 import routes from '@/navigation/routes';
 import { useLoginUserMutation } from "@/api/apiSlice";
+import { ApiError } from "@/types/types";
+import userStore from '@/utilities/stores'; 
+import { useNavigate } from "react-router-dom";
 
 
 interface SignupReq {
@@ -32,6 +35,8 @@ const Login = (): JSX.Element => {
     formState: { errors },
   } = useForm<SignupReq>({ resolver: joiResolver(schema) });
 
+  const navigate = useNavigate();
+
   const [loginUser, { isLoading }] = useLoginUserMutation();
 
   const onSubmit = handleSubmit(async (data) => {
@@ -39,12 +44,17 @@ const Login = (): JSX.Element => {
       const response = await loginUser({
         email: data.email,
         password: data.password,
-      }).unwrap();
-  
-      console.log({ response });
-      appToast.Success("SIGN UP Done");
+      }).unwrap(); 
+      const token = response.data?.token;
+      const user = { name: response.data.user?.first_name, email: response.data.user?.email };
+      const userType = 'user';
+      userStore.loginUser(token, user, userType);
+      appToast.Success(response?.message);
+      navigate(routes.usersRoutes.DASHBOARD)
     } catch (error) {
-      appToast.Error("Sign Up Failed");
+      const typedError = error as ApiError;   
+      const errorMessage = typedError?.data?.message || "Sign Up Failed. Please try again.";     
+      appToast.Error(errorMessage)
     }
   });
 

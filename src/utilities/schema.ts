@@ -56,22 +56,24 @@ export const joiSchemas = {
             'any.required': 'Password is a required field',
         }),
 
-    verificationCode: Joi.string()
-        .length(6)  // Assuming a 6-character code, modify if different length
-        .pattern(/^[0-9]{6}$/)  // Only allows digits, for numeric codes
-        .required()
-        .messages({
-            'string.length': 'Verification code must be exactly 6 characters long',
-            'string.pattern.base': 'Verification code must be numeric and contain only digits',
-            'string.empty': 'Verification code is required and cannot be empty',
-            'any.required': 'Verification code is a required field',
-        }),
-
     confirmPassword: Joi.any()
         .valid(Joi.ref('password'))  // Ensures it matches the password
         .required()
         .messages({
             'any.only': 'Confirm password must match the password',
             'any.required': 'Confirm password is required',
+        }),
+}
+
+export const codeSchemas = {
+    code: Joi.string()
+        .length(4)  // Assuming a 4-character code
+        .pattern(/^[0-9]{4}$/)  // Only allows digits, for 4-digit numeric codes
+        .required()
+        .messages({
+            'string.length': 'Verification code must be exactly 4 characters long',
+            'string.pattern.base': 'Verification code must be numeric and contain only digits',
+            'string.empty': 'Verification code is required and cannot be empty',
+            'any.required': 'Verification code is a required field',
         }),
 }

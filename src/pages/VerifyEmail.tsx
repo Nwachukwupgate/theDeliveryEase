@@ -1,19 +1,22 @@
 import Joi from "joi";
-import { joiSchemas } from "@/utilities/schema";
+import { codeSchemas } from "@/utilities/schema";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { useForm } from "react-hook-form";
 import { appToast } from "@/utilities/appToast";
 import Icon from '@/assets/image/logo.png';
 import Input from "@/common/form/Input";
-import { Button } from "@mui/material";
-
+import { Button, CircularProgress } from "@mui/material";
+import { useVerifyEmailMutation } from "@/api/apiSlice";
+import { ApiError } from "@/types/types";
+import { useNavigate } from "react-router-dom";
+import routes from '@/navigation/routes';
 
 interface SignupReq {
   code: string;
 }
 
 const schema = Joi.object<SignupReq>({
-  code: joiSchemas.verificationCode,
+  code: codeSchemas.code,
 });
 
 const VerifyEmail = (): JSX.Element => {
@@ -22,10 +25,23 @@ const VerifyEmail = (): JSX.Element => {
     register,
     formState: { errors },
   } = useForm<SignupReq>({ resolver: joiResolver(schema) });
+  const navigate = useNavigate()
+
+  const [verifyEmail, { isLoading }] = useVerifyEmailMutation();
 
   const onSubmit = handleSubmit(async (data) => {
     console.log({ data });
-    appToast.Success("SIGN UP Done");
+    try {
+      await verifyEmail({
+        code: data.code,
+      }).unwrap();
+      appToast.Success("Email Verification Successful");
+      navigate(routes.LOGIN)
+    } catch (error) {
+      const typedError = error as ApiError;   
+      const errorMessage = typedError?.data?.message || "Verification Failed. Please try again.";     
+      appToast.Error(errorMessage)
+    }
   });
 
   return (
@@ -45,7 +61,7 @@ const VerifyEmail = (): JSX.Element => {
                     <div className="mb-8">              
                         <Input
                             placeholder="Input Code"
-                            name="Code"
+                            name="code"
                             register={register}
                             error={errors.code}
                             type="text"
@@ -57,7 +73,21 @@ const VerifyEmail = (): JSX.Element => {
                     </div>
                 
                     <div className="my-2">
-                      <Button fullWidth type="submit"> Proceed </Button>               
+                    <Button 
+                      fullWidth 
+                      type="submit" 
+                      variant="contained"
+                      disabled={isLoading}  // Disable the button while loading
+                    >
+                      {isLoading ? (
+                        <>
+                          <CircularProgress size={24} color="inherit" />  {/* Show spinner */}
+                          &nbsp;Verifying Account...  {/* Optional text update */}
+                        </>
+                      ) : (
+                        'Proceed'
+                      )}
+                    </Button>               
                     </div>                                  
                                       
                 </form>

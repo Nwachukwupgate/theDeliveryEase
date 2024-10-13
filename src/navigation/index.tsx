@@ -1,6 +1,5 @@
 import AppErrorBoundary from "@/common/errorComponents/AppErrorBoundary";
 import WelcomeLoader from "@/common/loaders/WelcomeLoader";
-import Layout from "../layout/Layout";
 import { lazy } from "react";
 import {
     createBrowserRouter,
@@ -10,6 +9,7 @@ import {
 import routes from "./routes";
 import HomeLayout from "@/layout/HomeLayout";
 import Home from "@/Home";
+import ProtectedRoute from "@/layout/ProtectedRoutes";
 
 type ExtendedRouteObject = RouteObject & {
   protected?: boolean;
@@ -59,7 +59,7 @@ const protectedRoutes: ExtendedRouteObject[] = [
   {
     path: "/",
     hasErrorBoundary: true,
-    element: <Layout />,
+    element: <ProtectedRoute />,
     errorElement: <AppErrorBoundary />,
     protected: true,
     children: [
