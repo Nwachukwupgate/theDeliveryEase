@@ -25,11 +25,21 @@ interface Delivery {
   steps: DeliveryStep[];
   icon: ReactNode; // Accepts JSX as the icon
   image: string;
+  stage?: number;
 }
 
 const DashboardPage = () => {
   // Delivery data type
   const { data } = useGetDashboardQuery()
+
+  const steps: string[] = [
+    "Delivery Booked",
+    "Delivery accepted",
+    "Arrived at pick up point",
+    "Route to delivery",
+    "Arrived at delivery",
+    "Delivery accepted",
+  ];
   const deliveries: Delivery[] = [
     {
       id: "AZ34KLO",
@@ -158,6 +168,50 @@ const DashboardPage = () => {
     setSelectedDelivery(delivery);
   };
 
+  function DeliverySteps({ delivery }: { delivery: Delivery }) {
+    return steps.map((step: string, index: number) => (
+      <div
+        key={index}
+        className="relative mb-10 flex flex-row items-start gap-x-4"
+      >
+        {/* Step Circle */}
+        <div
+          className={`relative z-10 flex h-5 w-5 items-center justify-center rounded-full ${
+            (delivery.stage ?? 0) === index + 1 ? "bg-[#581756]" : "bg-gray-300"
+          }`}
+          style={{ left: "1px" }} // Aligns with the vertical line
+        >
+          {/* Checkmark for completed steps */}
+          {(delivery.stage ?? 0) === index + 1 && (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-3 w-3 text-white"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+          )}
+        </div>
+
+        {/* Step Details */}
+        <div className="ml-4">
+          <div className="font-semibold">{step}</div>
+          <div className="text-sm text-gray-600">
+            {(delivery?.stage ?? 1) < 5 ? delivery.address : delivery.address}
+          </div>
+          <div className="text-xs text-gray-400">{delivery.timestamp}</div>
+        </div>
+      </div>
+    ));
+  }
+
   return (
     <div className="p-3 lg:p-6">
       {/* Dashboard Header */}
@@ -224,10 +278,10 @@ const DashboardPage = () => {
                         {delivery.icon}
                     </div>
 
-                    
+
                     <p className="font-semibold">{delivery.id}</p>
                     <p className="text-sm text-gray-500">{delivery.address}</p>
-                    
+
 
                     <div className="flex items-center gap-x-3 lg:gap-x-6">
                         <img
@@ -258,38 +312,9 @@ const DashboardPage = () => {
                 {/* Vertical Line */}
                 <div className="absolute w-px h-full bg-[#581756] left-2.5 top-0"></div>
 
-                {selectedDelivery.steps.map((step, index) => (
-                    <div key={index} className="relative flex flex-row items-start gap-x-4 mb-10">
-                        {/* Step Circle */}
-                        <div
-                        className={`relative z-10 w-5 h-5 rounded-full  flex items-center justify-center ${
-                            step.status === "Done" ? "bg-[#581756]" : "bg-gray-300"
-                        }`}
-                        style={{ left: '1px' }} // Aligns with the vertical line
-                        >
-                        {/* Checkmark for completed steps */}
-                        {step.status === "Done" && (
-                            <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-3 w-3 text-white"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            strokeWidth={2}
-                            >
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                            </svg>
-                        )}
-                        </div>
-
-                        {/* Step Details */}
-                        <div className="ml-4">
-                        <div className="font-semibold">{step.label}</div>
-                        <div className="text-sm text-gray-600">{step.location}</div>
-                        <div className="text-xs text-gray-400">{step.time}</div>
-                        </div>
-                    </div>
-                ))}
+                {
+                  selectedDelivery ? <DeliverySteps delivery={selectedDelivery}/> : <></>
+                }
             </div>
         </div>
       </div>
