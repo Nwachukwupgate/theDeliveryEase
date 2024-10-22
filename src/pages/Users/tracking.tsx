@@ -1,92 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DeliveringCard from "./components/DeliveringCard";
 import OverviewCard from "./components/OverviewCard";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import PlusIcon from '@/common/icons/PlusIcon'
+import { useGetDeliveryHistoryQuery } from "@/api/apiSlice";
+import { Delivery } from "@/types/types";
+import { DeliverySteps } from ".";
 
 
-const deliveries = [
-  {
-    id: "AZ34KLO",
-    delivery: "Same Day Delivery",
-    address: "Malu road Idumota, Abuja State",
-    status: "On the way",
-    date: "14 May 2024, 3:04 PM",
-    product: "Macbook",
-    weight: "2 kg",
-    trackingId: "AZ34KLO",
-    stops: [
-        {
-          label: "Delivery Booked",
-          location: "2, Malu road Idumota, Abuja",
-          status: "Done",
-          time: "14 May 2024, 3:04 PM",
-        },
-        {
-          label: "Arrived at pick up point",
-          location: "2, Malu road Idumota, Abuja",
-          status: "Done",
-          time: "14 May 2024, 3:04 PM",
-        },
-        {
-          label: "Route to delivery",
-          location: "2, Malu road Idumota, Abuja",
-          status: "Ongoing",
-          time: "Pending",
-        },
-        {
-          label: "Arrived at delivery",
-          location: "Pending",
-          status: "Pending",
-          time: "Pending",
-        },
-        {
-          label: "Delivery accepted",
-          location: "Pending",
-          status: "Pending",
-          time: "Pending",
-        },
-    ],
-    mapUrl: "https://via.placeholder.com/600x400.png?text=Map", // Placeholder image
-  },
-  {
-    id: "BZ23POI",
-    delivery: "Next Day Delivery",
-    address: "Malu road Idumota, Abuja State",
-    status: "Pending",
-    date: "14 May 2024, 3:04 PM",
-    product: "Laptop",
-    weight: "1.8 kg",
-    trackingId: "BZ23POI",
-    stops: [
-        {
-          label: "Delivery Booked",
-          location: "3, Malu road Idumota, Abuja",
-          status: "Done",
-          time: "15 May 2024, 3:04 PM",
-        },
-        {
-          label: "Arrived at pick up point",
-          location: "3, Malu road Idumota, Abuja",
-          status: "Pending",
-          time: "Pending",
-        },
-        {
-          label: "Route to delivery",
-          location: "Pending",
-          status: "Pending",
-          time: "Pending",
-        },
-    ],
-    mapUrl: "https://via.placeholder.com/600x400.png?text=Map",
-  },
-];
+const TrackingPage = () => {
+    const { data, error, isLoading } = useGetDeliveryHistoryQuery({ page: 1 });
+    const [selectedDeliveryId, setSelectedDeliveryId] = useState<Delivery | null>(null);
 
-const TrackingPage = () => {  
-    const [selectedDeliveryId, setSelectedDeliveryId] = useState<string | null>(null);
 
-    const selectedDelivery = deliveries.find((delivery) => delivery.id === selectedDeliveryId) || null;
-  
+      useEffect(() => {
+    if(data) {
+      setSelectedDeliveryId(data?.data?.deliveries?.data[0]);
+    }
+  }, [data])
+
     return (
         <div className="p-6">
             <div className="flex justify-between border-b border-gray-400 mb-12 pb-4">
@@ -109,25 +41,31 @@ const TrackingPage = () => {
                             }}
                         >
                         New Delivery
-                    </Button> 
-                    
-                    {deliveries.map((delivery) => (
+                    </Button>
+
+                    {
+                      isLoading ? (
+              <CircularProgress size={"24px"} color="inherit" />
+            ) : (
+                    data?.data?.deliveries?.data?.map((delivery) => (
                         <DeliveringCard
                             key={delivery.id}
                             id={delivery.id}
-                            delivery={delivery.delivery}
-                            address={delivery.address}
-                            status={delivery.status}
-                            date={delivery.date}
-                            selected={delivery.id === selectedDeliveryId}
-                            onClick={() => setSelectedDeliveryId(delivery.id)}
+                            delivery={delivery.delivery_address}
+                            address={delivery.pickup_address}
+                            status={delivery.delivery_status}
+                            date={delivery.created_at}
+                            selected={delivery.id === selectedDeliveryId?.id}
+                            onClick={() => setSelectedDeliveryId(delivery)}
                         />
-                    ))}
+                    ))
+                  )}
                 </div>
-        
+
                 {/* Right section with overview */}
                 <div className="w-[60%]">
-                    <OverviewCard selectedDelivery={selectedDelivery} />
+                  <OverviewCard selectedDelivery={selectedDeliveryId}/>
+                    {/* <DeliverySteps delivery={selectedDeliveryId} showExtras={false} /> */}
                 </div>
             </div>
       </div>
