@@ -1,7 +1,7 @@
 import React from "react";
 
 type DeliveryCardProps = {
-  id: string;
+  id: number;
   delivery: string;
   address: string;
   status: string;
@@ -34,7 +34,7 @@ const DeliveringCard: React.FC<DeliveryCardProps> = ({
             }`}
             onClick={onClick}
         >
-           
+
             {/* Progress and Address */}
             <div className="flex items-start">
                 {/* Circular Progress Indicator */}
@@ -58,7 +58,7 @@ const DeliveringCard: React.FC<DeliveryCardProps> = ({
                     </div>
                 </div>
             </div>
-    
+
             {/* Copy Link */}
             <div className="mt-4 flex items-center justify-between">
             <button className={`${selected ? "text-white" : "text-[#751F72]"}  text-sm flex items-center`}>
@@ -73,7 +73,7 @@ const DeliveringCard: React.FC<DeliveryCardProps> = ({
                 </svg>
 
             </button>
-    
+
             <span
                 className={`py-1 px-3 rounded-full text-sm ${
                 status === "On the way"
