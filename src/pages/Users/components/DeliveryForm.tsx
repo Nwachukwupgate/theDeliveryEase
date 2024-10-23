@@ -1,7 +1,7 @@
 import IconInput from "@/common/form/IconInput";
 import SelectDropdown from "@/common/form/SelectDropdown"
 import { useForm } from "react-hook-form";
-import { Button, CircularProgress } from "@mui/material";
+import { Button } from "@mui/material";
 import NameIcon from "@/common/icons/NameIcon"
 import PhoneIcon from "@/common/icons/PhoneIcon"
 import AddressIcon from "@/common/icons/AddressIcon"
@@ -11,7 +11,7 @@ import ProductDescriptionIcon from "@/common/icons/ProductDescriptionIcon"
 import WeightIcon from "@/common/icons/WeightIcon"
 import QuantityIcon from "@/common/icons/QuantityIcon"
 import WalletIcon from "@/common/icons/WalletIcon"
-import { appToast } from "@/utilities/appToast";
+
 
 interface DeliveryReq {
     name: string;
@@ -25,6 +25,7 @@ interface DeliveryReq {
     weight: string;
     quantity: string;
     type: string;
+    deliveryType: string;
 }
 
 const DeliveryForm: React.FC<{ onSubmit: (data: DeliveryReq) => void }> = ({ onSubmit }) => {
@@ -136,6 +137,20 @@ const DeliveryForm: React.FC<{ onSubmit: (data: DeliveryReq) => void }> = ({ onS
                     error={errors.type}
                     options={[
                         { value: "Card Payment", label: "Card Payment" },
+                    ]}
+                    icon={<WalletIcon />}
+                />     
+
+                <SelectDropdown 
+                    label="Delivery Type"
+                    name="deliveryType"
+                    register={register}
+                    error={errors.deliveryType}
+                    options={[
+                        { value: "Next Day Delivery", label: "Next Day Delivery" },
+                        { value: "Same Day Delivery", label: "Same Day Delivery" },
+                        { value: "Express Delivery", label: "Express Delivery" },
+                        { value: "Scheduled Delivery", label: "Scheduled Delivery" }
                     ]}
                     icon={<WalletIcon />}
                 />              

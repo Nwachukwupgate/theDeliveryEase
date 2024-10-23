@@ -17,6 +17,17 @@ import {
 
 export const description = "A stacked bar chart with a legend"
 
+interface BarChartItem {
+  month: string;
+  avg_cost: number;
+  delivery_count: number;
+}
+
+// Define the type for the props that the component will accept
+interface UserChartProps {
+  data: BarChartItem[];
+}
+
 const chartData = [
   { month: "January", desktop: 186, mobile: 80 },
   { month: "February", desktop: 305, mobile: 200 },
@@ -26,18 +37,18 @@ const chartData = [
   { month: "June", desktop: 214, mobile: 140 },
 ]
 
-const chartConfig = {
+const chartConfig: ChartConfig = {
   desktop: {
-    label: "Desktop",
+    label: "Avg Cost",
     color: "#513963",
   },
   mobile: {
-    label: "Mobile",
+    label: "Delivery Count",
     color: "#9165B0",
   },
-} satisfies ChartConfig
+}
 
-export default function UserChart() {
+export default function UserChart({ data }: UserChartProps) {
   return (
     <Card>
       <CardHeader>
@@ -45,7 +56,7 @@ export default function UserChart() {
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="min-h-[380px] h-[100px] w-full">
-          <BarChart accessibilityLayer data={chartData}>
+          <BarChart accessibilityLayer data={data}>
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey="month"
@@ -57,15 +68,15 @@ export default function UserChart() {
             <ChartTooltip content={<ChartTooltipContent hideLabel />} />
             <ChartLegend content={<ChartLegendContent />} />
             <Bar
-              dataKey="desktop"
+              dataKey="avg_cost"
               stackId="a"
-              fill="var(--color-desktop)"
+              fill={chartConfig.desktop.color}
               radius={[0, 0, 4, 4]}
             />
             <Bar
-              dataKey="mobile"
+              dataKey="delivery_count"
               stackId="a"
-              fill="var(--color-mobile)"
+              fill={chartConfig.mobile.color}
               radius={[4, 4, 0, 0]}
             />
           </BarChart>

@@ -2,8 +2,8 @@ export interface Dashboard {
     id: number;
     name: string;
     // Add any other fields relevant to the department
-  }
-
+}[]
+  
 export interface ApiResponse<T> {
     data: T;
 }
@@ -38,6 +38,29 @@ export interface DeliveryReq {
     type: string;
 }
 
+export interface DeliveryItem {
+    id: number;
+    user_id?: number;
+    code?: string;
+    contact_name?: string;
+    contact_phone?: string;
+    created_at?: string;
+    delivery_address?: string;
+    delivery_status?: string;
+    delivery_type?: string;
+    price?: string;
+    product_description?: string;
+    product_name?: string;
+    quantity?: string;
+    receiver_name?: string;
+    receiver_phone?: string;
+    stage?: number;
+    updated_at?: string;
+    weight?: string;
+    rider?: string;
+    // Add any other fields and make them optional with ?
+  }
+
 export interface ApiError {
     data?: {
       message?: string;
@@ -49,6 +72,9 @@ export interface Delivery {
     id: number;
     user_id: number;
     code: string;
+}
+
+export interface DeliveryData {
     contact_name: string;
     contact_phone: string;
     receiver_name: string;
@@ -105,4 +131,38 @@ export interface DeliveryHistoryResponse {
     locale: string;
     message: string;
     data: DeliveryHistoryData;
+}
+//     delivery_type: string;
+//     product_name: string;
+//     product_description: string;
+//     weight: string;
+//     quantity: string;
+// }
+
+export interface EditUser {
+    first_name: string;
+    last_name: string;
+    email: string;
+    occupation: string;
+    address: string;
+    file: File | null | string;
+};
+
+export interface PasswordtReq {
+    current_password: string;
+    new_password: string;
+    new_password_confirmation: string;
+}
+
+export interface DashboardQueryParams {
+    start_date?: string;
+    end_date?: string;
+}
+
+export interface BikerReq {
+    first_name: string;
+    last_name: string;
+    email: string;
+    password: string;
+    phone: string;
 }

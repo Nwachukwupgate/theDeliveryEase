@@ -3,7 +3,7 @@ import PaystackIcon from "@/assets/image/paystack.png"
 
 
 const PayWith: React.FC<{ deliveryData: any }> = ({ deliveryData }) => {
-  if (!deliveryData) return null;
+  if (!deliveryData?.name) return null;
   
   return (
     <div className="bg-white p-8 space-y-6">

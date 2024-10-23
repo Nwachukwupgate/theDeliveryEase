@@ -38,7 +38,7 @@ const DeliveryPage = () => {
                 <p className="font-bold text-xl">Add Deliveries</p>  
           </div>  
 
-          <div className="grid grid-cols-7 gap-6">
+          <div className="grid grid-col-1 lg:grid-cols-7 gap-6">
             
             <div className="col-span-4">
                 <DeliveryForm onSubmit={handleFormSubmit}/>

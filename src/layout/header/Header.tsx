@@ -11,7 +11,6 @@ import SearchOutline from "@/common/icons/SearchOutline";
 
 
 const Header: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { isActive } = useSnapshot(sidebarStore);
 

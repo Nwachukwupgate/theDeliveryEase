@@ -1,12 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import {
-  ApiResponse,
-  Dashboard,
-  RegisterApiRequest,
-  loginApiRequest,
-  verifyRequest,
-  DeliveryHistoryResponse,
-} from "../types/types";
+import { ApiResponse, Dashboard, RegisterApiRequest, loginApiRequest, verifyRequest, DeliveryData, EditUser, PasswordtReq, DashboardQueryParams, BikerReq, DeliveryHistoryResponse } from '../types/types';
 
 
 
@@ -35,7 +28,7 @@ export const apiSlice = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Department", "User", "Dashboard", "Deliveries"],
+  tagTypes: ["Department", "User", "Dashboard", "Deliveries", 'Delivery'],
 
   endpoints: (builder) => ({
     registerUser: builder.mutation<void, RegisterApiRequest>({
@@ -81,13 +74,104 @@ export const apiSlice = createApi({
       }),
       providesTags: ["Deliveries"],
     }),
+
+    getDeliveryStat: builder.query<Dashboard, void>({
+      query: () => '/delivery-stats',
+      providesTags: ['Dashboard'],
+    }),
+
+    getDashboardStats: builder.query<Record<string, any>, DashboardQueryParams>({
+      query: ({ start_date, end_date }) => {
+        const params = new URLSearchParams();
+        if (start_date) params.append('start_date', start_date);
+        if (end_date) params.append('end_date', end_date);
+    
+        return `delivery-stats/charts?${params.toString()}`;
+      },
+      providesTags: ['Dashboard'],
+    }),
+
+    getAdminDashboardStats: builder.query<Record<string, any>, DashboardQueryParams>({
+      query: ({ start_date, end_date }) => {
+        const params = new URLSearchParams();
+        if (start_date) params.append('start_date', start_date);
+        if (end_date) params.append('end_date', end_date);
+    
+        return `admin/dashboard?${params.toString()}`;
+      },
+      providesTags: ['Dashboard'],
+    }),
+    
+
+    createDelivery: builder.mutation<void, DeliveryData>({
+      query: (userData) => ({
+        url: 'deliveries',
+        method: 'POST',
+        body: userData,
+      }),
+      invalidatesTags: ['Delivery'],
+    }),
+
+    getHistory: builder.query<Record<string, any>, { page: number }>({
+      query: ({ page }) => ({
+        url: 'delivery-history',
+        params: { page },
+      }),
+      providesTags: ['Delivery'],
+    }),
+
+    editUser: builder.mutation<void, EditUser>({
+      query: (userData) => ({
+        url: 'settings/profile',
+        method: 'POST',
+        body: userData,
+      }),
+      invalidatesTags: ['User'],
+    }),
+
+    changePassword: builder.mutation<void, PasswordtReq>({
+      query: (userData) => ({
+        url: 'settings/change-password',
+        method: 'POST',
+        body: userData,
+      }),
+      invalidatesTags: ['User'],
+    }),
+
+    getNotification: builder.query<Record<string, any>, void>({
+      query: () => 'notifications',
+      providesTags: ['User'],
+    }),
+
+    getUser: builder.query<Record<string, any>, void>({
+      query: () => 'user',
+      providesTags: ['User'],
+    }),
+
+    createRider: builder.mutation<void, BikerReq>({
+      query: (userData) => ({
+        url: 'admin/create-rider',
+        method: 'POST',
+        body: userData,
+      }),
+      invalidatesTags: ['User'],
+    }),
+    
+    getBikers: builder.query<Record<string, any>, void>({
+      query: () => '/admin/riders',
+      providesTags: ['Delivery'],
+    }),
+
+    assignRider: builder.mutation<void, { delivery_id: string; rider_id: number }>({
+      query: ({ delivery_id, rider_id }) => ({
+        url: `admin/deliveries/${delivery_id}/assign`,
+        method: 'POST',
+        body: { rider_id },
+      }),
+      invalidatesTags: ['Delivery'],
+    }),
   }),
 });
 
-export const {
-  useRegisterUserMutation,
-  useLoginUserMutation,
-  useVerifyEmailMutation,
-  useGetDashboardQuery,
-  useGetDeliveryHistoryQuery,
-} = apiSlice;
+
+export const { useRegisterUserMutation, useGetDeliveryHistoryQuery, useLoginUserMutation, useVerifyEmailMutation, useGetDashboardQuery, useCreateDeliveryMutation, useGetHistoryQuery, useEditUserMutation, useChangePasswordMutation, useGetNotificationQuery, useGetUserQuery, useGetDeliveryStatQuery, useGetDashboardStatsQuery, useGetAdminDashboardStatsQuery, useCreateRiderMutation, useGetBikersQuery, useAssignRiderMutation } = apiSlice;

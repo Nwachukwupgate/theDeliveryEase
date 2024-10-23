@@ -1,49 +1,33 @@
 import routes from "@/navigation/routes";
-import { Divider } from "@mui/material";
 import SideNavLink from "@/layout/SideBar/SideNavlink";
 
 
 
 const normalBar = [
   {
-    icon: "DashboardIcon",
+    icon: "UserHomeIcon",
     text: "Dashboard",
-    link: routes.AdminRoute.ADMIN_DASHBOARD,
+    link: routes.RidersRoute.RIDER_DASHBOARD,
     iconSize: 30,
   },
   {
-    icon: "OrderIcon",
-    text: "Order",
-    link: routes.AdminRoute.ADMIN_ORDER,
+    icon: "HistoryIcon",
+    text: "History",
+    link: routes.RidersRoute.RIDER_DELIVERIES,
   },
   {
-    icon: "ServicesIcon",
-    text: "Services",
-    link: routes.AdminRoute.ADMIN_SERVICES,
+    icon: "ContactIcon",
+    text: "Contact",
+    link: routes.RidersRoute.RIDER_CONTACT,
   },
   {
-    icon: "ServicesIcon",
-    text: "Create Rider",
-    link: routes.AdminRoute.CREATE_RIDERS,
+    icon: "SettingIcon",
+    text: "Settings",
+    link: routes.usersRoutes.SETTING,
   },
-  // {
-  //   icon: "RadarShield",
-  //   text: "Communication",
-  //   link: '',
-  // },
-//   {
-//     icon: "SmallHouseFill",
-//     text: "Common Areas",
-//     link: routes.managerRoutes.COMMON_AREAS,
-//   },
-//   {
-//     icon: "RadarShield",
-//     text: "Communication",
-//     link: routes.managerRoutes.COMMUNICATIONS,
-//   },
 ];
 
-const ConciergeNav: React.FC = () => {
+const RidersNav: React.FC = () => {
     return (
       <>
         {...normalBar.map((props) => {
@@ -69,4 +53,4 @@ const ConciergeNav: React.FC = () => {
     );
   };
   
-  export default ConciergeNav;
+  export default RidersNav;

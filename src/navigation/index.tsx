@@ -35,13 +35,15 @@ const ContactPage = lazy(() => import("@/pages/Users/contact"));
 const SettingsPage = lazy(
   () => import("@/pages/Users/settings"),
 );
-// const LandOwners = lazy(() => import("@/pages/LandOwners"));
-// const ManagerSecurity = lazy(() => import("@/pages/ManagerSecurity"));
-// const ManagerHomeOwnerDetails = lazy(
-//   () => import("@/pages/ManagerHomeOwnerDetails"),
-// );
-// const ManagerFacilityUnits = lazy(() => import("@/pages/ManagerFacilityUnits"));
-// const ManagerVendors = lazy(() => import("@/pages/Vendors"));
+const RiderLogin = lazy(() => import("@/pages/Riders/Login"));
+const RiderDashBoard = lazy(() => import("@/pages/Riders"));
+const RiderDetail = lazy(() => import("@/pages/Riders/details"));
+const CreateRiders = lazy(() => import("@/pages/Admin/rider"));
+const RiderDeliveries = lazy(
+  () => import("@/pages/Riders/deliveries"),
+);
+const RiderContact = lazy(() => import("@/pages/Riders/contact"));
+const RiderSetting = lazy(() => import("@/pages/Riders/settings"));
 // const ManagerFacility = lazy(() => import("@/pages/ManagerFacility"));
 // const ManagerCommonArea = lazy(() => import("@/pages/ManagerCommonArea"));
 // const ManagerAccountInformation = lazy(
@@ -66,7 +68,7 @@ const protectedRoutes: ExtendedRouteObject[] = [
       {
         path: routes.AdminRoute.ADMIN_DASHBOARD,
         element: <AdminDashBoard />,
-      },
+      },                                                                            
       {
         path: routes.AdminRoute.ADMIN_ORDER,
         element: <AdminOrder />,
@@ -74,6 +76,10 @@ const protectedRoutes: ExtendedRouteObject[] = [
       {
         path: routes.AdminRoute.ADMIN_SERVICES,
         element: <AdminService />,
+      },
+      {
+        path: routes.AdminRoute.CREATE_RIDERS, // Dynamic route
+        element: <CreateRiders />, // Rider detail component
       },
       {
         path: routes.usersRoutes.DASHBOARD,
@@ -98,6 +104,26 @@ const protectedRoutes: ExtendedRouteObject[] = [
       {
         path: routes.usersRoutes.SETTING,
         element: <SettingsPage />
+      },
+      {
+        path: routes.RidersRoute.RIDER_DASHBOARD,
+        element: <RiderDashBoard />,
+      },
+      {
+        path: routes.RidersRoute.RIDER_DETAIL, // Dynamic route
+        element: <RiderDetail />, // Rider detail component
+      },
+      {
+        path: routes.RidersRoute.RIDER_DELIVERIES,
+        element: <RiderDeliveries />
+      },
+      {
+        path: routes.RidersRoute.RIDER_CONTACT,
+        element: <RiderContact />
+      },
+      {
+        path: routes.RidersRoute.RIDER_SETTINGS,
+        element: <RiderSetting />
       }
     ],
   },
@@ -137,6 +163,13 @@ const unAuthenticatedOnlyRoute: ExtendedRouteObject[] = [
   {
     path: routes.AdminRoute.ADMIN_LOGIN,
     element: <AdminLogin />,
+    anonymousOnly: true,
+    // errorElement: <ErrorBoundary />,
+  },
+
+  {
+    path: routes.RidersRoute.RIDER_LOGIN,
+    element: <RiderLogin />,
     anonymousOnly: true,
     // errorElement: <ErrorBoundary />,
   },

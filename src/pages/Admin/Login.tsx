@@ -5,8 +5,14 @@ import { useForm } from "react-hook-form";
 import { appToast } from "@/utilities/appToast";
 import Icon from '@/assets/image/logo.png';
 import Input from "@/common/form/Input";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import CheckBox from "@/common/form/CheckBox";
+import routes from '@/navigation/routes';
+import { useLoginUserMutation } from "@/api/apiSlice";
+import { ApiError } from "@/types/types";
+import userStore from '@/utilities/stores'; 
+import { useNavigate } from "react-router-dom";
+
 
 interface SignupReq {
   email: string;
@@ -27,10 +33,30 @@ const Login = (): JSX.Element => {
     formState: { errors },
   } = useForm<SignupReq>({ resolver: joiResolver(schema) });
 
+  const navigate = useNavigate();
+
+  const [loginUser, { isLoading }] = useLoginUserMutation();
+
   const onSubmit = handleSubmit(async (data) => {
-    console.log({ data });
-    appToast.Success("SIGN UP Done");
+    try {
+      const response = await loginUser({
+        email: data.email,
+        password: data.password,
+      }).unwrap(); 
+      console.log("response", response)
+      const token = response.data?.token;
+      const user = { name: response.data.user?.first_name, email: response.data.user?.email };
+      const userType = 'admin';
+      userStore.loginUser(token, user, userType);
+      appToast.Success(response?.message);
+      navigate(routes.AdminRoute.ADMIN_DASHBOARD)
+    } catch (error) {
+      const typedError = error as ApiError;   
+      const errorMessage = typedError?.data?.message || "Sign In Failed. Please try again.";     
+      appToast.Error(errorMessage)
+    }
   });
+
 
   return (
     <div className="h-screen bg-successActiveColorLight">
@@ -66,7 +92,21 @@ const Login = (): JSX.Element => {
                         <p className="text-sm font-bold text-gray-600">Forget Password</p>
                     </div>
 
-                    <Button fullWidth type="submit">Sign In</Button>
+                    <Button 
+                      fullWidth 
+                      type="submit" 
+                      variant="contained"
+                      disabled={isLoading}  // Disable the button while loading
+                    >
+                      {isLoading ? (
+                        <>
+                          <CircularProgress size={24} color="inherit" />  {/* Show spinner */}
+                          &nbsp;Processing...  {/* Optional text update */}
+                        </>
+                      ) : (
+                        'Sign In'
+                      )}
+                    </Button>
                                      
                 </form>
             </div>

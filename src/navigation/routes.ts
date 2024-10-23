@@ -16,7 +16,17 @@ export const parentRoutes = Object.freeze({
     ADMIN_LOGIN: "/admin/login",
     ADMIN_DASHBOARD: "/admin/dashboard",
     ADMIN_ORDER: "/admin/order",
-    ADMIN_SERVICES: "/admin/services"
+    ADMIN_SERVICES: "/admin/services",
+    CREATE_RIDERS: "/admin/create-riders"
+  })
+
+  export const RidersRoute = Object.freeze({
+    RIDER_LOGIN: "/rider/login",
+    RIDER_DASHBOARD: "/rider/dashboard",
+    RIDER_DETAIL: "/rider/:id",
+    RIDER_DELIVERIES: "/rider/deliveries",
+    RIDER_CONTACT: "/rider/contact",
+    RIDER_SETTINGS: "/rider/setting",
   })
   
   export default Object.freeze({
@@ -32,6 +42,7 @@ export const parentRoutes = Object.freeze({
     DASHBOARD_PAGE: parentRoutes.DASHBOARD,
     MANAGER_DASHBOARD: parentRoutes.MANAGER_DASHBOARD,
     usersRoutes,
-    AdminRoute
+    AdminRoute,
+    RidersRoute
   });
   

@@ -4,10 +4,10 @@ import { proxy } from 'valtio';
 const userStore = proxy({
   token: null as string | null,
   user: null as { name: string; email: string } | null,
-  userType: null as 'admin' | 'user' | null,
+  userType: null as 'admin' | 'user' | 'rider' | null,
 
   // Method to log in the user and save to localStorage
-  loginUser(token: string, user: { name: string; email: string }, userType: 'admin' | 'user') {
+  loginUser(token: string, user: { name: string; email: string }, userType: 'admin' | 'user' | 'rider') {
     this.token = token;
     this.user = user;
     this.userType = userType;

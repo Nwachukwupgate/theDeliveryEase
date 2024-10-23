@@ -3,10 +3,13 @@
 // import SignOutIcon from "@/common/icons/pack/SignOut";
 // import UserProfileFill from "@/common/icons/pack/UserProfileFill";
 import AppMenuWrapper from "@/common/utilities/AppMenuWrapper";
-import { Divider, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useGetUserQuery } from "@/api/apiSlice";
+
 
 const Profile: React.FC = () => {
+  const { data } = useGetUserQuery()
+
   return (
     <div className={`cursor-pointer`}>
       <AppMenuWrapper
@@ -19,8 +22,7 @@ const Profile: React.FC = () => {
               {/* <UserProfileFill /> */}
             </div>
             <div className="ml-4 hidden flex-col items-start lg:flex">
-              <span>Charles Paul</span>
-              <span>Facility Manager</span>
+              <span>{data?.data?.item?.first_name} {data?.data?.item?.last_name}</span>
             </div>
           </div>
         }
