@@ -10,6 +10,9 @@ import { useGetUserQuery } from "@/api/apiSlice";
 const Profile: React.FC = () => {
   const { data } = useGetUserQuery()
 
+  const defaultImage = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4mYGiDHOtUVcSxuzNfeds4xWXNOpQ-lIMPA&s";
+  const userImage = data?.data?.item?.photo || defaultImage;
+
   return (
     <div className={`cursor-pointer`}>
       <AppMenuWrapper
@@ -17,9 +20,19 @@ const Profile: React.FC = () => {
           <div className="flex items-center">
             <div className="block lg:hidden">
               {/* <UserProfileFill fill="#008CDB" /> */}
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4mYGiDHOtUVcSxuzNfeds4xWXNOpQ-lIMPA&s"
+                alt="profile image"
+                className="w-10 h-10 rounded-full" // Controls size for small screens
+              />
             </div>
             <div className={`hidden lg:block`}>
               {/* <UserProfileFill /> */}
+              <img
+                src={userImage}
+                alt="profile image"
+                className="w-10 h-10 rounded-full" // Controls size for larger screens
+              />
             </div>
             <div className="ml-4 hidden flex-col items-start lg:flex">
               <span>{data?.data?.item?.first_name} {data?.data?.item?.last_name}</span>
