@@ -23,7 +23,7 @@ const normalBar = [
   {
     icon: "SettingIcon",
     text: "Settings",
-    link: routes.usersRoutes.SETTING,
+    link: routes.RidersRoute.RIDER_SETTINGS,
   },
 ];
 
