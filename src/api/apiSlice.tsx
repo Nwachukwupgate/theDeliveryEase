@@ -13,6 +13,7 @@ import {
   DeliveryHistoryResponse,
   OrdersStats,
   RiderDeliveries,
+  Delivery,
 } from "../types/types";
 
 const api_origin = "https://deliver.door-steps.pro/api/";
@@ -134,6 +135,13 @@ export const apiSlice = createApi({
       }),
       providesTags: ["Delivery"],
     }),
+    getDelivery: builder.query<Delivery, { id: number }>({
+      query: ({ id }) => ({
+        url: "delivery/",
+        params: { id },
+      }),
+      providesTags: ["Delivery"],
+    }),
 
     editUser: builder.mutation<void, EditUser>({
       query: (userData) => ({
@@ -226,4 +234,5 @@ export const {
   useAssignRiderMutation,
   useRiderDashboardQuery,
   useRiderDeliveriesQuery,
+  useGetDeliveryQuery
 } = apiSlice;
