@@ -3,7 +3,7 @@ export interface Dashboard {
     name: string;
     // Add any other fields relevant to the department
 }[]
-  
+
 export interface ApiResponse<T> {
     data: T;
 }
@@ -72,9 +72,6 @@ export interface Delivery {
     id: number;
     user_id: number;
     code: string;
-}
-
-export interface DeliveryData {
     contact_name: string;
     contact_phone: string;
     receiver_name: string;
@@ -131,6 +128,19 @@ export interface DeliveryHistoryResponse {
     locale: string;
     message: string;
     data: DeliveryHistoryData;
+}
+
+export interface OrdersStats {
+    totalOrders: number;
+    successfulOrders: number;
+    ongoingOrders: number;
+    cancelledOrders: number;
+}
+
+export interface RiderDeliveries {
+    deliveries: Delivery[]
+    pendingDeliveries: Delivery[]
+    message: string;
 }
 //     delivery_type: string;
 //     product_name: string;
