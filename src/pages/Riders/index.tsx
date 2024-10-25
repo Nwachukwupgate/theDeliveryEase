@@ -2,6 +2,8 @@ import { useRiderDashboardQuery, useRiderDeliveriesQuery } from "@/api/apiSlice"
 import DashboardCard from "./components/DashboardCard";
 import DeliveringCard from "./components/DeliveringCard";
 import { CircularProgress } from "@mui/material";
+import { Link } from 'react-router-dom';
+
 
 const DashboardPage = () => {
   const { data } = useRiderDashboardQuery();
@@ -46,16 +48,18 @@ const DashboardPage = () => {
           <CircularProgress size={"24px"} color="inherit" />
         ) : (
           query?.deliveries?.map((delivery) => (
-            <DeliveringCard
-              key={delivery.code}
-              id={`${delivery.id}`}
-              delivery={delivery.product_name}
-              address={delivery.pickup_address}
-              status={delivery.delivery_status}
-              date={delivery.created_at}
-              selected={true}
-              showAction={false}
-            />
+            <Link to={`/rider/${delivery.id}`} key={delivery.code}>
+              <DeliveringCard
+                key={delivery.code}
+                id={`${delivery.id}`}
+                delivery={delivery.product_name}
+                address={delivery.pickup_address}
+                status={delivery.delivery_status}
+                date={delivery.created_at}
+                selected={true}
+                showAction={false}
+              />
+            </Link>
           ))
         )}
 
@@ -64,16 +68,17 @@ const DashboardPage = () => {
 
       <div className="my-4 rounded-2xl bg-white p-4">
         {query?.pendingDeliveries?.map((delivery) => (
-          <DeliveringCard
-            key={delivery.code}
-            id={`${delivery.id}`}
-            delivery={delivery.product_name}
-            address={delivery.pickup_address}
-            status={delivery.delivery_status}
-            date={delivery.created_at}
-            selected={false}
-            showAction={true}
-          />
+          <Link to={`/rider/${delivery.id}`} key={delivery.code}>
+            <DeliveringCard
+              id={`${delivery.id}`}
+              delivery={delivery.product_name}
+              address={delivery.pickup_address}
+              status={delivery.delivery_status}
+              date={delivery.created_at}
+              selected={false}
+              showAction={true}
+            />
+          </Link>
         ))}
 
         <div className="text-end font-bold">View All</div>
