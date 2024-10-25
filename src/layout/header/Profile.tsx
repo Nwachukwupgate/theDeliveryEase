@@ -20,11 +20,11 @@ const Profile: React.FC = () => {
           <div className="flex items-center">
             <div className="block lg:hidden">
               {/* <UserProfileFill fill="#008CDB" /> */}
-              <img
+              {/* <img
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4mYGiDHOtUVcSxuzNfeds4xWXNOpQ-lIMPA&s"
                 alt="profile image"
                 className="w-10 h-10 rounded-full" // Controls size for small screens
-              />
+              /> */}
             </div>
             <div className={`hidden lg:block`}>
               {/* <UserProfileFill /> */}

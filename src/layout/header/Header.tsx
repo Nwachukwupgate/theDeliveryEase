@@ -16,7 +16,6 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Check if the scroll position is more than 50px
       if (window.scrollY > 50) {
         setIsScrolled(true);
       } else {
@@ -24,10 +23,8 @@ const Header: React.FC = () => {
       }
     };
 
-    // Attach the event listener
     window.addEventListener('scroll', handleScroll);
 
-    // Clean up the event listener when the component unmounts
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -38,15 +35,15 @@ const Header: React.FC = () => {
       className={`fixed right-0 top-0 z-50 lg:grid lg:h-[70px] w-full lg:grid-cols-12 border-[#E0E0E0] lg:bg-white px-4 md:px-8 lg:w-[calc(100%-250px)] lg:border-b lg:pl-8 lg:pr-12 xl:pr-16 
         ${isScrolled ? 'bg-white shadow-md' : 'bg-transparent'} transition-colors duration-300 ease-in-out`}
     >
-      <div className="p-4 lg:p-0 lg:hidden">
+      <div className="pt-4 px-4 lg:p-0 lg:hidden">
         <div>
           <img className="w-auto h-12 sm:h-7" src={Icon} alt="Logo" />
         </div>
 
-        <div className="flex justify-between">
+        <div className="flex justify-between mt-5">
           <div className="flex lg:hidden">
             <button
-              onClick={sidebarStore.toggleSidebar} // Toggle sidebar
+              onClick={sidebarStore.toggleSidebar}
               type="button"
               className={`${isActive ? "text-black" : "text-primaryHoverColorDark"} focus:outline-none`}
               aria-label="toggle menu"
@@ -66,7 +63,13 @@ const Header: React.FC = () => {
           <div className="flex justify-around gap-4">
             <div><SearchOutline /></div>
             <div><BellFill /></div>
-            <div>icon 2</div>
+            <div>
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4mYGiDHOtUVcSxuzNfeds4xWXNOpQ-lIMPA&s"
+                alt="profile image"
+                className="w-6 h-6 rounded-full"
+              />
+            </div>
           </div>
         </div>
       </div>
