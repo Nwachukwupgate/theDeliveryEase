@@ -46,6 +46,9 @@ const DashboardPage = () => {
       </div>
 
       <div className="my-4 rounded-2xl bg-white p-4">
+
+        <h2 className="my-3 font-bold text-xl">Active Deliveries</h2>
+
         {isLoading ? (
           <CircularProgress size={"24px"} color="inherit" />
         ) : (
@@ -69,6 +72,9 @@ const DashboardPage = () => {
       </div>
 
       <div className="my-4 rounded-2xl bg-white p-4">
+
+        <h2 className="my-3 font-bold text-xl">New Deliveries</h2>
+
         {query?.pendingDeliveries?.map((delivery) => (
           <Link to={`/rider/${delivery.id}`} key={delivery.code}>
             <DeliveringCard
