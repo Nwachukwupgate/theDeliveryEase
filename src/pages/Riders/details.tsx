@@ -9,7 +9,12 @@ import { Delivery } from "@/types/types";
 const RiderDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
 
-  const { data, isLoading } = useGetDeliveryQuery({ id: parseInt(`${id}`) });
+  if (!id) {
+    return <div>Delivery ID is missing.</div>;
+  }
+
+  const pageId = parseInt(id)
+  const { data, isLoading } = useGetDeliveryQuery(pageId);
 
 
   return (
