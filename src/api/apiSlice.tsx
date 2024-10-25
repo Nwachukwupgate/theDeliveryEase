@@ -135,10 +135,10 @@ export const apiSlice = createApi({
       }),
       providesTags: ["Delivery"],
     }),
+
     getDelivery: builder.query<Delivery, number>({
       query: (id) => ({
-        url: "delivery/",
-        params: { id },
+        url: `delivery/${id}`,  
       }),
       providesTags: ["Delivery"],
     }),
@@ -230,6 +230,15 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["Delivery"],
     }),
+
+    updateDeliveryStatus: builder.mutation<{ message: string }, { id: number; status: string }>({
+      query: ({ id, status }) => ({
+        url: `delivery/${id}/status`,
+        method: 'PATCH',
+        body: { status },
+      }),
+      invalidatesTags: ['Delivery'], // Adjust tags as needed
+    }),
   }),
 });
 
@@ -255,5 +264,6 @@ export const {
   useRiderDeliveriesQuery,
   useGetDeliveryQuery,
   useRidersAcceptMutation,
-  useRidersRejectMutation
+  useRidersRejectMutation,
+  useUpdateDeliveryStatusMutation
 } = apiSlice;

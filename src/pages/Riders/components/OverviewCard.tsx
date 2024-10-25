@@ -179,10 +179,10 @@ const OverviewCard: React.FC<OverviewProps> = ({ selectedDelivery }) => {
         </div>
       </div>
 
-      <div className="mt-4 text-center">
+      {/* <div className="mt-4 text-center">
         <p>Estimated Time Delivery</p>
         <p className="font-bold">20MINS : 30SECS</p>
-      </div>
+      </div> */}
     </div>
   );
 };

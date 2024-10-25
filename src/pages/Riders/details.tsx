@@ -4,6 +4,7 @@ import OverviewCard from "./components/OverviewCard";
 import { useGetDeliveryQuery } from "@/api/apiSlice";
 import { CircularProgress } from "@mui/material";
 import { Delivery } from "@/types/types";
+import UpdateStatus from "./components/UpdateStatus";
 
 
 const RiderDetail: React.FC = () => {
@@ -42,6 +43,10 @@ const RiderDetail: React.FC = () => {
 
           <div className="">
             <OverviewCard selectedDelivery={data as Delivery} />
+          </div>
+
+          <div className="mt-4">
+            <UpdateStatus />
           </div>
         </>
       )}
