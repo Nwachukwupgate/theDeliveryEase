@@ -1,5 +1,9 @@
 import React from "react";
 import { Button, CircularProgress } from "@mui/material";
+import { useRidersAcceptMutation, useRidersRejectMutation } from "@/api/apiSlice";
+import { ApiError } from "@/types/types";
+import { appToast } from "@/utilities/appToast";
+
 
 
 type DeliveryCardProps = {
@@ -21,6 +25,32 @@ const DeliveringCard: React.FC<DeliveryCardProps> = ({
     selected,
     showAction
   }) => {
+
+  const [ridersReject, { isLoading }] = useRidersRejectMutation();
+  const [ridersAccept, { isLoading: acceptLoading }] = useRidersAcceptMutation();
+
+  const submitReject = async () => {
+    try {
+      const response = await ridersReject(id).unwrap();
+      appToast.Success(response?.message);
+    } catch (error) {
+      const typedError = error as ApiError;
+      const errorMessage = typedError?.data?.message || "Reject failed. Please try again.";
+      appToast.Error(errorMessage);
+    }
+  };
+
+  const submitAccept = async () => {
+    try {
+      const response = await ridersAccept(id).unwrap();
+      appToast.Success(response?.message);
+    } catch (error) {
+      const typedError = error as ApiError;
+      const errorMessage = typedError?.data?.message || "Accept failed. Please try again.";
+      appToast.Error(errorMessage);
+    }
+  };
+
     return (
       <div className="border border-[#751F72] rounded-lg p-8 mb-4">
         <div className="flex justify-between items-center mb-4">
@@ -84,25 +114,27 @@ const DeliveringCard: React.FC<DeliveryCardProps> = ({
             </div>
         </div>
 
-        {
-            showAction && (
-                <div className="flex justify-center gap-x-2 mt-4">
-                  <Button
-                    variant="contained"
-                    sx={{ backgroundColor: "#9DEA9B", width: "120px", color: "black" }}
-                  >
-                    Accept
-                  </Button>
+        {showAction && (
+          <div className="flex justify-center gap-x-2 mt-4">
+            <Button
+              variant="contained"
+              sx={{ backgroundColor: "#9DEA9B", width: "120px", color: "black" }}
+              onClick={submitAccept}
+              disabled={acceptLoading}
+            >
+              {acceptLoading ? <CircularProgress size={24} /> : "Accept"}
+            </Button>
 
-                  <Button
-                    variant="contained"
-                    sx={{ backgroundColor: "#F37F7F", width: "120px", color: "black" }}
-                  >
-                    Reject
-                  </Button>
-                </div>
-              )
-        }
+            <Button
+              variant="contained"
+              sx={{ backgroundColor: "#F37F7F", width: "120px", color: "black" }}
+              onClick={submitReject}
+              disabled={isLoading}
+            >
+              {isLoading ? <CircularProgress size={24} /> : "Reject"}
+            </Button>
+          </div>
+        )}
       </div>
   );
 };

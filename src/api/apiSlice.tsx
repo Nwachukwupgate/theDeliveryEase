@@ -14,6 +14,7 @@ import {
   OrdersStats,
   RiderDeliveries,
   Delivery,
+  dataResponse
 } from "../types/types";
 
 const api_origin = "https://deliver.door-steps.pro/api/";
@@ -43,7 +44,7 @@ export const apiSlice = createApi({
   tagTypes: ["Department", "User", "Dashboard", "Deliveries", "Delivery"],
 
   endpoints: (builder) => ({
-    registerUser: builder.mutation<void, RegisterApiRequest>({
+    registerUser: builder.mutation<dataResponse, RegisterApiRequest>({
       query: (userData) => ({
         url: "register",
         method: "POST",
@@ -52,7 +53,7 @@ export const apiSlice = createApi({
       invalidatesTags: ["User"],
     }),
 
-    loginUser: builder.mutation<void, loginApiRequest>({
+    loginUser: builder.mutation<dataResponse, loginApiRequest>({
       query: (userData) => ({
         url: "login",
         method: "POST",
@@ -119,7 +120,7 @@ export const apiSlice = createApi({
       providesTags: ["Dashboard"],
     }),
 
-    createDelivery: builder.mutation<void, DeliveryData>({
+    createDelivery: builder.mutation<dataResponse, DeliveryData>({
       query: (userData) => ({
         url: "deliveries",
         method: "POST",
@@ -143,7 +144,7 @@ export const apiSlice = createApi({
       providesTags: ["Delivery"],
     }),
 
-    editUser: builder.mutation<void, EditUser>({
+    editUser: builder.mutation<dataResponse, EditUser>({
       query: (userData) => ({
         url: "settings/profile",
         method: "POST",
@@ -152,7 +153,7 @@ export const apiSlice = createApi({
       invalidatesTags: ["User"],
     }),
 
-    changePassword: builder.mutation<void, PasswordtReq>({
+    changePassword: builder.mutation<dataResponse, PasswordtReq>({
       query: (userData) => ({
         url: "settings/change-password",
         method: "POST",
@@ -171,7 +172,7 @@ export const apiSlice = createApi({
       providesTags: ["User"],
     }),
 
-    createRider: builder.mutation<void, BikerReq>({
+    createRider: builder.mutation<dataResponse, BikerReq>({
       query: (userData) => ({
         url: "admin/create-rider",
         method: "POST",
@@ -186,7 +187,7 @@ export const apiSlice = createApi({
     }),
 
     assignRider: builder.mutation<
-      void,
+    dataResponse,
       { delivery_id: string; rider_id: number }
     >({
       query: ({ delivery_id, rider_id }) => ({
@@ -204,12 +205,31 @@ export const apiSlice = createApi({
       }),
       providesTags: ["Dashboard"],
     }),
+
     riderDeliveries: builder.query<RiderDeliveries, void>({
       query: () => ({
         url: `rider/deliveries`,
         method: "GET",
       }),
       providesTags: ["Delivery"],
+    }),
+
+    ridersReject: builder.mutation<dataResponse, string>({
+      query: (id) => ({
+        url: `rider/delivery/reject/${id}`,
+        method: "POST",
+        body: id
+      }),
+      invalidatesTags: ["Delivery"],
+    }),
+
+    ridersAccept: builder.mutation<dataResponse, string>({
+      query: (id) => ({
+        url: `rider/delivery/accept/${id}`,
+        method: "POST",
+        body: id,
+      }),
+      invalidatesTags: ["Delivery"],
     }),
   }),
 });
@@ -234,5 +254,7 @@ export const {
   useAssignRiderMutation,
   useRiderDashboardQuery,
   useRiderDeliveriesQuery,
-  useGetDeliveryQuery
+  useGetDeliveryQuery,
+  useRidersAcceptMutation,
+  useRidersRejectMutation
 } = apiSlice;

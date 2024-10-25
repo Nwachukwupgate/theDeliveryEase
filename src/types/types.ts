@@ -176,3 +176,23 @@ export interface BikerReq {
     password: string;
     phone: string;
 }
+
+export interface DeliveryData {
+    name: string;
+    recieverName: string;
+    phoneNumber: string;
+    recieverNumber: string;
+    pickupAddress: string;
+    deliveryAddress: string;
+    productName: string;
+    productDescription: string;
+    weight: string;
+    quantity: string;
+    type: string;
+    deliveryType: string;
+}
+
+export interface dataResponse {
+    message: string;
+    data: any;
+}
