@@ -8,7 +8,7 @@ import { Delivery } from "@/types/types";
 
 const RiderDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-
+  console.log({id})
   if (!id) {
     return <div>Delivery ID is missing.</div>;
   }

@@ -136,7 +136,7 @@ export const apiSlice = createApi({
       providesTags: ["Delivery"],
     }),
     getDelivery: builder.query<Delivery, number>({
-      query: ({ id }) => ({
+      query: (id) => ({
         url: "delivery/",
         params: { id },
       }),
