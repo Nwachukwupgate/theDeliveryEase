@@ -1,4 +1,8 @@
 import DeliveringCard from "./components/DeliveringCard";
+import { useRiderDashboardQuery, useRiderDeliveriesQuery } from "@/api/apiSlice";
+import { CircularProgress } from "@mui/material";
+import { Link } from 'react-router-dom';
+
 
 const deliveries = [
     {
@@ -78,6 +82,8 @@ const deliveries = [
   ];
 
 const DeliveriesPage = () => {
+
+  const { data: query, isLoading } = useRiderDeliveriesQuery();
      
   return (
     <div className="p-3 lg:p-6">
@@ -86,19 +92,24 @@ const DeliveriesPage = () => {
       </div>
 
       <div className="my-4 bg-white p-4 rounded-2xl">
-        {deliveries.map((delivery) => (
-            <DeliveringCard
-                key={delivery.id}
-                id={delivery.id}
-                delivery={delivery.delivery}
-                address={delivery.address}
-                status={delivery.status}
-                date={delivery.date}
-                selected = { false }
-                showAction= {false}
-            />
-        ))}
-
+        {isLoading ? (
+            <CircularProgress size={"24px"} color="inherit" />
+          ) : (
+            query?.deliveries?.map((delivery) => (
+              <Link to={`/rider/${delivery.id}`} key={delivery.code}>
+                <DeliveringCard
+                  key={delivery.code}
+                  id={`${delivery.id}`}
+                  delivery={delivery.product_name}
+                  address={delivery.pickup_address}
+                  status={delivery.delivery_status}
+                  date={delivery.created_at}
+                  selected={false}
+                  showAction={false}
+                />
+              </Link>
+            ))
+          )}
       </div>
 
     </div>
