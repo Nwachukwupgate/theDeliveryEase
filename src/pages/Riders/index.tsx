@@ -3,6 +3,8 @@ import DashboardCard from "./components/DashboardCard";
 import DeliveringCard from "./components/DeliveringCard";
 import { CircularProgress } from "@mui/material";
 import { Link } from 'react-router-dom';
+import routes from '@/navigation/routes';
+
 
 
 const DashboardPage = () => {
@@ -47,7 +49,7 @@ const DashboardPage = () => {
         {isLoading ? (
           <CircularProgress size={"24px"} color="inherit" />
         ) : (
-          query?.deliveries?.map((delivery) => (
+          query?.deliveries?.slice(0, 6).map((delivery) => (
             <Link to={`/rider/${delivery.id}`} key={delivery.code}>
               <DeliveringCard
                 key={delivery.code}
@@ -63,7 +65,7 @@ const DashboardPage = () => {
           ))
         )}
 
-        <div className="text-end font-bold">View All</div>
+        <div className="text-end font-bold"><Link to={routes.RidersRoute.RIDER_DELIVERIES}> View All </Link></div>
       </div>
 
       <div className="my-4 rounded-2xl bg-white p-4">
