@@ -15,7 +15,7 @@ export interface IconProps {
    */
   height?: string | number | undefined;
   size?: number | string;
-  className?: string;
+  className?: string | undefined;
   fill?: string;
 }
 
