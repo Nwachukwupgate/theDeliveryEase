@@ -4,7 +4,7 @@ import {
   RegisterApiRequest,
   loginApiRequest,
   verifyRequest,
-  DeliveryData,
+  DeliveryItem,
   EditUser,
   PasswordtReq,
   DashboardQueryParams,
@@ -119,7 +119,7 @@ export const apiSlice = createApi({
       providesTags: ["Dashboard"],
     }),
 
-    createDelivery: builder.mutation<dataResponse, DeliveryData>({
+    createDelivery: builder.mutation<dataResponse, DeliveryItem>({
       query: (userData) => ({
         url: "deliveries",
         method: "POST",

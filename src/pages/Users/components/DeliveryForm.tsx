@@ -136,7 +136,7 @@ const DeliveryForm: React.FC<{ onSubmit: (data: DeliveryReq) => void }> = ({ onS
                     register={register}
                     error={errors.type}
                     options={[
-                        { value: "Card Payment", label: "Card Payment" },
+                        { value: "Bank Transfer", label: "Bank Transfer" },
                     ]}
                     icon={<WalletIcon />}
                 />     

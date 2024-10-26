@@ -39,7 +39,7 @@ export interface DeliveryReq {
 }
 
 export interface DeliveryItem {
-    id: number;
+    id?: number;
     user_id?: number;
     code?: string;
     contact_name?: string;
@@ -58,7 +58,8 @@ export interface DeliveryItem {
     updated_at?: string;
     weight?: string;
     rider?: any;
-    receipt?: string;
+    receipt?: File | string;
+    pickup_address?: string;
     // Add any other fields and make them optional with ?
   }
 
