@@ -1,8 +1,8 @@
-import SVGIcon, { SVGIconProps } from "./SVGIcon";
+// import SVGIcon, { SVGIconProps } from "./SVGIcon";
 
-type ViewProps = Partial<SVGIconProps>;
+// type ViewProps = Partial<SVGIconProps>;
 
-const WalletIcon: React.FC<ViewProps> = ({ stroke = "#330E32", ...props }) => {
+const WalletIcon: React.FC = () => {
   return (
     <svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M11.275 8.969c-.263.256-.413.625-.375 1.019.056.675.675 1.169 1.35 1.169h1.187v.744c0 1.294-1.056 2.35-2.35 2.35H3.912c-1.294 0-2.35-1.056-2.35-2.35V7.694c0-1.294 1.056-2.35 2.35-2.35h7.175c1.294 0 2.35 1.056 2.35 2.35v.9h-1.262c-.35 0-.668.138-.899.375z" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>

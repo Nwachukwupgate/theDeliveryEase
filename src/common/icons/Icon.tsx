@@ -13,8 +13,9 @@ export interface IconProps {
   /**
    * The size of the icon which will be used as the width and height
    */
+  height?: string | number | undefined;
   size?: number | string;
-  className?: string;
+  className?: string | undefined;
   fill?: string;
 }
 

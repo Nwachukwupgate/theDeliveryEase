@@ -1,8 +1,8 @@
-import SVGIcon, { SVGIconProps } from "./SVGIcon";
+// import SVGIcon, { SVGIconProps } from "./SVGIcon";
 
-type ViewProps = Partial<SVGIconProps>;
+// type ViewProps = Partial<SVGIconProps>;
 
-const DeliveryIcon: React.FC<ViewProps> = ({ stroke = "#330E32", ...props }) => {
+const DeliveryIcon: React.FC = () => {
   return (
     <svg width="30" height="30" viewBox="0 0 144 144" fill="none" xmlns="http://www.w3.org/2000/svg">
       {/* Calendar Frame */}

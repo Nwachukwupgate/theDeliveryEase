@@ -1,8 +1,8 @@
-import SVGIcon, { SVGIconProps } from "./SVGIcon";
+// import SVGIcon, { SVGIconProps } from "./SVGIcon";
 
-type ViewProps = Partial<SVGIconProps>;
+// type ViewProps = Partial<SVGIconProps>;
 
-const ProductDescriptionIcon: React.FC<ViewProps> = ({ stroke = "#330E32", ...props }) => {
+const ProductDescriptionIcon: React.FC= () => {
   return ( 
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M2.11 4.96L8 8.37l5.84-3.39" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
