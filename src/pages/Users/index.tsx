@@ -1,4 +1,4 @@
-import { useState, ReactNode, useEffect } from "react";
+import { useState, useEffect } from "react";
 import DashboardCard from "./components/DashboardCard";
 import SameDay from "../../common/icons/SameDay";
 import ExpressIcon from "../../common/icons/ExpressIcon";
@@ -11,19 +11,19 @@ import { Delivery } from "@/types/types";
 import { CircularProgress } from "@mui/material";
 
 // Define the type for each step in the delivery process
-interface DeliveryStep {
-  label: string;
-  location: string;
-  status: "Done" | "Ongoing" | "Pending";
-  time: string;
-}
+// interface DeliveryStep {
+//   label: string;
+//   location: string;
+//   status: "Done" | "Ongoing" | "Pending";
+//   time: string;
+// }
 
 // Define the type for each delivery
 
 
 const DashboardPage = () => {
   // Delivery data type
-  const { data, error, isLoading } = useGetDeliveryHistoryQuery({ page: 1 });
+  const { data, isLoading } = useGetDeliveryHistoryQuery({ page: 1 });
 
 
 

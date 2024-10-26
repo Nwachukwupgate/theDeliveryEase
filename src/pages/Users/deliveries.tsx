@@ -11,26 +11,26 @@ const DeliveryPage = () => {
       setDeliveryData(data);
   };
 
-  const handlePlaceOrder = async () => {
-      // Make API call to submit deliveryData
-      try {
-          // const response = await fetch('/api/orders', {
-          //     method: 'POST',
-          //     headers: {
-          //         'Content-Type': 'application/json',
-          //     },
-          //     body: JSON.stringify(deliveryData),
-          // });
-          // if (!response.ok) {
-          //     throw new Error('Network response was not ok');
-          // }
-          // Handle successful order placement, e.g., show success message
-          console.log('Order placed successfully!');
-      } catch (error) {
-          console.error('Error placing order:', error);
-          // Handle error, e.g., show error message
-      }
-  };
+  // const handlePlaceOrder = async () => {
+  //     // Make API call to submit deliveryData
+  //     try {
+  //         // const response = await fetch('/api/orders', {
+  //         //     method: 'POST',
+  //         //     headers: {
+  //         //         'Content-Type': 'application/json',
+  //         //     },
+  //         //     body: JSON.stringify(deliveryData),
+  //         // });
+  //         // if (!response.ok) {
+  //         //     throw new Error('Network response was not ok');
+  //         // }
+  //         // Handle successful order placement, e.g., show success message
+  //         console.log('Order placed successfully!');
+  //     } catch (error) {
+  //         console.error('Error placing order:', error);
+  //         // Handle error, e.g., show error message
+  //     }
+  // };
 
     return (
       <div className="p-6">
