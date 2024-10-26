@@ -2,6 +2,7 @@ import { TIconPack, iconPack } from "@/common/icons/pack";
 import { FC } from "react";
 import { SVGIconProps } from "./SVGIcon";
 
+
 export interface IconProps {
   color?: SVGIconProps["color"];
 
@@ -15,7 +16,7 @@ export interface IconProps {
    */
   height?: string | number | undefined;
   size?: number | string;
-  className?: string | undefined;
+  className?: string;
   fill?: string;
 }
 
