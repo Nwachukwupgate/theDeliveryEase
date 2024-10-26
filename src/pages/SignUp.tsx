@@ -14,6 +14,7 @@ import { useRegisterUserMutation } from "@/api/apiSlice";
 import userStore from '@/utilities/stores'; 
 import { useGoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 
 interface GoogleUser {
@@ -52,6 +53,7 @@ const schema = Joi.object<SignupReq>({
 });
 
 const SignUp = (): JSX.Element => {
+  const navigate = useNavigate()
   const {
     handleSubmit,
     register,
