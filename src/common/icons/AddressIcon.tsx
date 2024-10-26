@@ -1,8 +1,8 @@
-import SVGIcon, { SVGIconProps } from "./SVGIcon";
+// import SVGIcon, { SVGIconProps } from "./SVGIcon";
 
-type ViewProps = Partial<SVGIconProps>;
+// type ViewProps = Partial<SVGIconProps>;
 
-const AddressIcon: React.FC<ViewProps> = ({ stroke = "#330E32", ...props }) => {
+const AddressIcon: React.FC = () => {
   return (
     <svg width="9" height="12" viewBox="0 0 9 12" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>

@@ -1,8 +1,8 @@
-import SVGIcon, { SVGIconProps } from "./SVGIcon";
+// import SVGIcon, { SVGIconProps } from "./SVGIcon";
 
-type ViewProps = Partial<SVGIconProps>;
+// type ViewProps = Partial<SVGIconProps>;
 
-const PhoneIcon: React.FC<ViewProps> = ({ stroke = "#330E32", ...props }) => {
+const PhoneIcon: React.FC = () => {
   return (
     <svg
     width="14"

@@ -1,8 +1,8 @@
-import SVGIcon, { SVGIconProps } from "./SVGIcon";
+// import SVGIcon, { SVGIconProps } from "./SVGIcon";
 
-type ViewProps = Partial<SVGIconProps>;
+// type ViewProps = Partial<SVGIconProps>;
 
-const NameIcon: React.FC<ViewProps> = ({ stroke = "#330E32", ...props }) => {
+const NameIcon: React.FC = () => {
   return (
     <svg
         width="20"

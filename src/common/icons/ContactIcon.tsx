@@ -4,7 +4,7 @@ type ViewProps = Partial<SVGIconProps>;
 
 const ContactIcon: React.FC<ViewProps> = ({ stroke = "#330E32", ...props }) => {
   return (
-    <svg
+    <SVGIcon
       width="20"
       height="20"
       viewBox="0 0 20 20"
@@ -18,7 +18,7 @@ const ContactIcon: React.FC<ViewProps> = ({ stroke = "#330E32", ...props }) => {
         stroke-width="1.5"
         stroke-miterlimit="10"
       />
-    </svg>
+    </SVGIcon>
   );
 };
 
