@@ -12,6 +12,14 @@ import { Link } from 'react-router-dom';
 import routes from '@/navigation/routes';
 import { useRegisterUserMutation } from "@/api/apiSlice";
 import userStore from '@/utilities/stores'; 
+import { useGoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from "jwt-decode";
+
+
+interface GoogleUser {
+  email: string;
+  name: string;
+}
 
 interface ApiError {
   data?: {
@@ -72,6 +80,39 @@ const SignUp = (): JSX.Element => {
       const errorMessage = typedError?.data?.message || "Sign Up Failed. Please try again.";     
       appToast.Error(errorMessage)
     }
+  });
+
+  const onGoogleSuccess = async (response: any) => {
+    try {
+      const { credential } = response;
+      const googleUser: GoogleUser = jwtDecode<GoogleUser>(credential);
+
+      // Call the registration API with Google details
+      const apiResponse = await registerUser({
+        first_name: googleUser.name.split(" ")[0],
+        last_name: googleUser.name.split(" ")[1] || "",
+        email: googleUser.email,
+        password: "", // May need modification if backend requires password
+      }).unwrap();
+
+      const token = apiResponse.data?.token;
+      const user = { email: apiResponse.data.user?.email };
+      userStore.loginUser(token, user, 'user');
+      appToast.Success("Google Sign-Up Successful");
+      navigate(routes.usersRoutes.DASHBOARD);
+    } catch (error) {
+      const errorMessage = (error as ApiError)?.data?.message || "Google Sign-Up failed. Please try again.";
+      appToast.Error(errorMessage);
+    }
+  };
+
+  const onGoogleFailure = () => {
+    appToast.Error("Google Sign-Up failed. Please try again.");
+  };
+
+  const googleSignup = useGoogleLogin({
+    onSuccess: onGoogleSuccess,
+    onError: onGoogleFailure,
   });
 
   return (
@@ -154,6 +195,7 @@ const SignUp = (): JSX.Element => {
                 borderColor: '#d0d5dd',
                 color: '#344054',
               }}
+              onClick={() => googleSignup()}
             >
               Continue with Google
             </Button>

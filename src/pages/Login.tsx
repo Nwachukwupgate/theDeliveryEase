@@ -14,7 +14,26 @@ import { useLoginUserMutation } from "@/api/apiSlice";
 import { ApiError } from "@/types/types";
 import userStore from '@/utilities/stores'; 
 import { useNavigate } from "react-router-dom";
+import { useGoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from "jwt-decode";
 
+
+
+interface GoogleUser {
+  email: string;
+  name: string;
+}
+
+interface ApiResponse {
+  data: {
+    token: string;
+    user: {
+      first_name: string;
+      email: string;
+    };
+  };
+  message: string;
+}
 
 interface SignupReq {
   email: string;
@@ -58,6 +77,41 @@ const Login = (): JSX.Element => {
       appToast.Error(errorMessage)
     }
   });
+
+  const onGoogleSuccess = async (response: any) => {
+    try {
+      // Decode JWT response and extract user information
+      const { credential } = response;
+      const googleUser: GoogleUser = jwtDecode<GoogleUser>(credential); // Specify type for jwt_decode
+  
+      // Send user data to backend for further processing
+      const apiResponse: ApiResponse = await loginUser({
+        email: googleUser.email,
+      }).unwrap();
+  
+      const token = apiResponse.data?.token;
+      const user = {
+        email: apiResponse.data.user?.email,
+      };
+      userStore.loginUser(token, user, 'user');
+      appToast.Success(apiResponse?.message);
+      navigate(routes.usersRoutes.DASHBOARD);
+    } catch (error: any) {
+      const errorMessage = error?.data?.message || "Google Sign-In failed. Please try again.";
+      appToast.Error(errorMessage);
+    }
+  };
+
+  const onGoogleFailure = () => {
+    // console.error("Google Sign-In Error", error);
+    appToast.Error("Google Sign-In failed. Please try again.");
+  };
+
+  const login = useGoogleLogin({
+    onSuccess: onGoogleSuccess,
+    onError: onGoogleFailure
+  });
+
 
   return (
     <div className="h-screen bg-successActiveColorLight">
@@ -114,18 +168,19 @@ const Login = (): JSX.Element => {
                     <p className="font-bold text-sm md:text-lg text-center mb-2">Or</p>
 
                     <Button
-                        fullWidth
-                        variant="outlined"
-                        startIcon={<GoogleIcon />}
-                        className="my-2"
-                        size="small"
-                        sx={{
-                            borderColor :'#d0d5dd',
-                            color:'#344054',
-                            }}
-                        >
-                        Continue with Google
-                    </Button>                   
+                      fullWidth
+                      variant="outlined"
+                      startIcon={<GoogleIcon />}
+                      className="my-2"
+                      size="small"
+                      sx={{
+                        borderColor: '#d0d5dd',
+                        color: '#344054',
+                      }}
+                      onClick={() => login()}
+                    >
+                      Continue with Google
+                    </Button>                
                 </form>
             </div>
         </div>

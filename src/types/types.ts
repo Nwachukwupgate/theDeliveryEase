@@ -17,7 +17,7 @@ export interface RegisterApiRequest {
 
 export interface loginApiRequest {
     email: string;
-    password: string;
+    password?: string;
 }
 
 export interface verifyRequest {
