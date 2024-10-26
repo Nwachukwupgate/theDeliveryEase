@@ -5,11 +5,10 @@ import { Button, CircularProgress } from "@mui/material";
 import PlusIcon from '@/common/icons/PlusIcon'
 import { useGetDeliveryHistoryQuery } from "@/api/apiSlice";
 import { Delivery } from "@/types/types";
-import { DeliverySteps } from ".";
 
 
 const TrackingPage = () => {
-    const { data, error, isLoading } = useGetDeliveryHistoryQuery({ page: 1 });
+    const { data, isLoading } = useGetDeliveryHistoryQuery({ page: 1 });
     const [selectedDeliveryId, setSelectedDeliveryId] = useState<Delivery | null>(null);
 
 
