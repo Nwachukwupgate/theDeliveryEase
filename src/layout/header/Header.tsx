@@ -80,7 +80,7 @@ const Header: React.FC = () => {
                 className="w-6 h-6 rounded-full"
               />
             </div>
-            <div onClick={handleLogout}> <LogoutIcon /> </div>
+            <div className='cursor-pointer' onClick={handleLogout}> <LogoutIcon /> </div>
           </div>
         </div>
       </div>
@@ -91,7 +91,7 @@ const Header: React.FC = () => {
         <Notifications />
         <Divider sx={{ height: "80%" }} orientation="vertical" className="hidden lg:block" />
         <Profile />
-        <div className='hidden lg:block' onClick={handleLogout}> <LogoutIcon /> </div>
+        <div className='cursor-pointer hidden lg:block' onClick={handleLogout}> <LogoutIcon /> </div>
       </div>
     </header>
   );
