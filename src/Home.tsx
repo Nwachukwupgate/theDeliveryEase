@@ -237,7 +237,7 @@ const Home = () => {
                   color: 'black',
                   width: '100%',
                   '@media (min-width: 1024px)': {
-                    width: '35%',
+                    width: '48%',
                     backgroundColor: '#EFDFEE'
                   }
                 }}
