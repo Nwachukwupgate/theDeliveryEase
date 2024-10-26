@@ -123,23 +123,23 @@ const DashboardPage = () => {
     end_date: endDate || undefined,
   })
 
-  const desktopData1 = [
-    { month: "January", desktop: 305, mobile: 200 },
-    { month: "February", desktop: 85, mobile: 80 },
-    { month: "March", desktop: 237, mobile: 120 },
-  ];
+  // const desktopData1 = [
+  //   { month: "January", desktop: 305, mobile: 200 },
+  //   { month: "February", desktop: 85, mobile: 80 },
+  //   { month: "March", desktop: 237, mobile: 120 },
+  // ];
   
-  const desktopData2 = [
-    { month: "January", desktop: 100, mobile: 300 },
-    { month: "February", desktop: 250, mobile: 150 },
-    { month: "March", desktop: 120, mobile: 250 },
-  ];
+  // const desktopData2 = [
+  //   { month: "January", desktop: 100, mobile: 300 },
+  //   { month: "February", desktop: 250, mobile: 150 },
+  //   { month: "March", desktop: 120, mobile: 250 },
+  // ];
   
-  const desktopData3 = [
-    { month: "January", desktop: 400, mobile: 180 },
-    { month: "February", desktop: 330, mobile: 170 },
-    { month: "March", desktop: 290, mobile: 210 },
-  ];
+  // const desktopData3 = [
+  //   { month: "January", desktop: 400, mobile: 180 },
+  //   { month: "February", desktop: 330, mobile: 170 },
+  //   { month: "March", desktop: 290, mobile: 210 },
+  // ];
 
   const getMonthName = (monthNumber : any) => {
     const monthNames = [
