@@ -52,16 +52,15 @@ import { ApiError } from "@/types/types";
         try {
           if (!deliveryId) {
             console.error("Delivery ID is null");
-            return; // Return early if deliveryId is null
+            return; 
           }
       
-          // Call the assign rider mutation with deliveryId and rider_id
-          await assignRider({
-            delivery_id: deliveryId, // Convert deliveryId to integer
-            rider_id: parseInt(formData.rider_id), // Convert rider_id to integer
-          });
+          const response = await assignRider({
+            delivery_id: deliveryId,
+            rider_id: parseInt(formData.rider_id),
+          }).unwrap();
           appToast.Success(response?.message);
-          onClose(); // Close the modal after successful assignment
+          onClose();
         } catch (error) {
             const typedError = error as ApiError;   
             const errorMessage = typedError?.data?.message || "Sign Up Failed. Please try again.";     

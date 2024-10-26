@@ -185,10 +185,7 @@ export const apiSlice = createApi({
       providesTags: ["Delivery"],
     }),
 
-    assignRider: builder.mutation<
-    dataResponse,
-      { delivery_id: string; rider_id: number }
-    >({
+    assignRider: builder.mutation<dataResponse, { delivery_id: string; rider_id: number }>({
       query: ({ delivery_id, rider_id }) => ({
         url: `admin/deliveries/${delivery_id}/assign`,
         method: "POST",
