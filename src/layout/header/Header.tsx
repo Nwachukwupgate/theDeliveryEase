@@ -8,9 +8,14 @@ import Search from "./Search";
 import Icon from '@/assets/image/logo.png'
 import BellFill from "@/common/icons/BellFill";
 import SearchOutline from "@/common/icons/SearchOutline";
+import LogoutIcon from '@/common/icons/LogoutIcon';
+import userStore from '@/utilities/stores';
+import { useNavigate } from 'react-router-dom'; 
+import routes from '@/navigation/routes';
 
 
 const Header: React.FC = () => {
+  const navigate = useNavigate()
   const [isScrolled, setIsScrolled] = useState(false);
   const { isActive } = useSnapshot(sidebarStore);
 
@@ -29,6 +34,11 @@ const Header: React.FC = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  const handleLogout = () => {
+    userStore.logoutUser()
+    navigate(routes.HOME_PAGE)
+  }
 
   return (
     <header
@@ -61,7 +71,7 @@ const Header: React.FC = () => {
           </div>
 
           <div className="flex justify-around gap-4">
-            <div><SearchOutline /></div>
+            <div className='hidden'><SearchOutline /></div>
             <div><BellFill /></div>
             <div>
               <img
@@ -70,6 +80,7 @@ const Header: React.FC = () => {
                 className="w-6 h-6 rounded-full"
               />
             </div>
+            <div onClick={handleLogout}> <LogoutIcon /> </div>
           </div>
         </div>
       </div>
@@ -80,6 +91,7 @@ const Header: React.FC = () => {
         <Notifications />
         <Divider sx={{ height: "80%" }} orientation="vertical" className="hidden lg:block" />
         <Profile />
+        <div className='hidden lg:block' onClick={handleLogout}> <LogoutIcon /> </div>
       </div>
     </header>
   );

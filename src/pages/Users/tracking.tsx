@@ -5,6 +5,8 @@ import { Button, CircularProgress } from "@mui/material";
 import PlusIcon from '@/common/icons/PlusIcon'
 import { useGetDeliveryHistoryQuery } from "@/api/apiSlice";
 import { Delivery } from "@/types/types";
+import { Link } from 'react-router-dom'; 
+import routes from "@/navigation/routes";
 
 
 const TrackingPage = () => {
@@ -24,23 +26,25 @@ const TrackingPage = () => {
                 <div className="font-bold text-lg">Tracking</div>
             </div>
 
-            <div className="flex gap-8 p-8">
+            <div className="flex flex-col lg:flex-row gap-8 p-2 lg:p-8">
                 {/* Left section with delivery cards */}
-                <div className="w-[40%] space-y-6">
+                <div className="lg:w-[40%] space-y-6">
 
-                    <Button
-                        fullWidth
-                        variant="outlined"
-                        startIcon={<PlusIcon />}
-                        className="my-2"
-                        size="small"
-                        sx={{
-                            borderColor :'#751F72',
-                            color:'#751F72',
-                            }}
-                        >
-                        New Delivery
-                    </Button>
+                    <Link to={routes.usersRoutes.DELIVERY}>
+                      <Button
+                          fullWidth
+                          variant="outlined"
+                          startIcon={<PlusIcon />}
+                          className="my-2"
+                          size="small"
+                          sx={{
+                              borderColor :'#751F72',
+                              color:'#751F72',
+                              }}
+                          >
+                          New Delivery
+                      </Button>
+                    </Link>
 
                     {
                       isLoading ? (
@@ -62,7 +66,7 @@ const TrackingPage = () => {
                 </div>
 
                 {/* Right section with overview */}
-                <div className="w-[60%]">
+                <div className="lg:w-[60%]">
                   <OverviewCard selectedDelivery={selectedDeliveryId}/>
                     {/* <DeliverySteps delivery={selectedDeliveryId} showExtras={false} /> */}
                 </div>
