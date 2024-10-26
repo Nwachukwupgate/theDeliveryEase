@@ -7,6 +7,7 @@ import { format, startOfYear } from 'date-fns';
 import moment from 'moment';
 import {DeliveryItem} from '@/types/types';
 import ModalPage  from "./components/ModalPage"
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 
 export type Payment = {
@@ -287,7 +288,7 @@ const DashboardPage = () => {
   }, [historyData]);
  
   if (isLoading || statLoading) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner />;
   }
 
   return (

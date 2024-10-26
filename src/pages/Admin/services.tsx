@@ -7,6 +7,8 @@ import { useGetAdminDashboardStatsQuery, useGetHistoryQuery } from '@/api/apiSli
 import moment from 'moment';
 import {DeliveryItem} from '@/types/types';
 import { format, startOfYear } from 'date-fns';
+import LoadingSpinner from '@/components/LoadingSpinner';
+
 
 export type Payment = {
   id: string;
@@ -150,7 +152,7 @@ const DashboardPage = () => {
   }, [historyData]);
 
   if (isLoading || statLoading) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner />;
   }
 
 
