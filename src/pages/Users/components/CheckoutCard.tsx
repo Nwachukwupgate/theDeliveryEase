@@ -70,8 +70,6 @@ const CheckoutCard: React.FC<{ deliveryData: any }> = ({ deliveryData }) => {
         const errorMessage = typedError?.data?.message || "Failed. Please try again.";     
         appToast.Error(errorMessage)
       }
-      
-      // Add further API handling here if needed
     }
   };
 
