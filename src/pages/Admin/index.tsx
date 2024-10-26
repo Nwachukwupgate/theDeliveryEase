@@ -101,6 +101,17 @@ export const columns = [
   },
 ];
 
+interface UserData {
+  month: number; // Month as a number (1-12)
+  user_count: number; 
+}
+
+interface DeliveryData {
+  month: number; 
+  successful_count?: number; 
+  delivery_count?: number; 
+}
+
 const DashboardPage = () => {  
   const [currentPage, setCurrentPage] = useState<number>(1);
   const { data: historyData, isLoading } = useGetHistoryQuery({ page: currentPage });
@@ -130,10 +141,36 @@ const DashboardPage = () => {
     { month: "March", desktop: 290, mobile: 210 },
   ];
 
+  const getMonthName = (monthNumber : any) => {
+    const monthNames = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+    return monthNames[monthNumber - 1] || ""; 
+  };
+
   const handleDateChange = (start: Date | null, end: Date | null) => {
     setStartDate(start ? format(start, 'yyyy-MM-dd') : null);
     setEndDate(end ? format(end, 'yyyy-MM-dd') : null);
   };
+
+  const totalUsersData = Dashboard?.lineCharts?.totalUsers.map((user: UserData) => ({
+    month: getMonthName(user.month), 
+    desktop: user.user_count,
+    mobile: 120, 
+  })) || [];
+
+  const successfulDeliveriesData = Dashboard?.lineCharts?.successfulDeliveries.map((delivery: DeliveryData) => ({
+    month: getMonthName(delivery.month), 
+    desktop: delivery.successful_count,
+    mobile: 250,
+  })) || [];
+
+  const totalDeliveriesData = Dashboard?.lineCharts?.totalDeliveries.map((delivery: DeliveryData) => ({
+    month: getMonthName(delivery.month),
+    desktop: delivery.delivery_count,
+    mobile: 210,
+  })) || [];
 
   const radialData = useMemo(() => {
     if (!Dashboard || isLoading) {
@@ -198,11 +235,15 @@ const DashboardPage = () => {
       </div>
 
       <div className='flex gap-x-6'>
-        <div> <ChartLine color="#FF8901" data={desktopData1} /> </div>
-
-        <div> <ChartLine color="#FF392B" data={desktopData2} /> </div>
-
-        <div> <ChartLine color="#27BF51" data={desktopData3}  /> </div>
+        <div>
+          <ChartLine color="#FF8901" data={totalUsersData} />
+        </div>
+        <div>
+          <ChartLine color="#FF392B" data={successfulDeliveriesData} />
+        </div>
+        <div>
+          <ChartLine color="#27BF51" data={totalDeliveriesData} />
+        </div>
       </div>
 
       <div className='grid grid-cols-6 gap-x-4 my-10'>

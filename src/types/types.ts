@@ -57,7 +57,8 @@ export interface DeliveryItem {
     stage?: number;
     updated_at?: string;
     weight?: string;
-    rider?: string;
+    rider?: any;
+    receipt?: string;
     // Add any other fields and make them optional with ?
   }
 

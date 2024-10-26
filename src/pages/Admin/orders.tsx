@@ -19,53 +19,70 @@ export type Payment = {
   status: "Pending" | "Completed" | "Ongoing";
 };
 
-const data: Payment[] = [
-  {
-    id: "m5gr84i9",
-    tracker: "AZ34KLO900",
-    services: "Same Day Delivery",
-    product: "success",
-    weight: "3kg",
-    date: "Feb 13th 2025",
-    status: "Completed",
-  },
-  {
-    id: "3u1reuv4",
-    tracker: "AZ34KLO900",
-    services: "Next Day Delivery",
-    product: "success",
-    weight: "3kg",
-    date: "Feb 13th 2025",
-    status: "Ongoing",
-  },
-  {
-    id: "derv1ws0",
-    tracker: "AZ34KLO900",
-    services: "Scheduled Delivery",
-    product: "success",
-    weight: "3kg",
-    date: "Feb 13th 2025",
-    status: "Ongoing",
-  },
-  {
-    id: "5kma53ae",
-    tracker: "AZ34KLO900",
-    services: "Express Delivery",
-    product: "success",
-    weight: "3kg",
-    date: "Feb 13th 2025",
-    status: "Pending",
-  },
-  {
-    id: "bhqecj4p",
-    tracker: "AZ34KLO900",
-    services: "Same Day Delivery",
-    product: "success",
-    weight: "3kg",
-    date: "Feb 13th 2025",
-    status: "Ongoing",
-  },
-];
+// const data: Payment[] = [
+//   {
+//     id: "m5gr84i9",
+//     tracker: "AZ34KLO900",
+//     services: "Same Day Delivery",
+//     product: "success",
+//     weight: "3kg",
+//     date: "Feb 13th 2025",
+//     status: "Completed",
+//   },
+//   {
+//     id: "3u1reuv4",
+//     tracker: "AZ34KLO900",
+//     services: "Next Day Delivery",
+//     product: "success",
+//     weight: "3kg",
+//     date: "Feb 13th 2025",
+//     status: "Ongoing",
+//   },
+//   {
+//     id: "derv1ws0",
+//     tracker: "AZ34KLO900",
+//     services: "Scheduled Delivery",
+//     product: "success",
+//     weight: "3kg",
+//     date: "Feb 13th 2025",
+//     status: "Ongoing",
+//   },
+//   {
+//     id: "5kma53ae",
+//     tracker: "AZ34KLO900",
+//     services: "Express Delivery",
+//     product: "success",
+//     weight: "3kg",
+//     date: "Feb 13th 2025",
+//     status: "Pending",
+//   },
+//   {
+//     id: "bhqecj4p",
+//     tracker: "AZ34KLO900",
+//     services: "Same Day Delivery",
+//     product: "success",
+//     weight: "3kg",
+//     date: "Feb 13th 2025",
+//     status: "Ongoing",
+//   },
+// ];
+
+interface UserData {
+  month: number; // Month as a number (1-12)
+  user_count: number; 
+}
+
+interface DeliveryData {
+  month: number; 
+  successful_count?: number; 
+  delivery_count?: number; 
+}
+
+// interface ChartData {
+//   month: string; // Month as a string (e.g., "January")
+//   desktop: number; // Desktop value
+//   mobile: number; // Mobile value
+// }
 
 
 const DashboardPage = () => {  
@@ -143,6 +160,27 @@ const DashboardPage = () => {
       cell: ({ row }: any) => <div className="capitalize">{row.getValue("status")}</div>,
     },
     {
+      accessorKey: "receipt",
+      header: "Receipt",
+      cell: ({ row }: any) => {
+        const receiptUrl = row.getValue("receipt"); // Assume receipt contains the URL
+        const displayText = receiptUrl.length > 15 ? `${receiptUrl.substring(0, 15)}...` : receiptUrl; 
+
+        return (
+          <div className="capitalize">
+            <a
+              href={receiptUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 underline decoration-dashed decoration-1"
+            >
+              {displayText}
+            </a>
+          </div>
+        );
+      }
+    },
+    {
       accessorKey: "actions",
       header: "Actions",
       cell: ({ row }: any) => (
@@ -156,33 +194,59 @@ const DashboardPage = () => {
     },
   ];
 
+  const getMonthName = (monthNumber : any) => {
+    const monthNames = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+    return monthNames[monthNumber - 1] || ""; 
+  };
+
   const{ data: Dashboard, isLoading: statLoading } = useGetAdminDashboardStatsQuery({
     start_date: startDate || undefined,
     end_date: endDate || undefined,
   })
 
-  const desktopData1 = [
-    { month: "January", desktop: 305, mobile: 200 },
-    { month: "February", desktop: 85, mobile: 80 },
-    { month: "March", desktop: 237, mobile: 120 },
-  ];
+  // const desktopData1 = [
+  //   { month: "January", desktop: 305, mobile: 200 },
+  //   { month: "February", desktop: 85, mobile: 80 },
+  //   { month: "March", desktop: 237, mobile: 120 },
+  // ];
   
-  const desktopData2 = [
-    { month: "January", desktop: 100, mobile: 300 },
-    { month: "February", desktop: 250, mobile: 150 },
-    { month: "March", desktop: 120, mobile: 250 },
-  ];
+  // const desktopData2 = [
+  //   { month: "January", desktop: 100, mobile: 300 },
+  //   { month: "February", desktop: 250, mobile: 150 },
+  //   { month: "March", desktop: 120, mobile: 250 },
+  // ];
   
-  const desktopData3 = [
-    { month: "January", desktop: 400, mobile: 180 },
-    { month: "February", desktop: 330, mobile: 170 },
-    { month: "March", desktop: 290, mobile: 210 },
-  ];
+  // const desktopData3 = [
+  //   { month: "January", desktop: 400, mobile: 180 },
+  //   { month: "February", desktop: 330, mobile: 170 },
+  //   { month: "March", desktop: 290, mobile: 210 },
+  // ];
 
   const handleDateChange = (start: Date | null, end: Date | null) => {
     setStartDate(start ? format(start, 'yyyy-MM-dd') : null);
     setEndDate(end ? format(end, 'yyyy-MM-dd') : null);
   };
+
+  const totalUsersData = Dashboard?.lineCharts?.totalUsers.map((user: UserData) => ({
+    month: getMonthName(user.month), 
+    desktop: user.user_count,
+    mobile: 120, 
+  })) || [];
+
+  const successfulDeliveriesData = Dashboard?.lineCharts?.successfulDeliveries.map((delivery: DeliveryData) => ({
+    month: getMonthName(delivery.month), 
+    desktop: delivery.successful_count,
+    mobile: 250,
+  })) || [];
+
+  const totalDeliveriesData = Dashboard?.lineCharts?.totalDeliveries.map((delivery: DeliveryData) => ({
+    month: getMonthName(delivery.month),
+    desktop: delivery.delivery_count,
+    mobile: 210,
+  })) || [];
 
   // const radialData = useMemo(() => {
   //   if (!Dashboard || isLoading) {
@@ -203,28 +267,28 @@ const DashboardPage = () => {
 
 
   const mergedData = useMemo(() => {
-    return historyData?.data?.deliveries?.data?.map((item: DeliveryItem) => {
+    return historyData && historyData?.data?.deliveries?.data?.map((item: DeliveryItem) => {
       return {
-        id: item.code || "N/A",
-        tracker: item.code || "N/A",
-        services: item.delivery_type || "N/A",
-        product: item.product_name || "N/A",
-        contact: item.contact_name || "N/A",
+        id: item?.code || "N/A",
+        tracker: item?.code || "N/A",
+        services: item?.delivery_type || "N/A",
+        product: item?.product_name || "N/A",
+        contact: item?.contact_name || "N/A",
         contactPhone: item.contact_phone || "N/A",
-        recieverName: item.receiver_name || "N/A",
-        recieverPhone: item.receiver_phone || "N/A",
-        rider: item.rider || "N/A",
-        weight: item.weight || "N/A",
-        date: item.created_at ? moment(item.created_at).format("YYYY-MM-DD") : "N/A",
-        status: item.delivery_status || "N/A",
+        recieverName: item?.receiver_name || "N/A",
+        recieverPhone: item?.receiver_phone || "N/A",
+        rider: item?.rider?.name || "N/A",
+        weight: item?.weight || "N/A",
+        date: item?.created_at ? moment(item.created_at).format("YYYY-MM-DD") : "N/A",
+        status: item?.delivery_status || "N/A",
+        receipt: item?.receipt || "N/A"
       };
     }) || [];
   }, [historyData]);
-
+ 
   if (isLoading || statLoading) {
     return <div>Loading...</div>;
   }
-
 
   return (
     <div className="p-6">
@@ -248,11 +312,15 @@ const DashboardPage = () => {
       </div>
 
       <div className='flex gap-x-6 mb-10'>
-        <div> <ChartLine color="#FF8901" data={desktopData1} /> </div>
-
-        <div> <ChartLine color="#FF392B" data={desktopData2} /> </div>
-
-        <div> <ChartLine color="#27BF51" data={desktopData3}  /> </div>
+        <div>
+          <ChartLine color="#FF8901" data={totalUsersData} />
+        </div>
+        <div>
+          <ChartLine color="#FF392B" data={successfulDeliveriesData} />
+        </div>
+        <div>
+          <ChartLine color="#27BF51" data={totalDeliveriesData} />
+        </div>
       </div>
       
       <div className='bg-white p-8'>
