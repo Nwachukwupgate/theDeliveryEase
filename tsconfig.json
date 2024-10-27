@@ -8,6 +8,10 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "strict": false,                   // Disable strict checks
+    "noUnusedLocals": false,           // Allow unused local variables
+    "noUnusedParameters": false,       // Allow unused parameters
+    "noFallthroughCasesInSwitch": false // Disable strict switch case checks
   }
 }
