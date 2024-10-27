@@ -14,10 +14,10 @@
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
-    "strict": false,                    // Disable strict checks
-    "noUnusedLocals": false,            // Allow unused local variables
-    "noUnusedParameters": false,        // Allow unused parameters
-    "noFallthroughCasesInSwitch": false, // Disable strict switch case checks
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]

@@ -2,22 +2,13 @@ import { TIconPack, iconPack } from "@/common/icons/pack";
 import { FC } from "react";
 import { SVGIconProps } from "./SVGIcon";
 
-
 export interface IconProps {
   color?: SVGIconProps["color"];
-
-  /**
-   * The name of the icon from the icon pack.
-   */
   name: TIconPack;
-
-  /**
-   * The size of the icon which will be used as the width and height
-   */
-  height?: string | number | undefined;
   size?: number | string;
   className?: string;
   fill?: string;
+  viewBox?: string;
 }
 
 const IconComponent: FC<IconProps> = ({
@@ -25,16 +16,18 @@ const IconComponent: FC<IconProps> = ({
   size,
   className,
   fill,
+  viewBox = "0 0 24 24", // Default viewBox
   ...props
 }) => {
-  const IconFromPack = iconPack[name];
+  const IconFromPack = iconPack[name] as FC<SVGIconProps>;
 
   return (
     <IconFromPack
       height={size}
-      className={className}
       width={size}
       fill={fill}
+      className={className}
+      viewBox={viewBox} // Pass the viewBox prop
       {...props}
     />
   );
