@@ -128,7 +128,9 @@ const DashboardPage = () => {
                   (delivery: Delivery, index: number) => (
                     <div
                       key={index}
-                      className="mb-4 flex cursor-pointer flex-row items-center justify-between lg:py-2"
+                      className={`mb-4 flex cursor-pointer flex-row items-center justify-between lg:py-2 ${
+                        selectedDelivery === delivery ? "bg-[#EBE1F1] text-gray-800 px-4" : ""
+                      }`}
                       onClick={() => handleDeliveryClick(delivery)}
                     >
                       <div className="content-center rounded-full bg-[#B57EDC] p-2">
@@ -138,7 +140,7 @@ const DashboardPage = () => {
                       </div>
 
                       <p className="font-semibold">{delivery.code}</p>
-                      <p className="text-sm text-gray-500 text-ellipsis">
+                      <p className={`"text-sm ${selectedDelivery === delivery ? "text-gray-600" : "text-gray-500"} text-ellipsis"`}>
                         {delivery.delivery_address}
                       </p>
 
@@ -156,7 +158,7 @@ const DashboardPage = () => {
                             delivery.delivery_status === "pending"
                               ? "text-yellow-500"
                               : "text-gray-500"
-                          }`}
+                          } ${selectedDelivery === delivery ? "font-bold" : ""}`}
                         >
                           {delivery.delivery_status}
                         </p>
