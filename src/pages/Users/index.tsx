@@ -6,7 +6,7 @@ import ScheduledIcon from "../../common/icons/ScheduledIcon";
 import NextDay from "../../common/icons/NextDay";
 import DeliveryCard from "./components/DeliveryCard";
 import ViewIcon from "../../common/icons/ViewIcon";
-import { useGetDeliveryHistoryQuery } from "@/api/apiSlice";
+import { useGetDeliveryHistoryQuery, useGetDashboardQuery } from "@/api/apiSlice";
 import { Delivery } from "@/types/types";
 import { CircularProgress } from "@mui/material";
 
@@ -24,6 +24,7 @@ import { CircularProgress } from "@mui/material";
 const DashboardPage = () => {
   // Delivery data type
   const { data, isLoading } = useGetDeliveryHistoryQuery({ page: 1 });
+  const { data: deliveryData } = useGetDashboardQuery()
 
 
 
@@ -57,25 +58,25 @@ const DashboardPage = () => {
         <DashboardCard
           name="T"
           title="Total Order"
-          amount="2000"
+          amount={deliveryData?.data?.total_orders}
           color="#B57EDC"
         />
         <DashboardCard
           name="S"
           title="Successful Order"
-          amount="200"
+          amount={deliveryData?.data?.successful_orders}
           color="#7EDCA4"
         />
         <DashboardCard
           name="O"
           title="Ongoing Order"
-          amount="2000"
+          amount={deliveryData?.data?.ongoing_orders}
           color="#DF20E3"
         />
         <DashboardCard
           name="C"
           title="Cancelled Order"
-          amount="2000"
+          amount={deliveryData?.data?.cancelled_orders}
           color="#C31919"
         />
       </div>
@@ -124,8 +125,8 @@ const DashboardPage = () => {
               <CircularProgress size={"24px"} color="inherit" />
             ) : (
               <div className="mt-4">
-                {data?.data?.deliveries?.data?.map(
-                  (delivery: Delivery, index: number) => (
+                <div className="overflow-x-auto">
+                  {data?.data?.deliveries?.data?.map((delivery: Delivery, index: number) => (
                     <div
                       key={index}
                       className={`mb-4 flex cursor-pointer flex-row items-center justify-between lg:py-2 ${
@@ -134,20 +135,20 @@ const DashboardPage = () => {
                       onClick={() => handleDeliveryClick(delivery)}
                     >
                       <div className="content-center rounded-full bg-[#B57EDC] p-2">
-                        {
-                          delivery.delivery_type === "Same Day Delivery" ? <SameDay/> : <ExpressIcon/>
-                        }
+                        {delivery.delivery_type === "Same Day Delivery" ? <SameDay /> : <ExpressIcon />}
                       </div>
 
                       <p className="font-semibold">{delivery.code}</p>
-                      <p className={`"text-sm ${selectedDelivery === delivery ? "text-gray-600" : "text-gray-500"} text-ellipsis"`}>
+                      <p
+                        className={`text-sm ${selectedDelivery === delivery ? "text-gray-600" : "text-gray-500"} text-ellipsis`}
+                      >
                         {delivery.delivery_address}
                       </p>
 
                       <div className="flex items-center gap-x-3 lg:gap-x-6">
                         <img
                           className="h-6 w-6 rounded-full object-cover lg:h-8 lg:w-8"
-                          src={`delivery.image`}
+                          src={delivery.image}
                           alt="Delivery"
                         />
                       </div>
@@ -155,17 +156,15 @@ const DashboardPage = () => {
                       <div>
                         <p
                           className={`text-sm ${
-                            delivery.delivery_status === "pending"
-                              ? "text-yellow-500"
-                              : "text-gray-500"
+                            delivery.delivery_status === "pending" ? "text-yellow-500" : "text-gray-500"
                           } ${selectedDelivery === delivery ? "font-bold" : ""}`}
                         >
                           {delivery.delivery_status}
                         </p>
                       </div>
                     </div>
-                  ),
-                )}
+                  ))}
+                </div>
               </div>
             )}
           </div>

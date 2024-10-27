@@ -7,7 +7,7 @@ type Cards = {
   
 const DashboardCard: React.FC<Cards> = ({ name, title, amount, color }) => {
     return (
-        <div className="flex flex-row bg-white gap-x-4 p-4 rounded-lg shadow lg:flex-grow">
+        <div className="flex flex-row w-full lg:w-fit bg-white gap-x-4 p-4 rounded-lg shadow lg:flex-grow">
             <div
                 className="flex items-center justify-center px-4 py-1 rounded-full text-white font-bold"
                 style={{ backgroundColor: color }}
