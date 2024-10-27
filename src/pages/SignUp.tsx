@@ -71,12 +71,12 @@ const SignUp = (): JSX.Element => {
         email: data.email,
         password: data.password,
       }).unwrap();
-      console.log(response.data)
       const token = response.data?.token;
       const user = { name: response.data.user?.first_name, email: response.data.user?.email };
       const userType = 'user';
       userStore.loginUser(token, user, userType);
       appToast.Success("Sign Up Successful");
+      navigate(routes.VERIFY_EMAIL);
     } catch (error) {
       const typedError = error as ApiError;   
       const errorMessage = typedError?.data?.message || "Sign Up Failed. Please try again.";     
