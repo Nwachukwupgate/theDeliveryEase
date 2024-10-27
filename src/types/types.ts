@@ -1,6 +1,7 @@
 export interface Dashboard {
     id: number;
     name: string;
+    data?: any;
     // Add any other fields relevant to the department
 }[]
 
@@ -96,6 +97,7 @@ export interface Delivery {
         phone: string
     }
     stage: number;
+    image?: string;
 }
 
 export interface DeliveryPaginationLinks {
