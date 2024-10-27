@@ -1,26 +1,86 @@
-// SVGIcon.tsx
-import React from 'react';
+import { FC, ReactNode } from "react";
 
-export interface SVGIconProps extends React.SVGProps<SVGSVGElement> {
-  width?: string | number;
-  height?: string | number;
-  viewBox?: string;
-  className?: string;
-  stroke?: string;
+export interface SVGIconProps {
+  /**
+   * The paths, shapes and other SVG elements.
+   */
+  children?: ReactNode;
+  /**
+   * The fill color of the icon. Default is "none".
+   */
   fill?: string;
+
+  /**
+   * The height of the icon. Default is 24.
+   */
+  height?: number | string;
+
+  /**
+   * The viewBox of the icon.
+   */
+  viewBox: string;
+
+  /**
+   * The width of the icon. Default is 24.
+   */
+  width?: number | string;
+
+  /**
+   * The XML namespace of the icon. Default is "http://www.w3.org/2000/svg".
+   */
+  xmlns?: string;
+
+  /**
+   * The color of the icon. Default is currentColor
+   */
+  color?: string;
+
+  /**
+   * The stroke color of the svg icon
+   */
+  stroke?: string;
+
+  /**
+   * The stroke width of the svg icon
+   */
+  strokeWidth?: string;
+
+  strokeLinejoin?: "inherit" | "round" | "miter" | "bevel" | undefined;
+  fillRule?: "evenodd" | "nonzero" | undefined;
+  className?: string;
+  style?: React.CSSProperties;
 }
 
-const SVGIcon: React.FC<SVGIconProps> = ({ width, height, viewBox, children, className, stroke, fill,  ...props }) => {
+/**
+ * Renders an SVG icon component.
+ */
+const SVGIcon: FC<SVGIconProps> = ({
+  fill = "none",
+  width = 24,
+  height = 24,
+  xmlns = "http://www.w3.org/2000/svg",
+  color = "currentColor",
+  stroke,
+  children,
+  viewBox,
+  strokeWidth,
+  strokeLinejoin,
+  fillRule,
+  className,
+}) => {
   return (
     <svg
-      width={width}
-      height={height}
-      viewBox={viewBox}
-      className={className}
-      stroke={stroke}
+      color={color}
       fill={fill}
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
+      height={height}
+      stroke={stroke}
+      strokeLinejoin={strokeLinejoin}
+      strokeWidth={strokeWidth}
+      viewBox={viewBox}
+      width={width}
+      xmlns={xmlns}
+      fillRule={fillRule}
+      className={className ? className : ""}
     >
       {children}
     </svg>
