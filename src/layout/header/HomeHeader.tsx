@@ -47,7 +47,7 @@ const HomeHeader = () => {
 
           <div className='w-full mt-8'>
             <Link to={routes.LOGIN}>            
-                <Button fullWidth> Get Started</Button>
+                <Button fullWidth sx={{ backgroundColor: "#92278f" }}> Get Started</Button>
             </Link>
           </div>
         </div>
