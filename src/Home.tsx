@@ -12,6 +12,8 @@ import { useForm } from "react-hook-form";
 import SearchInput from './common/form/SearchInput'
 import ViewIcon from './common/icons/ViewIcon'
 import ScheduledIcon from './common/icons/ScheduledIcon'
+import { Link } from 'react-router-dom'
+import routes from './navigation/routes'
 
 
 type FormValues = {
@@ -64,9 +66,11 @@ const Home = () => {
                 <h1 className='text-[3.5vw] font-medium pb-4'>Who We are</h1>
                 <p className='text-[1.2vw] pb-4 md:pb-6 lg:pb-8'>We excels in fast and reliable deliveries, offering top-notch services to their clients. Their real-time tracking system ensures transparency and peace of mind throughout the shipping process. Trusted by businesses and individuals alike, We are the go-to choice for efficient logistics solutions.
                 </p>
-                <Button>
-                  GET STARTED
-                </Button>
+                <Link to={routes.REGISTER_PAGE}>
+                  <Button>
+                    GET STARTED
+                  </Button>
+                </Link>
               </div>
 
               <div className='grid grid-cols-2 items-center rounded-b-lg'>
