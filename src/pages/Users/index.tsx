@@ -129,7 +129,7 @@ const DashboardPage = () => {
                   {data?.data?.deliveries?.data?.map((delivery: Delivery, index: number) => (
                     <div
                       key={index}
-                      className={`mb-4 flex cursor-pointer flex-row items-center justify-between lg:py-2 ${
+                      className={`mb-4 flex cursor-pointer flex-row items-center justify-between text-nowrap space-x-4 lg:py-2 ${
                         selectedDelivery === delivery ? "bg-[#EBE1F1] text-gray-800 px-4" : ""
                       }`}
                       onClick={() => handleDeliveryClick(delivery)}
@@ -138,9 +138,9 @@ const DashboardPage = () => {
                         {delivery.delivery_type === "Same Day Delivery" ? <SameDay /> : <ExpressIcon />}
                       </div>
 
-                      <p className="font-semibold">{delivery.code}</p>
+                      <p className="font-semibold text-nowrap">{delivery.code}</p>
                       <p
-                        className={`text-sm ${selectedDelivery === delivery ? "text-gray-600" : "text-gray-500"} text-ellipsis`}
+                        className={`text-sm text-nowrap ${selectedDelivery === delivery ? "text-gray-600" : "text-gray-500"} text-ellipsis`}
                       >
                         {delivery.delivery_address}
                       </p>
@@ -170,7 +170,7 @@ const DashboardPage = () => {
           </div>
         </div>
 
-        <div className="col-span-2 rounded-lg bg-white p-8">
+        <div className="w-full col-span-2 rounded-lg bg-white p-8">
           <div className="font-bold">Quick Access</div>
           <div className="relative mt-4">
             {/* Vertical Line */}
