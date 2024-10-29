@@ -42,7 +42,7 @@ const HomeHeader = () => {
             <Link className="my-2 text-white transition-colors duration-300 transform border-b-2 border-white px-32 py-4 hover:text-white md:mx-4 md:my-0" to="/">ABOUT</Link>
             <Link className="my-2 text-white transition-colors duration-300 transform border-b-2 border-white px-32 py-4 hover:text-white md:mx-4 md:my-0" to="/shop">SERVICE</Link>
             <Link className="my-2 text-white transition-colors duration-300 transform border-b-2 border-white px-32 py-4 hover:text-white md:mx-4 md:my-0" to="/contact">TRACK</Link>
-            <Link className="my-2 text-white transition-colors duration-300 transform border-b-2 border-white px-32 py-4 hover:text-black md:mx-4 md:my-0" to="/about">CONTACT US</Link>            
+            <Link className="my-2 text-white transition-colors duration-300 transform border-b-2 border-white px-28 py-4 hover:text-black md:mx-4 md:my-0" to="/about">CONTACT US</Link>            
           </div>
 
           <div className='w-full mt-8'>
