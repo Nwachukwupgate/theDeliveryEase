@@ -36,10 +36,10 @@ const DeliveryForm: React.FC<{ onSubmit: (data: DeliveryReq) => void }> = ({ onS
     } = useForm<DeliveryReq>();
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-8">
+        <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-4 lg:p-8">
             <div>
                 <h3 className="font-bold text-lg mb-4">Contact Details</h3>
-                <div className="grid grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     
                     <IconInput 
                         placeholder="Your Name"
@@ -75,9 +75,9 @@ const DeliveryForm: React.FC<{ onSubmit: (data: DeliveryReq) => void }> = ({ onS
                 </div>
             </div>
 
-            <h3 className="font-bold text-lg">Delivery Details</h3>
+            <h3 className="font-bold text-lg mt-4">Delivery Details</h3>
 
-            <div className="grid grid-cols-2 gap-8 mt-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-6">
                 <IconInput 
                     placeholder="Pickup Address"
                     name="pickupAddress"
@@ -127,9 +127,9 @@ const DeliveryForm: React.FC<{ onSubmit: (data: DeliveryReq) => void }> = ({ onS
                 />
             </div>
 
-            <h3 className="font-bold text-lg mt-2">Delivery & Payment Type</h3>
+            <h3 className="font-bold text-lg mt-4">Delivery & Payment Type</h3>
 
-            <div className="grid grid-cols-2 gap-8 my-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 my-6">
                 <SelectDropdown 
                     label="Delivery Option"
                     name="deliveryOption"

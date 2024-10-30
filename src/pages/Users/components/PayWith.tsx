@@ -6,7 +6,7 @@ const PayWith: React.FC<{ deliveryData: any }> = ({ deliveryData }) => {
   if (!deliveryData?.name) return null;
   
   return (
-    <div className="bg-white p-8 space-y-6">
+    <div className="bg-white p-8 space-y-6 w-full">
         <div>
             <p className="font-bold text-xl">Pay With</p>
         </div>

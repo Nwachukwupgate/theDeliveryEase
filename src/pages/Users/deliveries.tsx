@@ -33,19 +33,21 @@ const DeliveryPage = () => {
   // };
 
     return (
-      <div className="p-6">
+      <div className="p-3 lg:p-6">
           <div className="mb-4">
                 <p className="font-bold text-xl">Add Deliveries</p>  
           </div>  
 
-          <div className="grid grid-col-1 lg:grid-cols-7 gap-6">
+          <div className="lg:grid grid-col-1 lg:grid-cols-7 gap-6 w-full">
             
             <div className="col-span-4">
                 <DeliveryForm onSubmit={handleFormSubmit}/>
             </div>
 
-            <div className="col-span-3 space-y-8">
-              <CheckoutCard deliveryData={deliveryData} />
+            <div className="mt-4 lg:mt-0 lg:col-span-3 space-y-8 w-full">
+              <div className="w-full">
+                <CheckoutCard deliveryData={deliveryData} />
+              </div>
 
               <PayWith deliveryData={deliveryData} />
             </div>
