@@ -58,7 +58,7 @@ const chartConfig = {
 export default function RadialChart({ data, sameDayDelivery, nextDayDelivery, scheduledDelivery, expressDelivery }: RadialChartProps) {
 
   return (
-    <Card className="flex flex-col">
+    <Card className="flex flex-col w-full">
       <CardHeader className="flex justify-between content-center items-center w-full flex-row pb-0">
         <CardTitle>Services</CardTitle>
         <CardDescription><ArrowIcon /> </CardDescription> 

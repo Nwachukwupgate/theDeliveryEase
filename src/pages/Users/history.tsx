@@ -240,7 +240,7 @@ const history = () => {
             </div>
         </div>
 
-        <div className='flex gap-2'>
+        <div className='flex flex-col lg:flex-row gap-2'>
           <div>
             <DatePicker
               date={startDate ? new Date(startDate) : null}   // Convert string to Date object
@@ -249,7 +249,7 @@ const history = () => {
           </div>
           
           {/* Date Picker for selecting endDate */}
-          <div className='ml-4'>
+          <div className='lg:ml-4'>
             <DatePicker
               date={endDate ? new Date(endDate) : null}      // Convert string to Date object
               setDate={(date) => handleDateChange(startDate ? new Date(startDate) : null, date)}
@@ -258,12 +258,12 @@ const history = () => {
         </div>
       </div>     
 
-      <div className='grid grid-cols-1 gap-y-8 lg:grid-cols-6 gap-x-4 my-10'>
-        <div className='col-span-4'>
+      <div className='lg:grid grid-cols-1 gap-y-8 lg:grid-cols-6 gap-x-4 my-10'>
+        <div className='lg:col-span-4'>
           <UserChart data={chartData || []}  />
         </div>
 
-        <div className='col-span-2'>
+        <div className='lg:col-span-2 w-full mt-4 lg:mt-0'>         
           <RadialChart data={radialData} 
           sameDayDelivery={sameDayDelivery}
           nextDayDelivery={nextDayDelivery}
