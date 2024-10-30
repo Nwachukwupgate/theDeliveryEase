@@ -90,7 +90,7 @@ const CheckoutCard: React.FC<{ deliveryData: any }> = ({ deliveryData }) => {
 
     return (
       <>
-        <div className="bg-white p-8">
+        <div className="bg-white p-4 lg:p-8 w-full">
             <div className="space-y-8">
                 <p className="font-bold text-xl">Summary</p>
                 <div className="flex flex-col gap-y-4">
