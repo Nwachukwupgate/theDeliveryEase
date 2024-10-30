@@ -201,7 +201,7 @@ const history = () => {
   
 
   return (
-    <div className="p-6">
+    <div className="p-3 lg:p-6">
 
       <div className='border-b border-gray-400 mb-12 pb-4'>
         <div className='font-bold text-xl'>
@@ -240,17 +240,21 @@ const history = () => {
             </div>
         </div>
 
-        <div>
-          <DatePicker
-            date={startDate ? new Date(startDate) : null}   // Convert string to Date object
-            setDate={(date) => handleDateChange(date, endDate ? new Date(endDate) : null)}
-          />
+        <div className='flex gap-2'>
+          <div>
+            <DatePicker
+              date={startDate ? new Date(startDate) : null}   // Convert string to Date object
+              setDate={(date) => handleDateChange(date, endDate ? new Date(endDate) : null)}
+            />
+          </div>
           
           {/* Date Picker for selecting endDate */}
-          <DatePicker
-            date={endDate ? new Date(endDate) : null}      // Convert string to Date object
-            setDate={(date) => handleDateChange(startDate ? new Date(startDate) : null, date)}
-          />
+          <div className='ml-4'>
+            <DatePicker
+              date={endDate ? new Date(endDate) : null}      // Convert string to Date object
+              setDate={(date) => handleDateChange(startDate ? new Date(startDate) : null, date)}
+            />
+          </div>
         </div>
       </div>     
 
