@@ -6,7 +6,7 @@ import AddressIcon from "@/common/icons/AddressIcon"
 const ContactPage = () => {
   return (
     <div className="flex flex-col justify-between ">
-        <div className="p-6">
+        <div className="p-3 lg:p-6">
             <div className="flex justify-between border-b border-gray-400 mb-12 pb-4">
                 <div className="font-bold text-xl">Contact</div>
             </div>

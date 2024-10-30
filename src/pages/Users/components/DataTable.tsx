@@ -67,7 +67,7 @@ export function DataTable({ data, columns, totalPages, currentPage, setCurrentPa
 
   return (
     <div className="w-full">
-      <div className="flex items-center justify-between py-4">
+      <div className="flex flex-col lg:flex-row items-center justify-between py-4 gap-y-4 lg:gap-y-0">
         <Input
           placeholder="Filter tracker..."
           value={(table.getColumn("tracker")?.getFilterValue() as string) ?? ""}
@@ -76,14 +76,14 @@ export function DataTable({ data, columns, totalPages, currentPage, setCurrentPa
           }
           className="max-w-sm"
         />
-        <div className="flex">
-          <div className="mr-2">
+        <div className="flex flex-col lg:flex-row gap-y-4 lg:gap-y-0">
+          <div className="lg:mr-2">
             <DatePicker date={date} setDate={setDate} />
           </div>
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="ml-auto flex">
+              <Button variant="outline" className="lg:ml-auto flex">
                 Filters
               </Button>
             </DropdownMenuTrigger>
