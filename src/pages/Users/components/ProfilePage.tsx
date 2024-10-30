@@ -17,7 +17,7 @@ const ProfilePage = () => {
             </div>
 
             <div className='space-y-8'>
-                <div className="flex justify-between items-center">
+                <div className="flex flex-col lg:flex-row justify-between items-center">
                     <div className="basis-3/12">
                         <p>Your photo</p>
                         <p className='text-[#667085]'>This will be displayed on your profile.</p>
@@ -32,8 +32,8 @@ const ProfilePage = () => {
                     </div>
                 </div>
 
-                <div className="flex justify-between items-center">
-                    <div className="basis-3/12">
+                <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center">
+                    <div className="lg:basis-3/12 mb-4 lg:mb-0">
                         Name:
                     </div>
 
@@ -43,8 +43,8 @@ const ProfilePage = () => {
                 </div>
 
                 <div className="w-full border my-4"></div>
-                <div className="flex justify-between items-center">
-                    <div className="basis-3/12">
+                <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center">
+                    <div className="basis-3/12 mb-4 lg:mb-0">
                         Email:
                     </div>
 
@@ -54,8 +54,8 @@ const ProfilePage = () => {
                 </div>
 
                 <div className="w-full border my-4"></div>
-                <div className="flex justify-between items-center">
-                    <div className="basis-3/12">
+                <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center">
+                    <div className="basis-3/12 mb-4 lg:mb-0">
                         Occupation:
                     </div>
 

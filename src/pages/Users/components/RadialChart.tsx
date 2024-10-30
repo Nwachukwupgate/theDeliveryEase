@@ -79,32 +79,32 @@ export default function RadialChart({ data, sameDayDelivery, nextDayDelivery, sc
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
         <div className="grid grid-cols-2">
-        <div className="flex flex-row gap-x-2 p-3 border-r border-b border-dashed border-black">
-            <div className="bg-[#F4E9F4CC] content-center px-2 rounded-full"><SameDay /></div>
+        <div className="flex flex-row items-center gap-x-2 p-3 border-r border-b border-dashed border-black">
+            <div className="bg-[#F4E9F4CC] content-center justify-items-center px-2 rounded-full h-10 w-10"><SameDay /></div>
             <div>
               <div>Same Day Delivery</div>
               <div className="font-bold text-base">{sameDayDelivery || 0}</div>
             </div>
           </div>
 
-          <div className="flex flex-row gap-x-2 p-3 border-b border-dashed border-black">
-            <div className="bg-[#F4E9F4CC] content-center px-2 rounded-full"><ExpressIcon /></div>
+          <div className="flex flex-row items-center gap-x-2 p-3 border-b border-dashed border-black">
+            <div className="bg-[#F4E9F4CC] content-center justify-center justify-items-center h-10 w-10 rounded-full"><ExpressIcon /></div>
             <div>
               <div>Express Delivery</div>
               <div className="font-bold text-base">{expressDelivery || 0}</div>
             </div>
           </div>
 
-          <div className="flex flex-row gap-x-2 p-3 border-r border-dashed border-black">
-            <div className="bg-[#F4E9F4CC] content-center px-2 rounded-full"><ScheduledIcon /></div>
+          <div className="flex flex-row items-center gap-x-2 p-3 border-r border-dashed border-black">
+            <div className="bg-[#F4E9F4CC] content-center justify-items-center px-2 rounded-full h-10 w-10"><ScheduledIcon /></div>
             <div>
               <div>Scheduled Delivery</div>
               <div className="font-bold text-base">{scheduledDelivery || 0}</div>
             </div>
           </div>
 
-          <div className="flex flex-row gap-x-2 p-3">
-            <div className="bg-[#F4E9F4CC] content-center px-2 rounded-full"><NextDay /></div>
+          <div className="flex flex-row items-center gap-x-2 p-3">
+            <div className="bg-[#F4E9F4CC] content-center justify-items-center px-2 rounded-full h-10 w-10"><NextDay /></div>
             <div>
               <div>Next Day Delivery</div>
               <div className="font-bold text-base">{nextDayDelivery || 0}</div>
