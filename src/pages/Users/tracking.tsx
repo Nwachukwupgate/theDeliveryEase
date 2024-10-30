@@ -10,18 +10,18 @@ import routes from "@/navigation/routes";
 
 
 const TrackingPage = () => {
-    const { data, isLoading } = useGetDeliveryHistoryQuery({ page: 1 });
-    const [selectedDeliveryId, setSelectedDeliveryId] = useState<Delivery | null>(null);
+  const { data, isLoading } = useGetDeliveryHistoryQuery({ page: 1 });
+  const [selectedDeliveryId, setSelectedDeliveryId] = useState<Delivery | null>(null);
 
 
-      useEffect(() => {
+  useEffect(() => {
     if(data) {
       setSelectedDeliveryId(data?.data?.deliveries?.data[0]);
     }
   }, [data])
 
     return (
-        <div className="p-6">
+        <div className="p-3 lg:p-6">
             <div className="flex justify-between border-b border-gray-400 mb-12 pb-4">
                 <div className="font-bold text-lg">Tracking</div>
             </div>
@@ -48,21 +48,21 @@ const TrackingPage = () => {
 
                     {
                       isLoading ? (
-              <CircularProgress size={"24px"} color="inherit" />
-            ) : (
-                    data?.data?.deliveries?.data?.map((delivery) => (
-                        <DeliveringCard
-                            key={delivery.id}
-                            id={delivery.id}
-                            delivery={delivery.delivery_address}
-                            address={delivery.pickup_address}
-                            status={delivery.delivery_status}
-                            date={delivery.created_at}
-                            selected={delivery.id === selectedDeliveryId?.id}
-                            onClick={() => setSelectedDeliveryId(delivery)}
-                        />
-                    ))
-                  )}
+                        <CircularProgress size={"24px"} color="inherit" />
+                      ) : (
+                      data?.data?.deliveries?.data?.map((delivery) => (
+                          <DeliveringCard
+                              key={delivery.id}
+                              id={delivery.id}
+                              delivery={delivery.delivery_address}
+                              address={delivery.pickup_address}
+                              status={delivery.delivery_status}
+                              date={delivery.created_at}
+                              selected={delivery.id === selectedDeliveryId?.id}
+                              onClick={() => setSelectedDeliveryId(delivery)}
+                          />
+                      ))
+                    )}
                 </div>
 
                 {/* Right section with overview */}

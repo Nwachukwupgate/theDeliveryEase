@@ -81,7 +81,7 @@ const DashboardPage = () => {
         />
       </div>
 
-      <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-6">
+      <div className="mt-10 lg:grid grid-cols-1 gap-8 lg:grid-cols-6">
         <div className="col-span-4">
           {/* Delivery Cards */}
           <div className="">
@@ -170,9 +170,9 @@ const DashboardPage = () => {
           </div>
         </div>
 
-        <div className="w-full col-span-2 rounded-lg bg-white p-8">
+        <div className="w-full lg:col-span-2 rounded-lg bg-white lg:p-8 p-4 mt-4 lg:mt-0">
           <div className="font-bold">Quick Access</div>
-          <div className="relative mt-4">
+          <div className="relative mt-4 w-full">
             {/* Vertical Line */}
             <div className="absolute left-2.5 top-0 h-full w-px bg-[#581756]"></div>
 

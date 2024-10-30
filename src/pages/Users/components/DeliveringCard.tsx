@@ -20,7 +20,7 @@ const DeliveringCard: React.FC<DeliveryCardProps> = ({
     selected,
   }) => {
     return (
-      <div className="border border-[#751F72] rounded-lg p-8 mb-4">
+      <div className="border border-[#751F72] rounded-lg p-4 lg:p-8 mb-4">
         <div className="flex justify-between items-center mb-4">
             <span className="text-sm">Tracking ID: <span className="font-bold">{id}</span></span>
             <span className="py-1 px-3 rounded-full text-sm bg-[#DDBCDC] text-[#330E32]">

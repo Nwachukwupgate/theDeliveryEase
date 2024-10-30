@@ -73,7 +73,7 @@ const OverviewCard: React.FC<OverviewProps> = ({ selectedDelivery }) => {
         </div>
       </div>
 
-        <div className="flex gap-x-8 justify-center mt-8">
+        <div className="flex flex-col lg:flex-row gap-x-8 justify-center mt-8">
             <div>
                 <div className="">
                     <h4 className="font-bold mb-2">Product Overview</h4>
@@ -102,7 +102,7 @@ const OverviewCard: React.FC<OverviewProps> = ({ selectedDelivery }) => {
                 </div>
             </div>
 
-            <div className="border border-gray-300 rounded-lg p-4">
+            <div className="border border-gray-300 rounded-lg p-4 mt-4 lg:mt-0">
                 <h4 className="font-bold">Stops</h4>
                 <div className="relative mt-6">
                 {/* Vertical Line */}
