@@ -61,10 +61,10 @@ const Home = () => {
         </div>
 
         <div className='px-4 md:px-16 lg:px-0'>
-          <div className='bg-primaryActiveColorLight p-8  md:p-12 lg:p-28 grid grid-cols-1 md:items-center lg:grid-cols-2 gap-8 rounded-b-lg lg:rounded-none '>
+          <div className='bg-primaryActiveColorLight p-4  md:p-12 lg:p-28 grid grid-cols-1 md:items-center lg:grid-cols-2 gap-8 rounded-b-lg lg:rounded-none '>
               <div>
-                <h1 className='text-[3.5vw] font-medium pb-4'>Who We are</h1>
-                <p className='text-[1.2vw] pb-4 md:pb-6 lg:pb-8'>We excels in fast and reliable deliveries, offering top-notch services to their clients. Their real-time tracking system ensures transparency and peace of mind throughout the shipping process. Trusted by businesses and individuals alike, We are the go-to choice for efficient logistics solutions.
+                <h1 className='text-xl md:text-[3.5vw] font-bold lg:font-medium pb-4'>Who We are</h1>
+                <p className='text-md md:text-[1.2vw] pb-4 md:pb-6 lg:pb-8'>We excels in fast and reliable deliveries, offering top-notch services to their clients. Their real-time tracking system ensures transparency and peace of mind throughout the shipping process. Trusted by businesses and individuals alike, We are the go-to choice for efficient logistics solutions.
                 </p>
                 <Link to={routes.REGISTER_PAGE}>
                   <Button>
@@ -107,20 +107,20 @@ const Home = () => {
         
 
         <div className='bg-primaryColorLight p-4 md:p-8 lg:grid lg:grid-cols-5 gap-8'>
-          <div className='flex flex-col justify-center  items-center text-center lg:text-left gap-6 md:gap-8 px-6 md:px-16 lg:col-span-3'>
-            <div className='border-b border-dashed border-black p-4'>
-              <h1 className='font-medium text-[1.8vw] pb-3 '>01 Booking</h1>
-              <p className='text-[1.25vw]'>To initiate a delivery, visit our website or contact our customer service. Provide us with necessary details, including pick up location, delivery address and package weight. A unique package and tracking number will be generated, enabling you to monitor its progress.</p>
+          <div className='flex flex-col justify-center  items-center text-center lg:text-left gap-6 md:gap-8 px-1 md:px-16 lg:col-span-3'>
+            <div className='border-b border-dashed border-black py-4 lg:p-4'>
+              <h1 className='font-bold text-lg lg:text-[1.8vw] pb-3 '>01 Booking</h1>
+              <p className='text-md lg:text-[1.25vw]'>To initiate a delivery, visit our website or contact our customer service. Provide us with necessary details, including pick up location, delivery address and package weight. A unique package and tracking number will be generated, enabling you to monitor its progress.</p>
             </div>
 
-            <div className='border-b border-dashed border-black p-4'>
-              <h1 className='font-medium text-[1.8vw] pb-3'>02 Pickup & Packaging</h1>
-              <p className='text-[1.25vw]'>Our professional delivery personnel will arrive at the designated pick up location to collect your package. They will ensure that the package is properly packaged and secures for safe transportation. At this stage you will recieve the <span className='text-primaryColorDarker'>TRACKING NUMBER</span>, which can be used to track the package journey.</p>
+            <div className='border-b border-dashed border-black py-4 lg:p-4'>
+              <h1 className='font-bold text-lg lg:text-[1.8vw] pb-3'>02 Pickup & Packaging</h1>
+              <p className='text-md lg:text-[1.25vw]'>Our professional delivery personnel will arrive at the designated pick up location to collect your package. They will ensure that the package is properly packaged and secures for safe transportation. At this stage you will recieve the <span className='text-primaryColorDarker'>TRACKING NUMBER</span>, which can be used to track the package journey.</p>
             </div>
 
-            <div className='p-4'>
-              <h1 className='font-medium text-[1.8vw] p-3 '>03 Delivery And Confirmation</h1>
-              <p className='text-[1.25vw]'>Once the package is in transit, its movement can be tracked using the provided tracking number. Upon successful delivery, you will recieve a confirmation notification.</p>
+            <div className='py-4 lg:p-4'>
+              <h1 className='font-bold text-lg lg:text-[1.8vw] p-3 '>03 Delivery And Confirmation</h1>
+              <p className='text-md lg:text-[1.25vw]'>Once the package is in transit, its movement can be tracked using the provided tracking number. Upon successful delivery, you will recieve a confirmation notification.</p>
             </div>
 
           </div>

@@ -12,7 +12,7 @@ const CardCarousel: React.FC = () => {
     SwiperCore.use([Mousewheel]);
 
     return (
-        <div className='w-full flex flex-col gap-10 p-8 md:p-16 lg:p-24'>
+        <div className='w-full flex flex-col gap-10 p-4 md:p-16 lg:p-24'>
             <div>
                 <h1 className='text-2xl md:text-3xl lg:text-5xl font-semibold'>
                     Our Services
@@ -22,7 +22,7 @@ const CardCarousel: React.FC = () => {
             <div className='flex items-center justify-center text-accent-2'>
                 {/* For mobile and tablet screens */}
                 <div className='block lg:hidden'>
-                    <div className='grid grid-cols-2 gap-4'>
+                    <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                         {deliveryOptions.map((item, index) => (
                             <div
                                 key={index}

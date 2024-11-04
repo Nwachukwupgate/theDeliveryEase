@@ -12,7 +12,7 @@ const HomeHeader = () => {
       <div className="container px-6 py-6 mx-auto md:flex md:justify-between md:items-center">
         <div className="flex items-center justify-between">
           <a href="#">
-            <img className="w-auto h-12 sm:h-7" src={Icon} alt="Logo" />
+            <img className="w-auto h-6 lg:h-12" src={Icon} alt="Logo" />
           </a>
 
           {/* Mobile menu button */}
