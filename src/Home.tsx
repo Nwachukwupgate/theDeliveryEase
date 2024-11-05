@@ -37,17 +37,17 @@ const Home = () => {
         <div className="flex flex-col gap-8 px-4 md:px-16 lg:px-32">
           <div className="grid grid-cols-3">
             <div className="col-span-2 flex text-left">
-              <h1 className="font-medium text-[6.5vw]">Delivery made easy</h1>
+              <h1 className="font-bold text-[6.6vw] md:text-[6.5vw] lg:text-[8.5ch] ">Delivery made easy</h1>
             </div>
 
-            <div className="col-span-1 text-[2.0vw] font-bold text-primaryColorDarker flex flex-col items-start justify-self-end">
+            <div className="col-span-1 text-[2.14vw] md:text-[2vw] lg:text-[2.8ch] font-bold text-primaryColorDarker flex flex-col items-start justify-self-end">
               <p>Establishing new standards</p>
               <p>logistics with eco-friendly</p>
               <p>and effecient delivery.</p>
             </div>
 
             <div className="col-span-3 ">
-              <h1 className="font-semibold text-[6.5vw] text-end lg:justify-self-end ">with real time tracking </h1>
+              <h1 className="font-bold text-[7vw] md:text-[8vw] lg:text-[9.5ch] text-end lg:justify-self-end ">with real time tracking </h1>
             </div>
           </div>
 
@@ -101,12 +101,12 @@ const Home = () => {
       
       </div>
       <div className=' flex flex-col justify-center pt-8 md:pt-16 lg:py-0'>
-        <div className='bg-primaryColorLight  border-b border-black border-dashed '>
+        <div className='bg-primaryColorLight  border-b border-black border-dashed'>
           <CardCarousel />
         </div>
         
 
-        <div className='bg-primaryColorLight p-4 md:p-8 lg:grid lg:grid-cols-5 gap-8'>
+        <div className='bg-primaryColorLight px-4 py-8 md:p-8 lg:grid lg:grid-cols-5 gap-8'>
           <div className='flex flex-col justify-center  items-center text-center lg:text-left gap-6 md:gap-8 px-1 md:px-16 lg:col-span-3'>
             <div className='border-b border-dashed border-black py-4 lg:p-4'>
               <h1 className='font-bold text-lg lg:text-[1.8vw] pb-3 '>01 Booking</h1>
