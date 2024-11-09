@@ -1,6 +1,6 @@
 import MessageIcon from "@/common/icons/MessageIcon"
 import ChatIcon from "@/common/icons/ChatIcon"
-import PhoneIcon from "@/common/icons/PhoneIcon"
+import PhoneIcon2 from "@/common/icons/PhoneIcon2"
 import AddressIcon from "@/common/icons/AddressIcon"
 
 const ContactPage = () => {
@@ -26,7 +26,7 @@ const ContactPage = () => {
                         <div className='space-y-2'>
                             <p className='font-semibold'>Chat to sales</p>
                             <p>Speak to our friendly team.</p>
-                            <p className='font-semibold'>sales@deliveryease.com</p>
+                            <p className='font-semibold'>Thedeliveryeaselogistics@gmail.com</p>
                         </div>
                     </div>
 
@@ -38,19 +38,26 @@ const ContactPage = () => {
                         <div className='space-y-2'>
                             <p className='font-semibold'>Chat on whatsapp</p>
                             <p>We’re here to help.</p>
-                            <p className='font-semibold'>http/whatsapplink......</p>
+                            <p className='font-semibold'><a 
+                            href="https://wa.me/2349040499422" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="font-semibold text-blue-600 hover:underline"
+                            >
+                            +234 904 049 9422
+                            </a></p>
                         </div>
                     </div>
 
                     <div className="flex-1 bg-white p-8">
                         <div className='mb-6'>
-                            <div className="bg-[#751F72] w-fit p-3 rounded-lg"><PhoneIcon /></div>
+                            <div className="bg-[#751F72] w-fit p-3 rounded-lg"><PhoneIcon2 /></div>
                         </div>
 
                         <div className='space-y-2'>
                             <p className='font-semibold'>Call us</p>
                             <p>Mon-Fri from 8am to 5pm.</p>
-                            <p className='font-semibold'>+1 (555) 000-0000</p>
+                            <p className='font-semibold'>+234 904 049 9422 | 08035327006</p>
                         </div>
                     </div>
                 </div>
@@ -72,7 +79,7 @@ const ContactPage = () => {
 
                 <div className='space-y-6'>
                     <p className='font-bold text-lg'>Our Location</p>
-                    <p className='text-lg'>Come visit our friendly team at our office.</p>
+                    <p className='text-lg'>Apo Urban Market, Apo resettlement Abuja Nigeria</p>
                 </div>
             </div>
         </div>
