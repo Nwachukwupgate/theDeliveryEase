@@ -57,7 +57,7 @@ const ContactPage = () => {
             </div>
         </div>
 
-        <div className='flex flex-col lg:flex-row justify-between bg-white mb-8 p-20 gap-y-8'>
+        <div className='flex flex-col lg:flex-row justify-between bg-white mb-8 p-10 lg:p-20 gap-y-8'>
             <div className='space-y-6'>
                 <p className='text-2xl font-bold'>Our Location</p>
                 <p className='text-lg'>Come visit our friendly team at our office.</p>
@@ -67,7 +67,7 @@ const ContactPage = () => {
 
             <div className='flex flex-col lg:flex-row gap-x-8 items-start lg:items-center'>
                 <div className='lg:self-center'>
-                    <p className="bg-[#751F72] w-fit p-3 rounded-lg"><AddressIcon /></p>
+                    <p className="bg-[#F4E9F4] w-fit p-3 rounded-lg"><AddressIcon /></p>
                 </div>
 
                 <div className='space-y-6'>
