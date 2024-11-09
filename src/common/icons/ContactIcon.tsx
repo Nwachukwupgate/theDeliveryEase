@@ -1,8 +1,8 @@
-import SVGIcon, { SVGIconProps } from "./SVGIcon";
+import  { SVGIconProps } from "./SVGIcon";
 
 type ViewProps = Partial<SVGIconProps>;
 
-const ContactIcon: React.FC<ViewProps> = ({ stroke = "#330E32", ...props }) => {
+const ContactIcon: React.FC<ViewProps> = () => {
   return (
     // <SVGIcon
     //   width="20"
