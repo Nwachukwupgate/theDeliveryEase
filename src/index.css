@@ -2,8 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Ezra Black';
+  src: url('./assets/fonts/ezra/EzraBlack.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Apply the font to the entire document */
+html {
+  font-family: 'Ezra Black', sans-serif;
+}
+
 body {
   @apply bg-white font-ezra font-normal text-black;
+  font-family: 'Ezra Black', sans-serif;
 }
 
 .blu {
