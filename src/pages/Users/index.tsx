@@ -133,7 +133,7 @@ const DashboardPage = () => {
                     <div
                       key={index}
                       className={`mb-4 flex cursor-pointer flex-row items-center justify-between text-nowrap space-x-4 lg:py-2 ${
-                        selectedDelivery === delivery ? "bg-[#EBE1F1] text-gray-800 px-4 py-1 w-fit" : ""
+                        selectedDelivery === delivery ? "bg-[#EBE1F1] text-gray-800 px-4 py-1 w-fit lg:w-full" : ""
                       }`}
                       onClick={() => handleDeliveryClick(delivery)}
                     >
