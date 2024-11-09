@@ -131,7 +131,7 @@ const DeliveryForm: React.FC<{ onSubmit: (data: DeliveryReq) => void }> = ({ onS
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 my-6">
                 <SelectDropdown 
-                    label="Delivery Option"
+                    label="Payment Option"
                     name="deliveryOption"
                     register={register}
                     error={errors.type}

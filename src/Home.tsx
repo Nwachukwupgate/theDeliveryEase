@@ -4,7 +4,7 @@ import home3 from '@/assets/image/home3.png'
 import home4 from '@/assets/image/home4.png'
 import home5 from '@/assets/image/home5.png'
 import home6 from '@/assets/image/image6.png'
-import home7 from '@/assets/image/home7.png'
+import image8 from '@/assets/image/image8.jpg'
 import { Button } from '@mui/material'
 import CardCarousel from './common/carousel/CardCarousel'
 import AppTextField from './common/form/AppTextField'
@@ -252,7 +252,7 @@ const Home = () => {
           </div>
         </div>
 
-        <div style={{ backgroundImage: `url(${home7})` }} className="flex justify-center items-center bg-cover bg-center bg-no-repeat relative h-screen"> 
+        <div style={{ backgroundImage: `url(${image8})` }} className="flex justify-center opacity-90 items-center bg-cover bg-center bg-no-repeat relative h-screen"> 
           {/* Content goes here */}
           <div className='border-2 border-dashed border-white p-2 lg:p-6 rounded-lg mx-8 lg:mx-auto lg:w-[35%]'>
             <div 

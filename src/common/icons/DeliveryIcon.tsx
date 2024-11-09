@@ -4,52 +4,14 @@
 
 const DeliveryIcon: React.FC = () => {
   return (
-    <svg width="30" height="30" viewBox="0 0 144 144" fill="none" xmlns="http://www.w3.org/2000/svg">
-      {/* Calendar Frame */}
-      <rect x="20" y="20" width="104" height="104" rx="8" fill="#ECEFF1" stroke="#90A4AE" strokeWidth="2" />
-
-      {/* Calendar Top Bar */}
-      <rect x="20" y="20" width="104" height="28" fill="#607D8B" />
-
-      {/* Calendar Days (Grid) */}
-      <g fill="#455A64" opacity="0.8" fontSize="2">
-        <circle cx="40" cy="58" r="1.5" />
-        <circle cx="60" cy="58" r="1.5" />
-        <circle cx="80" cy="58" r="1.5" />
-        <circle cx="100" cy="58" r="1.5" />
-        <circle cx="120" cy="58" r="1.5" />
-
-        <circle cx="40" cy="78" r="1.5" />
-        <circle cx="60" cy="78" r="1.5" />
-        <circle cx="80" cy="78" r="1.5" />
-        <circle cx="100" cy="78" r="1.5" />
-        <circle cx="120" cy="78" r="1.5" />
-
-        <circle cx="40" cy="98" r="1.5" />
-        <circle cx="60" cy="98" r="1.5" />
-        <circle cx="80" cy="98" r="1.5" />
-        <circle cx="100" cy="98" r="1.5" />
-        <circle cx="120" cy="98" r="1.5" />
-      </g>
-
-      {/* Add Delivery Button (Inside Calendar) */}
-      <g opacity="0.9">
-        <rect x="20" y="25" width="30" height="8" rx="2" fill="#43A047" />
-        <text x="22" y="29" fill="white" fontFamily="Arial" fontSize="2" fontWeight="bold">Add Delivery</text>
-
-        {/* Plus Icon for Add Delivery */}
-        <g transform="translate(10,25)">
-          <rect x="16" y="1" width="3" height="8" fill="white" />
-          <rect x="12" y="4" width="8" height="3" fill="white" />
-        </g>
-      </g>
-
-      {/* Month/Year Text at Top Bar */}
-      <text x="15" y="16" fill="white" fontFamily="Arial" fontSize="2" textAnchor="middle" fontWeight="bold">Oct 2024</text>
-
-      {/* Bottom Shadow for Depth */}
-      <rect x="20" y="70" width="104" height="3" fill="#CFD8DC" rx="2" />
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M6.50342 11.8708V8.64746" stroke="white" stroke-width="1.16042" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M8.07641 10.2588H4.85303" stroke="white" stroke-width="1.16042" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M5.49756 1.55566V3.48969" stroke="white" stroke-width="1.16042" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M10.6553 1.55566V3.48969" stroke="white" stroke-width="1.16042" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M10.5327 2.47168C12.6859 2.54904 13.7754 3.34199 13.8398 6.37197L13.9236 10.3496C13.9752 13.0057 13.3628 14.3402 10.1394 14.4111L6.27135 14.4884C3.04797 14.5529 2.3775 13.2378 2.32593 10.5881L2.23567 6.60405C2.17121 3.57408 3.23492 2.736 5.37525 2.57483L10.5327 2.47168Z" stroke="white" stroke-width="1.16042" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
+
   );
 };
 
