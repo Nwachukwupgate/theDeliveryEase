@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import DeliveringCard from "./components/DeliveringCard";
 import OverviewCard from "./components/OverviewCard";
 import { Button, CircularProgress } from "@mui/material";
@@ -13,6 +13,7 @@ const TrackingPage = () => {
   const { data, isLoading } = useGetDeliveryHistoryQuery({ page: 1 });
   const [selectedDeliveryId, setSelectedDeliveryId] = useState<Delivery | null>(null);
 
+  const targetRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if(data) {
@@ -59,14 +60,19 @@ const TrackingPage = () => {
                               status={delivery.delivery_status}
                               date={delivery.created_at}
                               selected={delivery.id === selectedDeliveryId?.id}
-                              onClick={() => setSelectedDeliveryId(delivery)}
+                              onClick={() => {
+                                setSelectedDeliveryId(delivery);
+                                if (targetRef.current) {
+                                  targetRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                }
+                              }}
                           />
                       ))
                     )}
                 </div>
 
                 {/* Right section with overview */}
-                <div className="lg:w-[60%]">
+                <div className="lg:w-[60%]" ref={targetRef}>
                   <OverviewCard selectedDelivery={selectedDeliveryId}/>
                     {/* <DeliverySteps delivery={selectedDeliveryId} showExtras={false} /> */}
                 </div>

@@ -62,7 +62,7 @@ const OverviewCard: React.FC<OverviewProps> = ({ selectedDelivery }) => {
       {/* Map with overlay */}
       <div className="relative w-full h-[20rem] mt-4 rounded-lg">
         {/* Image */}
-        <img src={'selectedDelivery.mapUrl'} alt="Delivery map" className="w-full h-full object-cover rounded-lg" />
+        <img src={'selectedDelivery.mapUrl'} alt="" className="w-full h-full object-cover rounded-lg" />
 
         {/* Overlay */}
         <div
