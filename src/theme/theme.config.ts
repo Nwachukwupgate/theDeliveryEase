@@ -77,7 +77,7 @@ export function customizeTheme(theme?: ThemeOptions) {
     },
     typography: {
       fontFamily: [
-        "'Ezra'",        // Add Ezra as the primary font
+        "'Poppins'",        // Add Ezra as the primary font
         "-apple-system",
         "BlinkMacSystemFont",
         "sans-serif",    // Fallback to sans-serif

@@ -56,7 +56,7 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export default function RadialChart({ data, sameDayDelivery, nextDayDelivery, scheduledDelivery, expressDelivery }: RadialChartProps) {
-
+  console.log("data", data)
   return (
     <Card className="flex flex-col w-full">
       <CardHeader className="flex justify-between content-center items-center w-full flex-row pb-0">
@@ -64,18 +64,22 @@ export default function RadialChart({ data, sameDayDelivery, nextDayDelivery, sc
         <CardDescription><ArrowIcon /> </CardDescription> 
       </CardHeader>
       <CardContent className="flex-1 pb-0">
-        <ChartContainer
-          config={chartConfig}
-          className="mx-auto aspect-square max-h-[200px]"
-        >
-          <RadialBarChart data={data} innerRadius={60} outerRadius={80} startAngle={180} endAngle={0}>
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel nameKey="browser" />}
-            />
-            <RadialBar dataKey="visitors" background />
-          </RadialBarChart>
-        </ChartContainer>
+        {data.length === 0 ? (
+          <div className="text-center text-gray-500">No data available</div>
+        ) : (
+          <ChartContainer
+            config={chartConfig}
+            className="mx-auto aspect-square max-h-[200px]"
+          >
+            <RadialBarChart data={data} innerRadius={60} outerRadius={80} >
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent  nameKey="name" />}
+              />
+              <RadialBar dataKey="value" background />
+            </RadialBarChart>
+          </ChartContainer>
+        )}
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
         <div className="grid grid-cols-2">

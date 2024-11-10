@@ -55,32 +55,36 @@ export default function UserChart({ data }: UserChartProps) {
         <CardTitle>Deliveries Over Time</CardTitle>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className="min-h-[380px] h-[100px] w-full">
-          <BarChart accessibilityLayer data={data}>
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
-            />
-            <ChartTooltip content={<ChartTooltipContent hideLabel />} />
-            <ChartLegend content={<ChartLegendContent />} />
-            <Bar
-              dataKey="avg_cost"
-              stackId="a"
-              fill={chartConfig.desktop.color}
-              radius={[0, 0, 4, 4]}
-            />
-            <Bar
-              dataKey="delivery_count"
-              stackId="a"
-              fill={chartConfig.mobile.color}
-              radius={[4, 4, 0, 0]}
-            />
-          </BarChart>
-        </ChartContainer>
+      {data.length === 0 ? (
+          <div className="text-center text-gray-500">No data available</div>
+        ) : (
+          <ChartContainer config={chartConfig} className="min-h-[380px] h-[100px] w-full">
+            <BarChart accessibilityLayer data={data}>
+              <CartesianGrid vertical={false} />
+              <XAxis
+                dataKey="month"
+                tickLine={false}
+                tickMargin={10}
+                axisLine={false}
+                tickFormatter={(value) => value.slice(0, 3)}
+              />
+              <ChartTooltip content={<ChartTooltipContent hideLabel />} />
+              <ChartLegend content={<ChartLegendContent />} />
+              <Bar
+                dataKey="avg_cost"
+                stackId="a"
+                fill={chartConfig.desktop.color}
+                radius={[0, 0, 4, 4]}
+              />
+              <Bar
+                dataKey="delivery_count"
+                stackId="a"
+                fill={chartConfig.mobile.color}
+                radius={[4, 4, 0, 0]}
+              />
+            </BarChart>
+          </ChartContainer>
+        )}
       </CardContent>
       
     </Card>

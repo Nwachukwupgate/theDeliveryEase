@@ -37,17 +37,17 @@ const Home = () => {
         <div className="flex flex-col gap-8 px-4 md:px-16 lg:px-32">
           <div className="grid grid-cols-3">
             <div className="col-span-2 flex text-left">
-              <h1 className="font-bold text-[6.6vw] md:text-[6.5vw] lg:text-[8.5ch] ">Delivery made easy</h1>
+              <h1 className="font-bold text-[5.9vw] sm:text-[6.2vw] md:text-[5.4vw] lg:text-[4.8vw] xl:text-[5.2vw]">Delivery made easy</h1>
             </div>
 
-            <div className="col-span-1 text-[2.14vw] md:text-[2vw] lg:text-[2.8ch] font-bold text-primaryColorDarker flex flex-col items-start justify-self-end">
+            <div className="col-span-1 text-[2vw] sm:text-[1.9vw] md:text-[1.8vw] lg:text-[1.7ch] xl:text-[1.85vw] font-bold text-primaryColorDarker flex flex-col items-start justify-self-end">
               <p>Establishing new standards</p>
               <p>logistics with eco-friendly</p>
               <p>and effecient delivery.</p>
             </div>
 
             <div className="col-span-3 ">
-              <h1 className="font-bold text-[7vw] md:text-[8vw] lg:text-[9.5ch] text-end lg:justify-self-end ">with real time tracking </h1>
+              <h1 className="font-bold text-[7.7vw] sm:text-[8.1vw] md:text-[7vw] lg:text-[6.39vw] text-end lg:justify-self-end xl:text-[6.8vw]">with real time tracking </h1>
             </div>
           </div>
 
@@ -76,7 +76,7 @@ const Home = () => {
               <div className='grid grid-cols-2 items-center rounded-b-lg'>
                 <div className='flex flex-col justify-center border-r border-b border-black border-dashed p-4 md:p-6 lg:p-8 text-center'>
                   <h1 className='text-3xl md:text-5xl lg:text-7xl font-semibold md:font-medium '> 100%</h1>
-                  <p className='text-xs md:text-base lg:text-xl  font-semibold'>Customer satisfaction</p>
+                  <p className='text-xs md:text-base lg:text-xl text-nowrap font-semibold'>Customer satisfaction</p>
                 </div>
 
                 <div className='flex flex-col justify-center border-b border-black border-dashed p-4 text-center md:p-6 lg:p-8'>
