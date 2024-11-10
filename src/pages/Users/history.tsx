@@ -132,10 +132,13 @@ const history = () => {
   
       const pendingPercentage = (pendingDeliveries / totalDeliveries) * 100;
       const completedPercentage = (completedDeliveries / totalDeliveries) * 100;
-  
+      console.log("pendingPercentage", pendingPercentage);
+      console.log("completedPercentage", completedPercentage);
+      
+      
       return [
-        { name: "Pending Deliveries", value: pendingPercentage, fill: "var(--color-chrome)" },
-        { name: "Completed Deliveries", value: completedPercentage, fill: "var(--color-safari)" },
+        { name: "Pending Deliveries", value: pendingPercentage, fill: "#9165B0" },
+        { name: "Completed Deliveries", value: completedPercentage, fill: "#3F2C4D" },
       ];
     }, [data, isLoading]);
 
@@ -263,7 +266,7 @@ const history = () => {
           <UserChart data={chartData || []}  />
         </div>
 
-        <div className='lg:col-span-2 w-full mt-4 lg:mt-0'>         
+        <div className='lg:col-span-2 w-full mt-5 lg:mt-0'>         
           <RadialChart data={radialData} 
           sameDayDelivery={sameDayDelivery}
           nextDayDelivery={nextDayDelivery}

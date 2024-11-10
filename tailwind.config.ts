@@ -12,7 +12,7 @@ export default {
   			xlc: '1500px'
   		},
   		fontFamily: {
-  			ezra: ['Ezra', 'sans-serif']
+  			Poppins: ['Poppins', 'sans-serif']
   		},
   		colors: {
   			primaryColor: 'var(--color-primary-main)',
