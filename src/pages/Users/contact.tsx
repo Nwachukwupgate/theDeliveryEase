@@ -26,7 +26,7 @@ const ContactPage = () => {
                         <div className='space-y-2'>
                             <p className='font-semibold'>Chat to sales</p>
                             <p>Speak to our friendly team.</p>
-                            <p className='font-semibold'>Thedeliveryeaselogistics@gmail.com</p>
+                            <p className='font-semibold'>thedeliveryeaselogistics@gmail.com</p>
                         </div>
                     </div>
 
