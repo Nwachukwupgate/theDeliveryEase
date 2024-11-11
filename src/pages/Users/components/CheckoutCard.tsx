@@ -43,7 +43,6 @@ const CheckoutCard: React.FC<{ deliveryData: any }> = ({ deliveryData }) => {
 
   const handleCompleteTransaction = async () => {
     if (imageFile) {
-      console.log("Image submitted:", imageFile);
       
       try {
         // Construct the FormData object
