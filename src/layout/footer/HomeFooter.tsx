@@ -71,8 +71,8 @@ const HomeFooter = () => {
 
             <div className="lg:space-y-2">
               <p className='font-bold text-lg'>Contact Us</p>
-              <p>deliveryease@gmail.com</p>
-              <p>08000000000</p>
+              <p>Thedeliveryeaselogistics@gmail.com</p>
+              <p>+234 904 049 9422 | 08035327006</p>
             </div>
           </div>
 
@@ -81,7 +81,14 @@ const HomeFooter = () => {
         <div className='text-center flex flex-col lg:flex-row justify-center lg:justify-between items-center lg:text-left text-lg gap-y-4 pb-4 lg:mx-20'>
           <p>All Rights Reserved &copy; {new Date().getFullYear()} Delivery Ease</p>
           <div className='flex gap-x-4'>
+          <a 
+            href="https://wa.me/2349040499422" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="font-semibold text-blue-600 hover:underline"
+            >
             <WhatsAppIcon />
+            </a>
             <InstagramIcon />
             <TwitterIcon />
           </div>
