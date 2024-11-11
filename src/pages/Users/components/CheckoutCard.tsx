@@ -43,32 +43,37 @@ const CheckoutCard: React.FC<{ deliveryData: any }> = ({ deliveryData }) => {
 
   const handleCompleteTransaction = async () => {
     if (imageFile) {
-      // Add image to createDelivery data and submit
       console.log("Image submitted:", imageFile);
-      try{
-        const response = await createDelivery({
-          contact_name: deliveryData?.name,
-          contact_phone: deliveryData?.phoneNumber,
-          receiver_name: deliveryData?.recieverName,
-          receiver_phone: deliveryData?.recieverNumber,
-          pickup_address: deliveryData?.pickupAddress,
-          delivery_address: deliveryData?.deliveryAddress,
-          delivery_type: deliveryData?.deliveryType,
-          product_name: deliveryData?.productName,
-          product_description: deliveryData?.productDescription,
-          weight: deliveryData?.weight,
-          quantity: deliveryData?.quantity,
-          price: deliveryPrice.toString(),
-          receipt: imageFile,
-        }).unwrap(); 
-        console.log("response", response)     
+      
+      try {
+        // Construct the FormData object
+        const formData = new FormData();
+        formData.append("contact_name", deliveryData?.name || "");
+        formData.append("contact_phone", deliveryData?.phoneNumber || "");
+        formData.append("receiver_name", deliveryData?.recieverName || "");
+        formData.append("receiver_phone", deliveryData?.recieverNumber || "");
+        formData.append("pickup_address", deliveryData?.pickupAddress || "");
+        formData.append("delivery_address", deliveryData?.deliveryAddress || "");
+        formData.append("delivery_type", deliveryData?.deliveryType || "");
+        formData.append("product_name", deliveryData?.productName || "");
+        formData.append("product_description", deliveryData?.productDescription || "");
+        formData.append("weight", deliveryData?.weight?.toString() || "");
+        formData.append("quantity", deliveryData?.quantity?.toString() || "");
+        formData.append("price", deliveryPrice.toString());
+        formData.append("receipt", imageFile); // Add the image file to form data
+  
+        // Call the API with formData instead of JSON
+        const response = await createDelivery(formData as any).unwrap();
+        console.log("response", response);
+  
         appToast.Success(response?.message);
         setDialogOpen(false);
         navigate('/history');
+        
       } catch (error) {
         const typedError = error as ApiError;   
         const errorMessage = typedError?.data?.message || "Failed. Please try again.";     
-        appToast.Error(errorMessage)
+        appToast.Error(errorMessage);
       }
     }
   };
