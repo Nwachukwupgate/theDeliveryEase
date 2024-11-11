@@ -151,7 +151,7 @@ const DashboardPage = () => {
                       <div className="flex items-center gap-x-3 lg:gap-x-6">
                         <img
                           className="h-6 w-6 rounded-full object-cover lg:h-8 lg:w-8"
-                          src={`https://deliver.door-steps.pro/storage/${delivery.image}`}
+                          src={`https://deliver.door-steps.pro/storage/${delivery.receipt}`}
                           alt="Delivery"
                         />
                       </div>
