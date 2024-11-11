@@ -98,6 +98,7 @@ export interface Delivery {
     }
     stage: number;
     image?: string;
+    receipt?: string;
 }
 
 export interface DeliveryPaginationLinks {
