@@ -228,11 +228,11 @@ export const apiSlice = createApi({
       invalidatesTags: ["Delivery"],
     }),
 
-    updateDeliveryStatus: builder.mutation<{ message: string }, { id: number; status: string }>({
-      query: ({ id, status }) => ({
+    updateDeliveryStatus: builder.mutation<{ message: string }, { id: number; status: string; location: string }>({
+      query: ({ id, status, location }) => ({
         url: `delivery/${id}/status`,
         method: 'PATCH',
-        body: { status },
+        body: { status, location },
       }),
       invalidatesTags: ['Delivery'], // Adjust tags as needed
     }),

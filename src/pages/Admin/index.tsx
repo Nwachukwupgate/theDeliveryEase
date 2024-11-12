@@ -123,7 +123,7 @@ const DashboardPage = () => {
     start_date: startDate || undefined,
     end_date: endDate || undefined,
   })
-
+  console.log("the dashboard", Dashboard)
   // const desktopData1 = [
   //   { month: "January", desktop: 305, mobile: 200 },
   //   { month: "February", desktop: 85, mobile: 80 },
@@ -179,14 +179,14 @@ const DashboardPage = () => {
     }
 
     const { pieChart } = Dashboard;
-    const { totalDeliveries, pendingDeliveries, completedDeliveries } = pieChart;
+    const { pendingDeliveries, completedDeliveries } = pieChart;
 
-    const pendingPercentage = (pendingDeliveries / totalDeliveries) * 100;
-    const completedPercentage = (completedDeliveries / totalDeliveries) * 100;
+    const pendingPercentage = (pendingDeliveries / (pendingDeliveries + completedDeliveries)) * 100;
+    const completedPercentage = (completedDeliveries / (pendingDeliveries + completedDeliveries)) * 100;
 
     return [
-      { name: "Pending Deliveries", value: pendingPercentage, fill: "var(--color-chrome)" },
-      { name: "Completed Deliveries", value: completedPercentage, fill: "var(--color-safari)" },
+      { name: "Pending Deliveries", value: pendingPercentage, fill: "#9165B0" },
+      { name: "Completed Deliveries", value: completedPercentage, fill: "#3F2C4D" },
     ];
   }, [data, isLoading]);
 
@@ -237,13 +237,13 @@ const DashboardPage = () => {
 
       <div className='flex gap-x-6'>
         <div>
-          <ChartLine color="#FF8901" data={totalUsersData} />
+          <ChartLine color="#FF8901" data={totalUsersData} name="Total Users" dashboard={Dashboard?.total_users} />
         </div>
         <div>
-          <ChartLine color="#FF392B" data={successfulDeliveriesData} />
+          <ChartLine color="#FF392B" data={successfulDeliveriesData} name="Successful Deliveries" dashboard={Dashboard?.successful_orders} />
         </div>
         <div>
-          <ChartLine color="#27BF51" data={totalDeliveriesData} />
+          <ChartLine color="#27BF51" data={totalDeliveriesData} name="Total Deliveries" dashboard={Dashboard?.total_orders} />
         </div>
       </div>
 

@@ -11,7 +11,7 @@ interface AccountReq {
     firstName: string;
     lastName: string;
     email: string;
-    photo: string;
+    photo: FileList;
     occupation: string;
     address: string;
 }
@@ -25,37 +25,74 @@ const MyDetails = () => {
     } = useForm<AccountReq>();
 
     const [editUser, { isLoading }] = useEditUserMutation();
-
     const [preview, setPreview] = useState<string | null>(null);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
     // Handle image upload and preview
+    // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     const file = e.target.files?.[0];
+    //     if (file) {
+    //     setPreview(URL.createObjectURL(file));
+    //     }
+    // };
+
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
-        setPreview(URL.createObjectURL(file));
+          setPreview(URL.createObjectURL(file));
+          setSelectedFile(file); // Store the selected file in state
         }
-    };
+      };
 
+    // const onSubmit = handleSubmit(async (data) => {
+    //     try {
+    //       const response = await editUser({
+    //         first_name: data.firstName,
+    //         last_name: data.lastName,
+    //         email: data.email,
+    //         file: data.photo,
+    //         occupation: data.occupation,
+    //         address: data.address,
+    //       }).unwrap(); 
+    //       appToast.Success(response?.message);
+    //       reset();  // Reset the form fields
+    //       setPreview(null);
+    //     } catch (error) {
+    //       const typedError = error as ApiError;   
+    //       const errorMessage = typedError?.data?.message || "Update Failed. Please try again.";     
+    //       appToast.Error(errorMessage)
+    //     }
+    //   });
+  
     const onSubmit = handleSubmit(async (data) => {
         try {
-          const response = await editUser({
-            first_name: data.firstName,
-            last_name: data.lastName,
-            email: data.email,
-            file: data.photo,
-            occupation: data.occupation,
-            address: data.address,
-          }).unwrap(); 
+          // Create a new FormData instance
+          const formData = new FormData();
+          formData.append("first_name", data.firstName);
+          formData.append("last_name", data.lastName);
+          formData.append("email", data.email);
+          formData.append("occupation", data.occupation);
+          formData.append("address", data.address);
+          
+          // Append the photo if it exists
+          if (selectedFile) {
+            formData.append("photo", selectedFile);
+          }
+    
+          // Send the formData with the API call
+          const response = await editUser(formData as any).unwrap();
           appToast.Success(response?.message);
-          reset();  // Reset the form fields
+          reset(); // Reset the form fields
           setPreview(null);
+          setSelectedFile(null);
         } catch (error) {
-          const typedError = error as ApiError;   
-          const errorMessage = typedError?.data?.message || "Update Failed. Please try again.";     
-          appToast.Error(errorMessage)
+          const typedError = error as ApiError;
+          const errorMessage = typedError?.data?.message || "Update Failed. Please try again.";
+          appToast.Error(errorMessage);
         }
-      });
-  return (
+    });
+
+    return (
     <>     
       <div className="my-8">
             <div> 

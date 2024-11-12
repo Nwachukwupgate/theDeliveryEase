@@ -14,10 +14,12 @@ const deliveryStatuses = ["Pending", "Dispatched", "In Transit", "Delivered"];
 // Define the validation schema
 const schema = Joi.object({
   status: Joi.string().valid(...deliveryStatuses).required(),
+  location: Joi.string().min(3).required()
 });
 
 interface UpdateStatusForm {
   status: string;
+  location: string;
 }
 
 const UpdateStatus: React.FC = () => {
@@ -30,8 +32,9 @@ const UpdateStatus: React.FC = () => {
   const [updateDeliveryStatus, { isLoading }] = useUpdateDeliveryStatusMutation();
 
   const onSubmit = handleSubmit(async (data) => {
+    console.log("data for location", data)
     try {
-      const response = await updateDeliveryStatus({ id: pageId, status: data.status }).unwrap();
+      const response = await updateDeliveryStatus({ id: pageId, status: data.status, location: data.location }).unwrap();
       appToast.Success(response.message);
     } catch (error) {
       const typedError = error as ApiError;
@@ -51,6 +54,14 @@ const UpdateStatus: React.FC = () => {
           ))}
         </select>
         {errors.status && <span className="text-red-500">{errors.status.message}</span>}
+
+        <input 
+          type="text" 
+          {...register("location")} 
+          placeholder="Enter location" 
+          className="mb-4 border p-2 rounded w-full"
+        />
+        {errors.location && <span className="text-red-500">{errors.location.message}</span>}
         
         <Button 
           type="submit" 

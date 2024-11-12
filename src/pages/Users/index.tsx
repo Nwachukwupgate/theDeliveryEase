@@ -133,7 +133,7 @@ const DashboardPage = () => {
                     <div
                       key={index}
                       className={`mb-4 flex cursor-pointer flex-row items-center justify-between text-nowrap space-x-4 lg:py-2 ${
-                        selectedDelivery === delivery ? "bg-[#EBE1F1] text-gray-800 px-4 py-1 w-fit lg:w-full" : ""
+                        selectedDelivery === delivery ? "bg-[#EBE1F1] text-gray-800 px-4 py-1 w-fit sm:w-full lg:w-full" : ""
                       }`}
                       onClick={() => handleDeliveryClick(delivery)}
                     >
@@ -196,8 +196,8 @@ const DashboardPage = () => {
 export default DashboardPage;
 
 
-  export function DeliverySteps({ delivery, showExtras  = true }: { delivery: Delivery | null, showExtras?: boolean }) {
-      const steps: string[] = [
+export function DeliverySteps({ delivery, showExtras = true }: { delivery: Delivery | null; showExtras?: boolean }) {
+  const steps: string[] = [
     "Delivery Booked",
     "Delivery accepted",
     "Arrived at pick up point",
@@ -206,57 +206,70 @@ export default DashboardPage;
     "Delivery accepted",
   ];
 
-    return steps.map((step: string, index: number) => (
-      <div
-        key={index}
-        className="relative mb-10 flex flex-row items-start gap-x-4"
-      >
-        {/* Step Circle */}
-        <div
-          className={`relative z-10 flex h-5 w-5 items-center justify-center rounded-full ${
-            (delivery?.stage ?? 0) === index + 1 ? "bg-[#581756]" : "bg-gray-300"
-          }`}
-          style={{ left: "1px" }} // Aligns with the vertical line
-        >
-          {/* Checkmark for completed steps */}
-          {(delivery?.stage ?? 0) === index + 1 && (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-3 w-3 text-white"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M5 13l4 4L19 7"
-              />
-            </svg>
-          )}
-        </div>
-
-        {/* Step Details */}
-        <div className="ml-4">
-          <div className="font-semibold">{step}</div>
-        {
-          showExtras ? (
-
-          <>
-          <div className="text-sm text-gray-600">
-            {(delivery?.stage ?? 1) < 5 ? delivery?.pickup_address : delivery?.delivery_address}
-          </div>
-          <div className="text-xs text-gray-400">
-
-              {delivery?.created_at}
-
-          </div>
-          </>
-
-          ) : <></>
-        }
-         </div>
-      </div>
-    ));
+  // Map delivery statuses to steps using a function
+  function getStepByStatus(status: string): number {
+    switch (status) {
+      case "Pending":
+        return 1; // Delivery Booked
+      case "In Transit":
+        return 3; // Arrived at pick up point
+      case "Dispatched":
+        return 4; // Route to delivery
+      case "Delivered":
+        return 6; // Delivery accepted
+      default:
+        return -1; // Unknown status
+    }
   }
+
+  // Helper function to find the most recent location for each step
+  const getLocationForStep = (stepIndex: number) => {
+    const statusForStep = Object.keys(getStepByStatus).find(
+      (status) => getStepByStatus(status) === stepIndex + 1
+    );
+    return delivery?.locations?.find((location) => location.status === statusForStep)?.location;
+  };
+
+  return (
+    <>
+      {steps.map((step: string, index: number) => (
+        <div key={index} className="relative mb-10 flex flex-row items-start gap-x-4">
+          {/* Step Circle */}
+          <div
+            className={`relative z-10 flex h-5 w-5 items-center justify-center rounded-full ${
+              (delivery?.stage ?? 0) >= index + 1 ? "bg-[#581756]" : "bg-gray-300"
+            }`}
+            style={{ left: "1px" }} // Aligns with the vertical line
+          >
+            {/* Checkmark for completed steps */}
+            {(delivery?.stage ?? 0) >= index + 1 && (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-3 w-3 text-white"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            )}
+          </div>
+
+          {/* Step Details */}
+          <div className="ml-4">
+            <div className="font-semibold">{step}</div>
+            {showExtras && (
+              <>
+                <div className="text-sm text-gray-600">
+                  {getLocationForStep(index) || (index < 3 ? delivery?.pickup_address : delivery?.delivery_address)}
+                </div>
+                <div className="text-xs text-gray-400">{delivery?.created_at}</div>
+              </>
+            )}
+          </div>
+        </div>
+      ))}
+    </>
+  );
+}

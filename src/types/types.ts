@@ -99,6 +99,14 @@ export interface Delivery {
     stage: number;
     image?: string;
     receipt?: string;
+    locations?: {
+        id: number;
+        delivery_id: number;
+        status: string;
+        location: string;
+        created_at: string;
+        updated_at: string;
+    }[];
 }
 
 export interface DeliveryPaginationLinks {

@@ -19,9 +19,11 @@ export const description = "A line chart with a label"
 interface ChartLineProps {
   color: string;
   data: { month: string; desktop: number; mobile: number }[];
+  name: string;
+  dashboard: string;
 }
 
-export default function ChartLine({ color, data }: ChartLineProps) {
+export default function ChartLine({ color, data, name, dashboard }: ChartLineProps) {
   const chartConfig = {
     desktop: {
       label: "Desktop",
@@ -36,12 +38,12 @@ export default function ChartLine({ color, data }: ChartLineProps) {
   return (
     <Card className="flex">
       <CardHeader className="flex flex-col justify-between">
-        <CardTitle>New Delivery</CardTitle>
-        <CardDescription>200</CardDescription>
+        <CardTitle>{name}</CardTitle>
+        <CardDescription>{dashboard}</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col items-between">
         <div style={{ color: color }} className="justify-self-end text-right mt-4">
-          -20%
+        {parseFloat(dashboard.toString()) / 100}%
         </div>
         <ChartContainer config={chartConfig} className="min-h-[100px] h-[50px] w-full">
           <LineChart
