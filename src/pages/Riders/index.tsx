@@ -18,7 +18,7 @@ const DashboardPage = () => {
         <div className="text-lg font-bold">Dashboard</div>
       </div>
 
-      <div className="grid w-full grid-cols-2 flex-row flex-wrap gap-4 lg:flex">
+      <div className="grid w-full grid-cols-1 md:grid-cols-2 flex-row flex-wrap gap-4 lg:flex">
         <DashboardCard
           name="T"
           title="Total Order"

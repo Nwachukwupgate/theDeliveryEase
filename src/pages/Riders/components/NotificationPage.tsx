@@ -31,7 +31,7 @@ const NotificationPage: React.FC = () => {
   const { data } = useGetNotificationQuery()
   return (
     <div>
-      <div className="lg:w-2/4 bg-white p-6">
+      <div className="w-full lg:w-2/4 bg-white p-6">
         <h2 className="font-bold text-xl mb-6">Notification</h2>
 
         {data?.notifications?.map((notification: Notification) => (
