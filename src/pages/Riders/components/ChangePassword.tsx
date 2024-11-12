@@ -62,8 +62,8 @@ const ChangePassword = () => {
         <form onSubmit={onSubmit}>
             <div>
                 <div className="w-full border my-4"></div>
-                <div className="flex justify-between items-center">
-                    <div>
+                <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center">
+                    <div className="mb-4 lg:mb-0">
                         Current Password
                     </div>
 
@@ -82,8 +82,8 @@ const ChangePassword = () => {
 
             <div>
                 <div className="w-full border my-4"></div>
-                <div className="flex justify-between items-center">
-                    <div>
+                <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center">
+                    <div className="mb-4 lg:mb-0">
                         New Password
                     </div>
 
@@ -102,8 +102,8 @@ const ChangePassword = () => {
 
             <div>
                 <div className="w-full border my-4"></div>
-                <div className="flex justify-between items-center">
-                    <div>
+                <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center">
+                    <div className="mb-4 lg:mb-0">
                         Confirm New Password
                     </div>
 
@@ -120,9 +120,9 @@ const ChangePassword = () => {
                 </div> 
             </div>
 
-            <div className="flex justify-end">
+            <div className="flex justify-end mt-4">
             <Button 
-                fullWidth 
+                // fullWidth 
                 type="submit" 
                 variant="contained"
                 disabled={isLoading}  // Disable the button while loading

@@ -66,13 +66,13 @@ const MyDetails = () => {
 
       <form onSubmit={onSubmit}>
       <div className="w-full border my-4"></div>
-        <div className="flex justify-between items-center">
-            <div className="basis-3/12">
+        <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center">
+            <div className="mb-4 lg:mb-0 lg:basis-3/12">
                 Name:
             </div>
 
-            <div className="flex basis-9/12">
-                <div className="mr-6">
+            <div className="flex flex-col lg:flex-row basis-[100%] lg:basis-9/12">
+                <div className="lg:mr-6">
                     <Input
                         placeholder="First Name"
                         name="firstName"
@@ -93,8 +93,8 @@ const MyDetails = () => {
         </div>
         
         <div className="w-full border my-4"></div>
-        <div className="flex justify-between items-center">
-            <div>
+        <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center">
+            <div className="mb-4 lg:mb-0">
                 Email:
             </div>
 
@@ -111,8 +111,8 @@ const MyDetails = () => {
         </div>      
 
         <div className="w-full border my-4"></div>
-        <div className="mb-4 flex items-center">
-            <div>
+        <div className="mb-4 flex flex-col lg:flex-row lg:justify-between lg:items-center">
+            <div className="mb-4 lg:mb-0">
                 <label htmlFor="photo" className="block font-bold text-gray-700">
                     Your Photo
                 </label>
@@ -149,8 +149,8 @@ const MyDetails = () => {
         </div>
 
         <div className="w-full border my-4"></div>
-        <div className="flex">
-            <div className="basis-3/12">
+        <div className="flex flex-col lg:flex-row">
+            <div className="basis-3/12 mb-4 lg:mb-0">
                 <p>Occupation</p>
             </div>
             
@@ -166,8 +166,8 @@ const MyDetails = () => {
         </div>
         
         <div className="w-full border my-4"></div>
-        <div className="flex">
-            <div className="basis-3/12">
+        <div className="flex flex-col lg:flex-row">
+            <div className="basis-3/12 mb-4 lg:mb-0">
                 <p>Address</p>
             </div>
             

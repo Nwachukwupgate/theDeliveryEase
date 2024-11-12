@@ -3,7 +3,7 @@ import { Button, CircularProgress } from "@mui/material";
 import { useRidersAcceptMutation, useRidersRejectMutation } from "@/api/apiSlice";
 import { ApiError } from "@/types/types";
 import { appToast } from "@/utilities/appToast";
-
+import moment from 'moment';
 
 
 type DeliveryCardProps = {
@@ -73,16 +73,22 @@ const DeliveringCard: React.FC<DeliveryCardProps> = ({
                     <div className={`w-4 h-4 rounded-full bg-inherit border ${selected ? "border-white" : "border-[#751F72]"} `}></div>
                 </div>
 
-                <div>
+                <div className="w-full">
                     {/* Address and Date */}
-                    <div className="ml-4 text-sm">
-                        <p className="font-bold">2, {address}</p>
-                        <p>{date}</p>
+                    <div className="ml-4 text-sm flex">
+                        <p className="font-bold basis-9/12">{delivery}</p>
+                        <div>
+                            <p className="text-end">{moment(date).format("DD MMM YYYY")}</p>
+                            <p className="text-end">{moment(date).format("h:mm A")}</p>
+                        </div>
                     </div>
 
-                    <div className="ml-4 text-sm mt-2">
-                        <p className="font-bold">2, {address}</p>
-                        <p>{date}</p>
+                    <div className="ml-4 text-sm mt-2 flex">
+                        <p className="font-bold basis-9/12">{address}</p>
+                        <div>
+                            <p className="text-end">{moment(date).format("DD MMM YYYY")}</p>
+                            <p className="text-end">{moment(date).format("h:mm A")}</p>
+                        </div>
                     </div>
                 </div>
             </div>
