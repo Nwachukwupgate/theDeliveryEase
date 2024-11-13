@@ -13,7 +13,8 @@ import {
   OrdersStats,
   RiderDeliveries,
   Delivery,
-  dataResponse
+  dataResponse,
+  resetPassword
 } from "../types/types";
 
 const api_origin = "https://deliver.door-steps.pro/api/";
@@ -64,6 +65,24 @@ export const apiSlice = createApi({
     verifyEmail: builder.mutation<void, verifyRequest>({
       query: (userData) => ({
         url: "email/verify",
+        method: "POST",
+        body: userData,
+      }),
+      invalidatesTags: ["User"],
+    }),
+
+   resetPassword: builder.mutation<dataResponse, resetPassword>({
+      query: (userData) => ({
+        url: "password/reset",
+        method: "POST",
+        body: userData,
+      }),
+      invalidatesTags: ["User"],
+    }),
+
+    forgotPassword: builder.mutation<dataResponse, loginApiRequest>({
+      query: (userData) => ({
+        url: "password/email",
         method: "POST",
         body: userData,
       }),
@@ -262,5 +281,7 @@ export const {
   useGetDeliveryQuery,
   useRidersAcceptMutation,
   useRidersRejectMutation,
-  useUpdateDeliveryStatusMutation
+  useUpdateDeliveryStatusMutation,
+  useForgotPasswordMutation,
+  useResetPasswordMutation
 } = apiSlice;

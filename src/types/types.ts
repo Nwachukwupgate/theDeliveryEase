@@ -25,6 +25,11 @@ export interface verifyRequest {
     code: string;
 }
 
+export interface resetPassword {
+    password: string;
+    token: string
+}
+
 export interface DeliveryReq {
     name: string;
     recieverName: string;

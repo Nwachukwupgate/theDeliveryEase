@@ -107,7 +107,7 @@ const OverviewCard: React.FC<OverviewProps> = ({ selectedDelivery }) => {
                 <div className="relative mt-6">
                 {/* Vertical Line */}
                     <div className="absolute w-px h-full bg-[#581756] left-2.5 top-0"></div>
-                    <DeliverySteps showExtras={false} delivery={selectedDelivery} />
+                    <DeliverySteps showExtras={true} delivery={selectedDelivery} />
                 </div>
             </div>
         </div>
