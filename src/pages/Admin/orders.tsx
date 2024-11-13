@@ -270,7 +270,7 @@ const DashboardPage = () => {
   const mergedData = useMemo(() => {
     return historyData && historyData?.data?.deliveries?.data?.map((item: DeliveryItem) => {
       return {
-        id: item?.code || "N/A",
+        id: item?.id || "N/A",
         tracker: item?.code || "N/A",
         services: item?.delivery_type || "N/A",
         product: item?.product_name || "N/A",
@@ -314,13 +314,13 @@ const DashboardPage = () => {
 
       <div className='flex gap-x-6 mb-10'>
         <div>
-          <ChartLine color="#FF8901" data={totalUsersData} />
+          <ChartLine color="#FF8901" data={totalUsersData} name="Total Users" dashboard={Dashboard?.total_users} />
         </div>
         <div>
-          <ChartLine color="#FF392B" data={successfulDeliveriesData} />
+          <ChartLine color="#FF392B" data={successfulDeliveriesData} name="Successful Deliveries" dashboard={Dashboard?.successful_orders} />
         </div>
         <div>
-          <ChartLine color="#27BF51" data={totalDeliveriesData} />
+          <ChartLine color="#27BF51" data={totalDeliveriesData} name="Total Deliveries" dashboard={Dashboard?.total_orders} />
         </div>
       </div>
       
