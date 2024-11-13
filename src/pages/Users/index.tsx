@@ -207,27 +207,42 @@ export function DeliverySteps({ delivery, showExtras = true }: { delivery: Deliv
   ];
 
   // Map delivery statuses to steps using a function
-  function getStepByStatus(status: string): number {
-    switch (status) {
-      case "Pending":
-        return 1; // Delivery Booked
-      case "In Transit":
-        return 3; // Arrived at pick up point
-      case "Dispatched":
-        return 4; // Route to delivery
-      case "Delivered":
-        return 6; // Delivery accepted
-      default:
-        return -1; // Unknown status
-    }
-  }
+  // function getStepByStatus(status: string): number {
+  //   switch (status) {
+  //     case "Pending":
+  //       return 1; // Delivery Booked
+  //     case "Dispatched":
+  //       return 3; // Arrived at pick up point
+  //     case "In Transit":
+  //       return 4; // Route to delivery
+  //     case "Delivered":
+  //       return 6; // Delivery accepted
+  //     default:
+  //       return -1; // Unknown status
+  //   }
+  // }
 
   // Helper function to find the most recent location for each step
   const getLocationForStep = (stepIndex: number) => {
-    const statusForStep = Object.keys(getStepByStatus).find(
-      (status) => getStepByStatus(status) === stepIndex + 1
-    );
-    return delivery?.locations?.find((location) => location.status === statusForStep)?.location;
+    const statusForStep = Object.entries({
+      "Pending": 1,
+      "Dispatched": 3,
+      "In Transit": 4,
+      "Delivered": 6,
+    }).find(([_, step]) => step === stepIndex + 1)?.[0];
+
+    if (statusForStep) {
+      const locationsForStatus = delivery?.locations?.filter((location) => location.status === statusForStep);
+
+      // Find the location with the highest `id` (most recent)
+      const latestLocation = locationsForStatus?.reduce((latest, current) =>
+        current.id > (latest?.id ?? 0) ? current : latest,
+        delivery?.locations ? delivery.locations[0] : null
+      );
+
+      return latestLocation?.location;
+    }
+    return null;
   };
 
   return (
