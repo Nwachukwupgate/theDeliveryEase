@@ -5,9 +5,12 @@ import { useForm } from "react-hook-form";
 import { appToast } from "@/utilities/appToast";
 import Icon from '@/assets/image/logo.png';
 import Input from "@/common/form/Input";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import { Link } from 'react-router-dom'; 
 import routes from '@/navigation/routes';
+import { useForgotPasswordMutation } from "@/api/apiSlice";
+import { ApiError } from "@/types/types";
+import { useNavigate } from "react-router-dom";
 
 
 interface SignupReq {
@@ -24,10 +27,24 @@ const ForgotPassword = (): JSX.Element => {
     register,
     formState: { errors },
   } = useForm<SignupReq>({ resolver: joiResolver(schema) });
+  const navigate = useNavigate()
+
+
+  const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
 
   const onSubmit = handleSubmit(async (data) => {
     console.log({ data });
-    appToast.Success("SIGN UP Done");
+    try {
+      const response = await forgotPassword({
+        email: data.email,
+      }).unwrap();
+      appToast.Success(response?.message);
+      navigate(routes.RESET_PASSWORD_PAGE)
+    } catch (error) {
+      const typedError = error as ApiError;   
+      const errorMessage = typedError?.data?.message || "Verification Failed. Please try again.";     
+      appToast.Error(errorMessage)
+    }
   });
 
   return (
@@ -56,7 +73,16 @@ const ForgotPassword = (): JSX.Element => {
                   </div>
 
                   <div className="my-2">
-                      <Button fullWidth type="submit"> Send Link </Button>               
+                      <Button fullWidth type="submit"> 
+                        {isLoading ? (
+                          <>
+                            <CircularProgress size={24} color="inherit" />  {/* Show spinner */}
+                            &nbsp;Processing...  {/* Optional text update */}
+                          </>
+                        ) : (
+                          'Send Link'
+                        )}
+                      </Button>               
                   </div>
                   
                   <div className="flex justify-center my-4">
