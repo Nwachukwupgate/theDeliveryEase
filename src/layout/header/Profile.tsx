@@ -11,8 +11,11 @@ const Profile: React.FC = () => {
   const { data } = useGetUserQuery()
 
   const defaultImage = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4mYGiDHOtUVcSxuzNfeds4xWXNOpQ-lIMPA&s";
-  const userImage = data?.data?.item?.photo || defaultImage;
+  const userImage = data?.data?.item?.photo 
+  ? `https://deliver.door-steps.pro/storage/${data.data.item.photo}`
+  : defaultImage;
 
+  
   return (
     <div className={`cursor-pointer`}>
       <AppMenuWrapper
