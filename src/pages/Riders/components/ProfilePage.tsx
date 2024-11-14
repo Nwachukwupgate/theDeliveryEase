@@ -25,7 +25,7 @@ const ProfilePage = () => {
 
                     <div className="flex basis-9/12 p-4 rounded-lg">
                         <img
-                            src={data?.data?.item?.photo}
+                            src={`https://deliver.door-steps.pro/storage/${data?.data?.item?.photo}`}
                             alt="Profile Picture"
                             className="h-24 w-24 rounded-full"
                         />
