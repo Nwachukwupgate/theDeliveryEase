@@ -9,6 +9,8 @@ import ViewIcon from "../../common/icons/ViewIcon";
 import { useGetDeliveryHistoryQuery, useGetDashboardQuery } from "@/api/apiSlice";
 import { Delivery } from "@/types/types";
 import { CircularProgress } from "@mui/material";
+import moment from 'moment';
+
 
 // Define the type for each step in the delivery process
 // interface DeliveryStep {
@@ -279,7 +281,8 @@ export function DeliverySteps({ delivery, showExtras = true }: { delivery: Deliv
                 <div className="text-sm text-gray-600">
                   {getLocationForStep(index) || (index < 3 ? delivery?.pickup_address : delivery?.delivery_address)}
                 </div>
-                <div className="text-xs text-gray-400">{delivery?.created_at}</div>
+                <div className="text-xs text-gray-400">{moment(delivery?.created_at).format("DD MMM YYYY")} {moment(delivery?.created_at).format("h:mm A")}</div>
+                {/* <div className="text-xs text-gray-400">{moment(delivery?.created_at).format("h:mm A")}</div> */}
               </>
             )}
           </div>
