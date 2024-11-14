@@ -282,7 +282,7 @@ const DashboardPage = () => {
         weight: item?.weight || "N/A",
         date: item?.created_at ? moment(item.created_at).format("YYYY-MM-DD") : "N/A",
         status: item?.delivery_status || "N/A",
-        receipt: item?.receipt || "N/A"
+        receipt: `https://deliver.door-steps.pro/storage/${item?.receipt}` || "N/A" 
       };
     }) || [];
   }, [historyData]);
