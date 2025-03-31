@@ -160,6 +160,7 @@ const SignUp = (): JSX.Element => {
               register={register}
               error={errors.password}
               type="password" 
+              showPasswordToggle 
             />
             
             <div className="my-4">
