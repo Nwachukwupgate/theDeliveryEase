@@ -24,7 +24,7 @@ export interface RegisterApiRequest {
   last_name: string;
   email: string;
   password: string;
-  phone:string;
+  phone: string;
   password_confirmation: string;
 }
 

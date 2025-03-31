@@ -56,7 +56,7 @@ export const apiSlice = createApi({
 
     loginUser: builder.mutation<dataResponse, loginApiRequest>({
       query: (userData) => ({
-        url: "login",
+        url: "auth/login",
         method: "POST",
         body: userData,
       }),
