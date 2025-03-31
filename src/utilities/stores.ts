@@ -13,7 +13,7 @@ const userStore = proxy({
     this.userType = userType;
 
     // Save the data in localStorage
-    localStorage.setItem('token', token);
+    localStorage.setItem('DELogisticsToken', token);
     localStorage.setItem('user', JSON.stringify(user));
     localStorage.setItem('userType', userType);
   },
@@ -24,7 +24,7 @@ const userStore = proxy({
     this.user = null;
     this.userType = null;
 
-    localStorage.removeItem('token');
+    localStorage.removeItem('DELogisticsToken');
     localStorage.removeItem('user');
     localStorage.removeItem('userType');
   },
@@ -32,7 +32,7 @@ const userStore = proxy({
 
 // Load any saved data from localStorage on app initialization
 const loadUserDataFromLocalStorage = () => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('DELogisticsToken');
   const user = localStorage.getItem('user');
   const userType = localStorage.getItem('userType');
 

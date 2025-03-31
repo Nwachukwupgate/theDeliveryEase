@@ -6,27 +6,29 @@ import ScheduledIcon from "../../common/icons/ScheduledIcon";
 import NextDay from "../../common/icons/NextDay";
 import DeliveryCard from "./components/DeliveryCard";
 import ViewIcon from "../../common/icons/ViewIcon";
-import { useGetDeliveryHistoryQuery, useGetDashboardQuery } from "@/api/apiSlice";
+import {
+  useGetDeliveryHistoryQuery,
+  useGetDashboardQuery,
+} from "@/api/apiSlice";
 import { Delivery } from "@/types/types";
 import { CircularProgress } from "@mui/material";
-import moment from 'moment';
-
-
-// Define the type for each step in the delivery process
-// interface DeliveryStep {
-//   label: string;
-//   location: string;
-//   status: "Done" | "Ongoing" | "Pending";
-//   time: string;
-// }
-
-// Define the type for each delivery
-
+import moment from "moment";
 
 const DashboardPage = () => {
-  // Delivery data type
-  const { data, isLoading } = useGetDeliveryHistoryQuery({ page: 1 });
-  const { data: deliveryData } = useGetDashboardQuery()
+  // const { data, isLoading } = useGetDeliveryHistoryQuery({ page: 1 });
+
+  const { data: dashboardData, isLoading } = useGetDashboardQuery();
+
+  // Destructure the stats from the API response
+  const { total_orders, successful_orders, ongoing_orders, cancelled_orders } =
+    dashboardData?.data || {};
+
+  const stats = [
+    { title: "Total Orders", amount: total_orders, color: "#B57EDC" },
+    { title: "Successful Orders", amount: successful_orders, color: "#7EDCA4" },
+    { title: "Ongoing Orders", amount: ongoing_orders, color: "#DF20E3" },
+    { title: "Cancelled Orders", amount: cancelled_orders, color: "#C31919" },
+  ];
 
   const targetRef = useRef<HTMLDivElement | null>(null);
 
@@ -39,56 +41,45 @@ const DashboardPage = () => {
   const handleDeliveryClick = (delivery: Delivery) => {
     setSelectedDelivery(delivery);
     if (targetRef.current) {
-      targetRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      targetRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
-  useEffect(() => {
-    if(data) {
-      setSelectedDelivery(data?.data?.deliveries?.data[0]);
-    }
-  }, [data])
-
-
+  // useEffect(() => {
+  //   if (data) {
+  //     setSelectedDelivery(data?.data?.deliveries?.data[0]);
+  //   }
+  // }, [data]);
 
   return (
     <div className="p-3 lg:p-6">
-      {/* Dashboard Header */}
-      <div className="mb-12 flex justify-between border-b border-gray-400 pb-4">
-        <div className="text-lg font-bold">Dashboard</div>
+      {/* Dashboard Stats */}
+      <div>
+        <div className="mb-12 flex justify-between border-b border-gray-400 pb-4">
+          <div className="text-lg font-bold">Dashboard</div>
+        </div>
+
+        {/* Dashboard Cards */}
+        <div className="flex w-full flex-row flex-wrap gap-4">
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : (
+            stats.map((stat, index) => (
+              <DashboardCard
+                key={index}
+                name={stat.title.charAt(0)}
+                title={stat.title}
+                amount={stat.amount}
+                color={stat.color}
+              />
+            ))
+          )}
+        </div>
       </div>
 
-      {/* Dashboard Cards */}
-      <div className="flex w-full flex-row flex-wrap gap-4">
-        <DashboardCard
-          name="T"
-          title="Total Order"
-          amount={deliveryData?.data?.total_orders}
-          color="#B57EDC"
-        />
-        <DashboardCard
-          name="S"
-          title="Successful Order"
-          amount={deliveryData?.data?.successful_orders}
-          color="#7EDCA4"
-        />
-        <DashboardCard
-          name="O"
-          title="Ongoing Order"
-          amount={deliveryData?.data?.ongoing_orders}
-          color="#DF20E3"
-        />
-        <DashboardCard
-          name="C"
-          title="Cancelled Order"
-          amount={deliveryData?.data?.cancelled_orders}
-          color="#C31919"
-        />
-      </div>
-
-      <div className="mt-10 lg:grid grid-cols-1 gap-8 lg:grid-cols-6">
+      {/* Delivery Types */}
+      <div className="mt-10 grid-cols-1 gap-8 lg:grid lg:grid-cols-6">
         <div className="col-span-4">
-          {/* Delivery Cards */}
           <div className="">
             <div className="flex flex-row flex-wrap justify-center gap-8">
               <DeliveryCard
@@ -130,52 +121,64 @@ const DashboardPage = () => {
               <CircularProgress size={"24px"} color="inherit" />
             ) : (
               <div className="mt-4">
-                <div className="overflow-x-auto">
-                  {data?.data?.deliveries?.data?.map((delivery: Delivery, index: number) => (
-                    <div
-                      key={index}
-                      className={`mb-4 flex cursor-pointer flex-row items-center justify-between text-nowrap space-x-4 lg:py-2 ${
-                        selectedDelivery === delivery ? "bg-[#EBE1F1] text-gray-800 px-4 py-1 w-fit sm:w-full lg:w-full" : ""
-                      }`}
-                      onClick={() => handleDeliveryClick(delivery)}
-                    >
-                      <div className="content-center rounded-full bg-[#B57EDC] p-2">
-                        {delivery.delivery_type === "Same Day Delivery" ? <SameDay /> : <ExpressIcon />}
-                      </div>
-
-                      <p className="font-semibold text-nowrap">{delivery.code}</p>
-                      <p
-                        className={`text-sm text-nowrap ${selectedDelivery === delivery ? "text-gray-600" : "text-gray-500"} text-ellipsis`}
+                {/* <div className="overflow-x-auto">
+                  {data?.data?.deliveries?.data?.map(
+                    (delivery: Delivery, index: number) => (
+                      <div
+                        key={index}
+                        className={`mb-4 flex cursor-pointer flex-row items-center justify-between space-x-4 text-nowrap lg:py-2 ${
+                          selectedDelivery === delivery
+                            ? "w-fit bg-[#EBE1F1] px-4 py-1 text-gray-800 sm:w-full lg:w-full"
+                            : ""
+                        }`}
+                        onClick={() => handleDeliveryClick(delivery)}
                       >
-                        {delivery.delivery_address}
-                      </p>
+                        <div className="content-center rounded-full bg-[#B57EDC] p-2">
+                          {delivery.delivery_type === "Same Day Delivery" ? (
+                            <SameDay />
+                          ) : (
+                            <ExpressIcon />
+                          )}
+                        </div>
 
-                      <div className="flex items-center gap-x-3 lg:gap-x-6">
-                        <img
-                          className="h-6 w-6 rounded-full object-cover lg:h-8 lg:w-8"
-                          src={`https://deliver.door-steps.pro/storage/${delivery.receipt}`}
-                          alt="Delivery"
-                        />
-                      </div>
-
-                      <div>
-                        <p
-                          className={`text-sm ${
-                            delivery.delivery_status === "pending" ? "text-yellow-500" : "text-gray-500"
-                          } ${selectedDelivery === delivery ? "font-bold" : ""}`}
-                        >
-                          {delivery.delivery_status}
+                        <p className="text-nowrap font-semibold">
+                          {delivery.code}
                         </p>
+                        <p
+                          className={`text-nowrap text-sm ${selectedDelivery === delivery ? "text-gray-600" : "text-gray-500"} text-ellipsis`}
+                        >
+                          {delivery.delivery_address}
+                        </p>
+
+                        <div className="flex items-center gap-x-3 lg:gap-x-6">
+                          <img
+                            className="h-6 w-6 rounded-full object-cover lg:h-8 lg:w-8"
+                            src={`https://deliver.door-steps.pro/storage/${delivery.receipt}`}
+                            alt="Delivery"
+                          />
+                        </div>
+
+                        <div>
+                          <p
+                            className={`text-sm ${
+                              delivery.delivery_status === "pending"
+                                ? "text-yellow-500"
+                                : "text-gray-500"
+                            } ${selectedDelivery === delivery ? "font-bold" : ""}`}
+                          >
+                            {delivery.delivery_status}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
+                    ),
+                  )}
+                </div> */}
               </div>
             )}
           </div>
         </div>
 
-        <div className="w-full lg:col-span-2 rounded-lg bg-white lg:p-8 p-4 mt-4 lg:mt-0">
+        <div className="mt-4 w-full rounded-lg bg-white p-4 lg:col-span-2 lg:mt-0 lg:p-8">
           <div className="font-bold">Quick Access</div>
           <div className="relative mt-4 w-full">
             {/* Vertical Line */}
@@ -197,8 +200,13 @@ const DashboardPage = () => {
 
 export default DashboardPage;
 
-
-export function DeliverySteps({ delivery, showExtras = true }: { delivery: Delivery | null; showExtras?: boolean }) {
+export function DeliverySteps({
+  delivery,
+  showExtras = true,
+}: {
+  delivery: Delivery | null;
+  showExtras?: boolean;
+}) {
   const steps: string[] = [
     "Delivery Booked",
     "Delivery accepted",
@@ -227,19 +235,22 @@ export function DeliverySteps({ delivery, showExtras = true }: { delivery: Deliv
   // Helper function to find the most recent location for each step
   const getLocationForStep = (stepIndex: number) => {
     const statusForStep = Object.entries({
-      "Pending": 1,
-      "Dispatched": 3,
+      Pending: 1,
+      Dispatched: 3,
       "In Transit": 4,
-      "Delivered": 6,
+      Delivered: 6,
     }).find(([_, step]) => step === stepIndex + 1)?.[0];
 
     if (statusForStep) {
-      const locationsForStatus = delivery?.locations?.filter((location) => location.status === statusForStep);
+      const locationsForStatus = delivery?.locations?.filter(
+        (location) => location.status === statusForStep,
+      );
 
       // Find the location with the highest `id` (most recent)
-      const latestLocation = locationsForStatus?.reduce((latest, current) =>
-        current.id > (latest?.id ?? 0) ? current : latest,
-        delivery?.locations ? delivery.locations[0] : null
+      const latestLocation = locationsForStatus?.reduce(
+        (latest, current) =>
+          current.id > (latest?.id ?? 0) ? current : latest,
+        delivery?.locations ? delivery.locations[0] : null,
       );
 
       return latestLocation?.location;
@@ -250,11 +261,16 @@ export function DeliverySteps({ delivery, showExtras = true }: { delivery: Deliv
   return (
     <>
       {steps.map((step: string, index: number) => (
-        <div key={index} className="relative mb-10 flex flex-row items-start gap-x-4">
+        <div
+          key={index}
+          className="relative mb-10 flex flex-row items-start gap-x-4"
+        >
           {/* Step Circle */}
           <div
             className={`relative z-10 flex h-5 w-5 items-center justify-center rounded-full ${
-              (delivery?.stage ?? 0) >= index + 1 ? "bg-[#581756]" : "bg-gray-300"
+              (delivery?.stage ?? 0) >= index + 1
+                ? "bg-[#581756]"
+                : "bg-gray-300"
             }`}
             style={{ left: "1px" }} // Aligns with the vertical line
           >
@@ -268,7 +284,11 @@ export function DeliverySteps({ delivery, showExtras = true }: { delivery: Deliv
                 stroke="currentColor"
                 strokeWidth={2}
               >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M5 13l4 4L19 7"
+                />
               </svg>
             )}
           </div>
@@ -279,9 +299,15 @@ export function DeliverySteps({ delivery, showExtras = true }: { delivery: Deliv
             {showExtras && (
               <>
                 <div className="text-sm text-gray-600">
-                  {getLocationForStep(index) || (index < 3 ? delivery?.pickup_address : delivery?.delivery_address)}
+                  {getLocationForStep(index) ||
+                    (index < 3
+                      ? delivery?.pickup_address
+                      : delivery?.delivery_address)}
                 </div>
-                <div className="text-xs text-gray-400">{moment(delivery?.created_at).format("DD MMM YYYY")} {moment(delivery?.created_at).format("h:mm A")}</div>
+                <div className="text-xs text-gray-400">
+                  {moment(delivery?.created_at).format("DD MMM YYYY")}{" "}
+                  {moment(delivery?.created_at).format("h:mm A")}
+                </div>
                 {/* <div className="text-xs text-gray-400">{moment(delivery?.created_at).format("h:mm A")}</div> */}
               </>
             )}

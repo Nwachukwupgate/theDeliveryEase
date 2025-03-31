@@ -14,13 +14,11 @@ import {
   RiderDeliveries,
   Delivery,
   dataResponse,
-  resetPassword
+  resetPassword,
 } from "../types/types";
 import { baseUrl } from "@/config";
 
 const api_origin = baseUrl;
-
-const localToken = localStorage.getItem("token");
 
 export const apiSlice = createApi({
   reducerPath: "api",
@@ -28,7 +26,11 @@ export const apiSlice = createApi({
     baseUrl: api_origin,
     mode: "cors",
     prepareHeaders: (headers) => {
-      const token = localToken;
+      // Dynamically fetch the token from localStorage
+      const token = localStorage.getItem("DELogisticsToken");
+      if (token) {
+        headers.set("authorization", `Bearer ${token}`);
+      }
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
       }
@@ -72,7 +74,7 @@ export const apiSlice = createApi({
       invalidatesTags: ["User"],
     }),
 
-   resetPassword: builder.mutation<dataResponse, resetPassword>({
+    resetPassword: builder.mutation<dataResponse, resetPassword>({
       query: (userData) => ({
         url: "password/reset",
         method: "POST",
@@ -158,7 +160,7 @@ export const apiSlice = createApi({
 
     getDelivery: builder.query<Delivery, number>({
       query: (id) => ({
-        url: `delivery/${id}`,  
+        url: `delivery/${id}`,
       }),
       providesTags: ["Delivery"],
     }),
@@ -205,7 +207,10 @@ export const apiSlice = createApi({
       providesTags: ["Delivery"],
     }),
 
-    assignRider: builder.mutation<dataResponse, { delivery_id: string; rider_id: number }>({
+    assignRider: builder.mutation<
+      dataResponse,
+      { delivery_id: string; rider_id: number }
+    >({
       query: ({ delivery_id, rider_id }) => ({
         url: `admin/deliveries/${delivery_id}/assign`,
         method: "POST",
@@ -234,7 +239,7 @@ export const apiSlice = createApi({
       query: (id) => ({
         url: `rider/delivery/reject/${id}`,
         method: "POST",
-        body: id
+        body: id,
       }),
       invalidatesTags: ["Delivery"],
     }),
@@ -248,13 +253,16 @@ export const apiSlice = createApi({
       invalidatesTags: ["Delivery"],
     }),
 
-    updateDeliveryStatus: builder.mutation<{ message: string }, { id: number; status: string; location: string }>({
+    updateDeliveryStatus: builder.mutation<
+      { message: string },
+      { id: number; status: string; location: string }
+    >({
       query: ({ id, status, location }) => ({
         url: `delivery/${id}/status`,
-        method: 'PATCH',
+        method: "PATCH",
         body: { status, location },
       }),
-      invalidatesTags: ['Delivery'], // Adjust tags as needed
+      invalidatesTags: ["Delivery"], // Adjust tags as needed
     }),
   }),
 });
@@ -284,5 +292,5 @@ export const {
   useRidersRejectMutation,
   useUpdateDeliveryStatusMutation,
   useForgotPasswordMutation,
-  useResetPasswordMutation
+  useResetPasswordMutation,
 } = apiSlice;

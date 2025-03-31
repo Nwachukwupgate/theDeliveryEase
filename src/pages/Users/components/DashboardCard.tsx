@@ -1,31 +1,30 @@
-type Cards = {
-    name: string;
-    title: string;
-    amount: string;
-    color: string;  // Color is passed as a hex code string
-  };
-  
-const DashboardCard: React.FC<Cards> = ({ name, title, amount, color }) => {
-    return (
-        <div className="flex flex-row w-full items-center lg:w-fit bg-white gap-x-4 p-4 rounded-lg shadow lg:flex-grow">
-            <div
-                className="flex items-center justify-center w-10 h-10 rounded-full text-white font-bold"
-                style={{ backgroundColor: color }}
-            >
-                {name}
-            </div>
-            <div>
-                <div>
-                <p>{title}</p>
-                </div>
-                <div className="font-bold text-lg">
-                <p>{amount}</p>
-                </div>
-            </div>
-        </div>
-    );
+type DashboardCardProps = {
+  name: string;
+  title: string;
+  amount: number | string;
+  color: string;
 };
-  
+
+const DashboardCard: React.FC<DashboardCardProps> = ({
+  name,
+  title,
+  amount,
+  color,
+}) => {
+  return (
+    <div className="flex w-full max-w-[202px] flex-row items-center gap-x-4 rounded-lg bg-white p-4 shadow lg:w-fit lg:flex-grow">
+      <div
+        className="flex h-10 w-10 items-center justify-center rounded-full font-bold text-white"
+        style={{ backgroundColor: color }}
+      >
+        {name}
+      </div>
+      <div>
+        <p>{title}</p>
+        <p className="text-lg font-bold">{amount ?? "-"}</p>
+      </div>
+    </div>
+  );
+};
 
 export default DashboardCard;
-  

@@ -3,7 +3,7 @@ import routes from '@/navigation/routes';
 import Layout from './Layout';
 
 const ProtectedRoute = () => {
-  const localToken = localStorage.getItem('token');
+  const localToken = localStorage.getItem('DELogisticsToken');
   
   // If there's no token, redirect to login
   if (!localToken) {

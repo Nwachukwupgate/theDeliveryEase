@@ -76,7 +76,7 @@ const Login = (): JSX.Element => {
       const typedError = error as ApiError;
       console.log("typedError", typedError);
       const errorMessage =
-        typedError?.data?.message || "Sign Up Failed. Please try again.";
+        typedError?.data?.message || "Sign In Failed. Please try again.";
       appToast.Error(errorMessage);
     }
   });
