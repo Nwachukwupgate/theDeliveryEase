@@ -257,11 +257,6 @@ const Home = () => {
           <div className='border-2 border-dashed border-white p-2 lg:p-6 rounded-lg mx-8 lg:mx-auto lg:w-[35%]'>
             <div 
               className="bg-gradient-to-b from-primaryColor  to-successActiveColor rounded-xl shadow-md border border-white/66 p-6 lg:p-4  space-y-8 text-white"
-              // style={{
-              //   backdropFilter: 'blur(11.6px)',
-              //   WebkitBackdropFilter: 'blur(11.6px)',
-              //   boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
-              // }}
             >
               <div className='p-4 lg:p-4'>
                 <div className='flex mb-6 items-center gap-2'>
