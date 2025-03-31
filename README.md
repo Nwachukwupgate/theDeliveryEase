@@ -48,3 +48,12 @@ export default tseslint.config({
   },
 })
 ```
+# Environment Config
+
+## Required Files
+
+### `env-config.js` (DO NOT COMMIT)
+```javascript
+window.env = {
+  REACT_APP_BASE_URL: "https://your-real-api.com"
+};

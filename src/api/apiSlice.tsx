@@ -16,8 +16,9 @@ import {
   dataResponse,
   resetPassword
 } from "../types/types";
+import { baseUrl } from "@/config";
 
-const api_origin = "https://deliver.door-steps.pro/api/";
+const api_origin = baseUrl;
 
 const localToken = localStorage.getItem("token");
 
