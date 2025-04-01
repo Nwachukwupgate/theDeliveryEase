@@ -21,7 +21,6 @@ const Login = lazy(() => import("@/pages/Login"));
 const VerifyEmail = lazy(() => import("@/pages/VerifyEmail"));
 const ForgotPassword = lazy(() => import("@/pages/ForgotPassword"));
 const ResetPassword = lazy(() => import("@/pages/ResetPassword"));
-const AdminLogin = lazy(() => import("@/pages/Admin/Login"));
 const AdminDashBoard = lazy(() => import("@/pages/Admin"));
 const AdminOrder = lazy(() => import("@/pages/Admin/orders"));
 const AdminService = lazy(() => import("@/pages/Admin/services"));
@@ -35,7 +34,6 @@ const ContactPage = lazy(() => import("@/pages/Users/contact"));
 const SettingsPage = lazy(
   () => import("@/pages/Users/settings"),
 );
-const RiderLogin = lazy(() => import("@/pages/Riders/Login"));
 const RiderDashBoard = lazy(() => import("@/pages/Riders"));
 const RiderDetail = lazy(() => import("@/pages/Riders/details"));
 const CreateRiders = lazy(() => import("@/pages/Admin/rider"));
@@ -44,18 +42,6 @@ const RiderDeliveries = lazy(
 );
 const RiderContact = lazy(() => import("@/pages/Riders/contact"));
 const RiderSetting = lazy(() => import("@/pages/Riders/settings"));
-// const ManagerFacility = lazy(() => import("@/pages/ManagerFacility"));
-// const ManagerCommonArea = lazy(() => import("@/pages/ManagerCommonArea"));
-// const ManagerAccountInformation = lazy(
-//   () => import("@/pages/AccountInformation"),
-// );
-// const ManagerManageBookings = lazy(() => import("@/pages/ManageBookings"));
-// const ManagerConciergeOfficer = lazy(() => import("@/pages/ConciergeOfficer"));
-// const ManagerOwnerCheckLog = lazy(() => import("@/pages/ManagerOwnerCheckLog"));
-// const ManagerOwnerResident = lazy(() => import("@/pages/ManagerOwnerResident"));
-// const ManagerOwnerPayment = lazy(() => import("@/pages/ManagerOwnerPayment"));
-// const ManagerResidentActivityLog = lazy(() => import("@/pages/ManageResidentActivityLog"));
-// const ManagerResidentInviteSent = lazy(() => import("@/pages/ManageResidentInvite"));
 
 const protectedRoutes: ExtendedRouteObject[] = [
   {
@@ -157,19 +143,6 @@ const unAuthenticatedOnlyRoute: ExtendedRouteObject[] = [
   {
     path: routes.VERIFY_EMAIL,
     element: <VerifyEmail />,
-    anonymousOnly: true,
-    // errorElement: <ErrorBoundary />,
-  },
-  {
-    path: routes.AdminRoute.ADMIN_LOGIN,
-    element: <AdminLogin />,
-    anonymousOnly: true,
-    // errorElement: <ErrorBoundary />,
-  },
-
-  {
-    path: routes.RidersRoute.RIDER_LOGIN,
-    element: <RiderLogin />,
     anonymousOnly: true,
     // errorElement: <ErrorBoundary />,
   },

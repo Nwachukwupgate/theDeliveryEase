@@ -71,7 +71,16 @@ const Login = (): JSX.Element => {
 
       userStore.loginUser(token, user, role);
       appToast.Success(response?.message);
-      navigate(routes.usersRoutes.DASHBOARD);
+      switch (role) {
+        case "admin":
+          navigate(routes.AdminRoute.ADMIN_DASHBOARD);
+          break;
+        case "rider":
+          navigate(routes.RidersRoute.RIDER_DASHBOARD);
+          break;
+        default: // regular user
+          navigate(routes.usersRoutes.DASHBOARD);
+      }
     } catch (error) {
       const typedError = error as ApiError;
       console.log("typedError", typedError);
