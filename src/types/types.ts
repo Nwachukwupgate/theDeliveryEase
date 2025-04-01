@@ -1,3 +1,84 @@
+export interface DeliveryReq {
+  contact_name: string;
+  contact_phone: string;
+  receiver_name: string;
+  receiver_phone: string;
+  pickup_address: string;
+  pickup_lat?: number;
+  pickup_long?: number;
+  delivery_address: string;
+  delivery_lat?: number;
+  delivery_long?: number;
+  delivery_type: string;
+  product_name: string;
+  product_description: string;
+  price?: number;
+  weight: string;
+  quantity: string;
+  payment_option?: string;
+}
+
+export interface Delivery {
+  id: number;
+  user_id: number;
+  code: string;
+  contact_name: string;
+  contact_phone: string;
+  receiver_name: string;
+  receiver_phone: string;
+  pickup_address: string;
+  pickup_lat: number;
+  pickup_long: number;
+  delivery_address: string;
+  delivery_lat: number;
+  delivery_long: number;
+  delivery_type: 'same_day' | 'next_day' | 'scheduled' | 'express';
+  product_name: string;
+  product_description: string;
+  weight: string;
+  quantity: string;
+  delivery_status: string;
+  price: string;
+  receipt: string | null;
+  created_at: string;
+  updated_at: string;
+  rider_id: number | null;
+  stage: number;
+  assignment_type: string;
+  claimed_at: string | null;
+  rider: null | {
+    id: number;
+    first_name: string;
+    email: string;
+    phone: string;
+  };
+}
+
+export interface Pagination {
+  total: number;
+  count: number;
+  per_page: number;
+  current_page: number;
+  total_pages: number;
+  links: {
+    next: string | null;
+    previous: string | null;
+  };
+}
+
+export interface DeliveriesResponse {
+  success: boolean;
+  code: number;
+  locale: string;
+  message: string;
+  data: {
+    items: Delivery[];
+    meta: {
+      pagination: Pagination;
+    };
+  };
+}
+
 export interface Dashboard {
   id: number;
   name: string;
@@ -33,19 +114,19 @@ export interface resetPassword {
   token: string;
 }
 
-export interface DeliveryReq {
-  name: string;
-  recieverName: string;
-  phoneNumber: string;
-  recieverNumber: string;
-  pickupAddress: string;
-  deliveryAddress: string;
-  productName: string;
-  productDescription: string;
-  weight: string;
-  quantity: string;
-  type: string;
-}
+// export interface DeliveryReq {
+//   name: string;
+//   recieverName: string;
+//   phoneNumber: string;
+//   recieverNumber: string;
+//   pickupAddress: string;
+//   deliveryAddress: string;
+//   productName: string;
+//   productDescription: string;
+//   weight: string;
+//   quantity: string;
+//   type: string;
+// }
 
 export interface DeliveryItem {
   id?: number;
@@ -67,7 +148,7 @@ export interface DeliveryItem {
   updated_at?: string;
   weight?: string;
   rider?: any;
-  receipt?: File | string;
+  // receipt?: File | string;
   pickup_address?: string;
   // Add any other fields and make them optional with ?
 }
@@ -79,52 +160,52 @@ export interface ApiError {
   status?: number;
 }
 
-export interface Delivery {
-  id: number;
-  user_id: number;
-  code: string;
-  contact_name: string;
-  contact_phone: string;
-  receiver_name: string;
-  receiver_phone: string;
-  pickup_address: string;
-  delivery_address: string;
-  delivery_type:
-    | "Next Day Delivery"
-    | "Express Delivery"
-    | "Same Day Delivery"
-    | "Scheduled Delivery"; // Assuming these are possible values
-  product_name: string;
-  product_description: string;
-  weight: string; // Could also parse this to number
-  quantity: string; // Could also parse this to number
-  delivery_status:
-    | "pending"
-    | "completed"
-    | "cancelled"
-    | "ongoing"
-    | "In Transit"; // Assuming these are possible values
-  price: string; // Could be number if you're parsing
-  created_at: string; // ISO 8601 date string
-  updated_at: string; // ISO 8601 date string
-  rider_id: number | null; // Nullable
-  rider: {
-    first_name: string;
-    last_name: string;
-    phone: string;
-  };
-  stage: number;
-  image?: string;
-  receipt?: string;
-  locations?: {
-    id: number;
-    delivery_id: number;
-    status: string;
-    location: string;
-    created_at: string;
-    updated_at: string;
-  }[];
-}
+// export interface Delivery {
+//   id: number;
+//   user_id: number;
+//   code: string;
+//   contact_name: string;
+//   contact_phone: string;
+//   receiver_name: string;
+//   receiver_phone: string;
+//   pickup_address: string;
+//   delivery_address: string;
+//   delivery_type:
+//     | "Next Day Delivery"
+//     | "Express Delivery"
+//     | "Same Day Delivery"
+//     | "Scheduled Delivery"; // Assuming these are possible values
+//   product_name: string;
+//   product_description: string;
+//   weight: string; // Could also parse this to number
+//   quantity: string; // Could also parse this to number
+//   delivery_status:
+//     | "pending"
+//     | "completed"
+//     | "cancelled"
+//     | "ongoing"
+//     | "In Transit"; // Assuming these are possible values
+//   price: string; // Could be number if you're parsing
+//   created_at: string; // ISO 8601 date string
+//   updated_at: string; // ISO 8601 date string
+//   rider_id: number | null; // Nullable
+//   rider: {
+//     first_name: string;
+//     last_name: string;
+//     phone: string;
+//   };
+//   stage: number;
+//   image?: string;
+//   receipt?: string;
+//   locations?: {
+//     id: number;
+//     delivery_id: number;
+//     status: string;
+//     location: string;
+//     created_at: string;
+//     updated_at: string;
+//   }[];
+// }
 
 export interface DeliveryPaginationLinks {
   url: string | null;

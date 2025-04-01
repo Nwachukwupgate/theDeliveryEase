@@ -27,54 +27,6 @@ export type Payment = {
   status: "Pending" | "Completed" | "Ongoing";
 };
 
-// const data: Payment[] = [
-//   {
-//     id: "m5gr84i9",
-//     tracker: "AZ34KLO900",
-//     services: "Same Day Delivery",
-//     product: "success",
-//     weight: "3kg",
-//     date: "Feb 13th 2025",
-//     status: "Completed",
-//   },
-//   {
-//     id: "3u1reuv4",
-//     tracker: "AZ34KLO900",
-//     services: "Next Day Delivery",
-//     product: "success",
-//     weight: "3kg",
-//     date: "Feb 13th 2025",
-//     status: "Ongoing",
-//   },
-//   {
-//     id: "derv1ws0",
-//     tracker: "AZ34KLO900",
-//     services: "Scheduled Delivery",
-//     product: "success",
-//     weight: "3kg",
-//     date: "Feb 13th 2025",
-//     status: "Ongoing",
-//   },
-//   {
-//     id: "5kma53ae",
-//     tracker: "AZ34KLO900",
-//     services: "Express Delivery",
-//     product: "success",
-//     weight: "3kg",
-//     date: "Feb 13th 2025",
-//     status: "Pending",
-//   },
-//   {
-//     id: "bhqecj4p",
-//     tracker: "AZ34KLO900",
-//     services: "Same Day Delivery",
-//     product: "success",
-//     weight: "3kg",
-//     date: "Feb 13th 2025",
-//     status: "Ongoing",
-//   },
-// ];
-
 export const columns = [
   {
     accessorKey: "tracker",

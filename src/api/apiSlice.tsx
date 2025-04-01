@@ -15,6 +15,7 @@ import {
   Delivery,
   dataResponse,
   resetPassword,
+  DeliveriesResponse,
 } from "../types/types";
 import { baseUrl } from "@/config";
 
@@ -28,9 +29,6 @@ export const apiSlice = createApi({
     prepareHeaders: (headers) => {
       // Dynamically fetch the token from localStorage
       const token = localStorage.getItem("DELogisticsToken");
-      if (token) {
-        headers.set("authorization", `Bearer ${token}`);
-      }
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
       }
@@ -165,6 +163,23 @@ export const apiSlice = createApi({
       providesTags: ["Delivery"],
     }),
 
+    getDeliveries: builder.query<
+      DeliveriesResponse,
+      { type?: string; page?: number }
+    >({
+      query: ({ type, page }) => {
+        const params = new URLSearchParams();
+        if (type) params.append("type", type);
+        if (page) params.append("page", page.toString());
+
+        return {
+          url: "deliveries",
+          params: Object.fromEntries(params),
+        };
+      },
+      providesTags: ["Deliveries"],
+    }),
+
     editUser: builder.mutation<dataResponse, EditUser>({
       query: (userData) => ({
         url: "settings/profile",
@@ -288,6 +303,7 @@ export const {
   useRiderDashboardQuery,
   useRiderDeliveriesQuery,
   useGetDeliveryQuery,
+  useGetDeliveriesQuery,
   useRidersAcceptMutation,
   useRidersRejectMutation,
   useUpdateDeliveryStatusMutation,
