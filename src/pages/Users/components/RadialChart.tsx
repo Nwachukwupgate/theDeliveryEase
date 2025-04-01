@@ -1,10 +1,9 @@
-import { RadialBar, RadialBarChart } from "recharts"
-import SameDay from "../../../common/icons/SameDay"
-import ExpressIcon from "../../../common/icons/ExpressIcon"
-import ScheduledIcon from "../../../common/icons/ScheduledIcon"
-import NextDay from "../../../common/icons/NextDay"
-import ArrowIcon from "../../../common/icons/ArrowIcon"
-
+import { RadialBar, RadialBarChart, ResponsiveContainer } from "recharts";
+import SameDay from "../../../common/icons/SameDay";
+import ExpressIcon from "../../../common/icons/ExpressIcon";
+import ScheduledIcon from "../../../common/icons/ScheduledIcon";
+import NextDay from "../../../common/icons/NextDay";
+import ArrowIcon from "../../../common/icons/ArrowIcon";
 import {
   Card,
   CardContent,
@@ -12,13 +11,13 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart"
+} from "@/components/ui/chart";
 
 interface RadialChartData {
   name: string;
@@ -34,20 +33,10 @@ interface RadialChartProps {
   expressDelivery?: number;
 }
 
-export const description = "A radial chart"
-
-// const chartData = [
-//   { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-//   { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-// //   { browser: "firefox", visitors: 187, fill: "var(--color-firefox)" },
-// //   { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-// //   { browser: "other", visitors: 90, fill: "var(--color-other)" },
-// ]
-
 const chartConfig = {
   Pending: {
     label: "Pending",
-    color: "#9165B0"
+    color: "#9165B0",
   },
   Completed: {
     label: "Completed",
@@ -55,67 +44,94 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export default function RadialChart({ data, sameDayDelivery, nextDayDelivery, scheduledDelivery, expressDelivery }: RadialChartProps) {
-  console.log("data", data)
+export default function RadialChart({
+  data,
+  sameDayDelivery = 0,
+  nextDayDelivery = 0,
+  scheduledDelivery = 0,
+  expressDelivery = 0,
+}: RadialChartProps) {
   return (
-    <Card className="flex flex-col w-full">
-      <CardHeader className="flex justify-between content-center items-center w-full flex-row pb-0">
+    <Card className="flex h-full flex-col">
+      <CardHeader className="flex flex-row items-center justify-between pb-2">
         <CardTitle>Services</CardTitle>
-        <CardDescription><ArrowIcon /> </CardDescription> 
+        <CardDescription>
+          <ArrowIcon />
+        </CardDescription>
       </CardHeader>
+
       <CardContent className="flex-1 pb-0">
         {data.length === 0 ? (
-          <div className="text-center text-gray-500">No data available</div>
+          <div className="flex h-full items-center justify-center text-gray-500">
+            No data available
+          </div>
         ) : (
-          <ChartContainer
-            config={chartConfig}
-            className="mx-auto aspect-square max-h-[200px]"
-          >
-            <RadialBarChart data={data} innerRadius={60} outerRadius={80} >
-              <ChartTooltip
-                cursor={false}
-                content={<ChartTooltipContent  nameKey="name" />}
-              />
-              <RadialBar dataKey="value" background />
-            </RadialBarChart>
-          </ChartContainer>
+          <div className="h-[200px] w-full">
+            <ChartContainer config={chartConfig}>
+              <ResponsiveContainer width="100%" height="100%">
+                <RadialBarChart
+                  innerRadius="60%"
+                  outerRadius="80%"
+                  data={data}
+                  startAngle={90}
+                  endAngle={-270}
+                >
+                  <RadialBar
+                    dataKey="value"
+                    cornerRadius={4}
+                    background={{ fill: "#f3f4f6" }}
+                  />
+                  <ChartTooltip
+                    content={<ChartTooltipContent nameKey="name" />}
+                  />
+                </RadialBarChart>
+              </ResponsiveContainer>
+            </ChartContainer>
+          </div>
         )}
       </CardContent>
-      <CardFooter className="flex-col gap-2 text-sm">
-        <div className="grid grid-cols-2">
-        <div className="flex flex-row items-center gap-x-2 p-3 border-r border-b border-dashed border-black">
-            <div className="bg-[#F4E9F4CC] content-center justify-items-center px-2 rounded-full h-10 w-10"><SameDay /></div>
-            <div>
-              <div>Same Day Delivery</div>
-              <div className="font-bold text-base">{sameDayDelivery || 0}</div>
-            </div>
-          </div>
 
-          <div className="flex flex-row items-center gap-x-2 p-3 border-b border-dashed border-black">
-            <div className="bg-[#F4E9F4CC] content-center justify-center justify-items-center h-10 w-10 rounded-full"><ExpressIcon /></div>
-            <div>
-              <div>Express Delivery</div>
-              <div className="font-bold text-base">{expressDelivery || 0}</div>
-            </div>
+      <CardFooter className="grid grid-cols-2 gap-0 p-0 text-sm">
+        <div className="flex items-center gap-3 border-b border-r border-dashed border-gray-200 p-4">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F4E9F4CC]">
+            <SameDay />
           </div>
-
-          <div className="flex flex-row items-center gap-x-2 p-3 border-r border-dashed border-black">
-            <div className="bg-[#F4E9F4CC] content-center justify-items-center px-2 rounded-full h-10 w-10"><ScheduledIcon /></div>
-            <div>
-              <div>Scheduled Delivery</div>
-              <div className="font-bold text-base">{scheduledDelivery || 0}</div>
-            </div>
+          <div>
+            <div className="text-gray-600">Same Day</div>
+            <div className="text-base font-bold">{sameDayDelivery}</div>
           </div>
+        </div>
 
-          <div className="flex flex-row items-center gap-x-2 p-3">
-            <div className="bg-[#F4E9F4CC] content-center justify-items-center px-2 rounded-full h-10 w-10"><NextDay /></div>
-            <div>
-              <div>Next Day Delivery</div>
-              <div className="font-bold text-base">{nextDayDelivery || 0}</div>
-            </div>
+        <div className="flex items-center gap-3 border-b border-dashed border-gray-200 p-4">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F4E9F4CC]">
+            <ExpressIcon />
+          </div>
+          <div>
+            <div className="text-gray-600">Express</div>
+            <div className="text-base font-bold">{expressDelivery}</div>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3 border-r border-dashed border-gray-200 p-4">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F4E9F4CC]">
+            <ScheduledIcon />
+          </div>
+          <div>
+            <div className="text-gray-600">Scheduled</div>
+            <div className="text-base font-bold">{scheduledDelivery}</div>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3 p-4">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F4E9F4CC]">
+            <NextDay />
+          </div>
+          <div>
+            <div className="text-gray-600">Next Day</div>
+            <div className="text-base font-bold">{nextDayDelivery}</div>
           </div>
         </div>
       </CardFooter>
     </Card>
-  )
+  );
 }

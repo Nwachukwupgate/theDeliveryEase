@@ -112,14 +112,14 @@ export const apiSlice = createApi({
       providesTags: ["Dashboard"],
     }),
 
-    getDashboardStats: builder.query<Record<string, any>, DashboardQueryParams>(
+    getDeliveryHistoryStats: builder.query<Record<string, any>, DashboardQueryParams>(
       {
         query: ({ start_date, end_date }) => {
           const params = new URLSearchParams();
           if (start_date) params.append("start_date", start_date);
           if (end_date) params.append("end_date", end_date);
 
-          return `delivery-stats/charts?${params.toString()}`;
+          return `delivery-history/stats/charts?${params.toString()}`;
         },
         providesTags: ["Dashboard"],
       },
@@ -295,7 +295,7 @@ export const {
   useGetNotificationQuery,
   useGetUserQuery,
   useGetDeliveryStatQuery,
-  useGetDashboardStatsQuery,
+  useGetDeliveryHistoryStatsQuery,
   useGetAdminDashboardStatsQuery,
   useCreateRiderMutation,
   useGetBikersQuery,
