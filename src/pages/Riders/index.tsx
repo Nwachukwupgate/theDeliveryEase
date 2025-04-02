@@ -17,13 +17,13 @@ const DashboardPage = () => {
   const {
     data: availableDeliveries,
     isLoading: loadingAvailable
-  } = useRiderAvailableDeliveriesQuery();
+  } = useRiderAvailableDeliveriesQuery({ page: 1 });
 
   // Active deliveries (already claimed by rider)
   const {
     data: activeDeliveries,
     isLoading: loadingActive
-  } = useRiderActiveDeliveriesQuery();
+  } = useRiderActiveDeliveriesQuery({ page: 1 });
 
   return (
     <div className="p-3 lg:p-6">
@@ -68,17 +68,17 @@ const DashboardPage = () => {
         ) : activeDeliveries?.data?.items?.length ? (
           <>
             {activeDeliveries.data.items.slice(0, 6).map((delivery) => (
-              <Link to={`/rider/${delivery.id}`} key={delivery.code}>
-                <DeliveringCard
-                  id={`${delivery.code}`}
-                  delivery={delivery.product_name}
-                  address={delivery.pickup_address}
-                  status={delivery.delivery_status}
-                  date={delivery.created_at}
-                  selected={true}
-                  showAction={false}
-                />
-              </Link>
+              <DeliveringCard
+                key={delivery.code}
+                id={`${delivery.id}`}
+                trackingId={delivery.code}
+                delivery={delivery.product_name}
+                address={delivery.pickup_address}
+                status={delivery.delivery_status}
+                date={delivery.created_at}
+                selected={true}
+                showAction={true}
+              />
             ))}
             <div className="text-end font-bold">
               <Link to={routes.RidersRoute.RIDER_DELIVERIES}>View All</Link>
@@ -98,20 +98,23 @@ const DashboardPage = () => {
         ) : availableDeliveries?.data?.items?.length ? (
           <>
             {availableDeliveries.data.items.slice(0, 6).map((delivery) => (
-              <Link to={`/rider/${delivery.id}`} key={delivery.code}>
-                <DeliveringCard
-                  id={`${delivery.code}`}
-                  delivery={delivery.product_name}
-                  address={delivery.pickup_address}
-                  status={delivery.delivery_status}
-                  date={delivery.created_at}
-                  selected={false}
-                  showAction={true}  // Show claim button for available deliveries
-                />
-              </Link>
+
+              <DeliveringCard
+                key={delivery.code}
+                id={`${delivery.id}`}
+                trackingId={delivery.code}
+                delivery={delivery.product_name}
+                address={delivery.pickup_address}
+                status={delivery.delivery_status}
+                date={delivery.created_at}
+                selected={false}
+                showAction={true}
+                isAvailableDelivery={true}
+              />
+
             ))}
             <div className="text-end font-bold">
-              {/* <Link to={routes.RidersRoute.AVAILABLE_DELIVERIES}>View All</Link> */}
+              <Link to={routes.RidersRoute.AVAILABLE_DELIVERIES}>View All</Link>
             </div>
           </>
         ) : (

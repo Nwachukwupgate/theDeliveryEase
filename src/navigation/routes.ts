@@ -22,6 +22,7 @@ export const parentRoutes = Object.freeze({
     RIDER_DASHBOARD: "/rider/dashboard",
     RIDER_DETAIL: "/rider/:id",
     RIDER_DELIVERIES: "/rider/deliveries",
+    AVAILABLE_DELIVERIES: '/rider/available-deliveries',
     RIDER_CONTACT: "/rider/contact",
     RIDER_SETTINGS: "/rider/setting",
   })

@@ -35,7 +35,7 @@ const SettingsPage = lazy(
   () => import("@/pages/Users/settings"),
 );
 const RiderDashBoard = lazy(() => import("@/pages/Riders"));
-const RiderDetail = lazy(() => import("@/pages/Riders/details"));
+const DeliveryDetails = lazy(() => import("@/pages/Riders/DeliveryDetails"));
 const CreateRiders = lazy(() => import("@/pages/Admin/rider"));
 const RiderDeliveries = lazy(
   () => import("@/pages/Riders/deliveries"),
@@ -97,10 +97,14 @@ const protectedRoutes: ExtendedRouteObject[] = [
       },
       {
         path: routes.RidersRoute.RIDER_DETAIL, // Dynamic route
-        element: <RiderDetail />, // Rider detail component
+        element: <DeliveryDetails />,
       },
       {
         path: routes.RidersRoute.RIDER_DELIVERIES,
+        element: <RiderDeliveries />
+      },
+      {
+        path: routes.RidersRoute.AVAILABLE_DELIVERIES,
         element: <RiderDeliveries />
       },
       {

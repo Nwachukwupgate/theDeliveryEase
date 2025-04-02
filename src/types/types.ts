@@ -95,6 +95,13 @@ export interface RiderStats {
   };
 }
 
+export interface SuccessResponse{
+  success: boolean;
+  code: number;
+  message: string;
+  data: any;
+}
+
 //OLDER TYPES
 export interface Dashboard {
   id: number;

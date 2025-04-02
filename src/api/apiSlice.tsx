@@ -10,13 +10,12 @@ import {
   DashboardQueryParams,
   BikerReq,
   DeliveryHistoryResponse,
-  OrdersStats,
-  RiderDeliveries,
   Delivery,
   dataResponse,
   resetPassword,
   DeliveriesResponse,
   RiderStats,
+  SuccessResponse,
 } from "../types/types";
 import { baseUrl } from "@/config";
 
@@ -243,38 +242,38 @@ export const apiSlice = createApi({
       providesTags: ["Dashboard"],
     }),
 
-    riderAvailableDeliveries: builder.query<DeliveriesResponse, void>({
-      query: () => ({
+    riderAvailableDeliveries: builder.query<DeliveriesResponse, { page: number }>({
+      query: ({page}) => ({
         url: `deliveries/available`,
+        params: { page },
         method: "GET",
       }),
       providesTags: ["Delivery"],
     }),
 
-    riderActiveDeliveries: builder.query<DeliveriesResponse, void>({
-      query: () => ({
+    riderActiveDeliveries: builder.query<DeliveriesResponse, { page: number }>({
+      query: ({ page }) => ({
         url: `/rider/deliveries`,
+        params: { page },
         method: "GET",
       }),
       providesTags: ["Delivery"],
     }),
 
-    ridersReject: builder.mutation<dataResponse, string>({
-      query: (id) => ({
-        url: `rider/delivery/reject/${id}`,
-        method: "POST",
-        body: id,
+    ridersAccept: builder.mutation<SuccessResponse, string>({
+      query: (deliveryId) => ({
+        url: `/deliveries/${deliveryId}/claim`,
+        method: 'POST',
       }),
-      invalidatesTags: ["Delivery"],
+      invalidatesTags: ['Delivery']
     }),
-
-    ridersAccept: builder.mutation<dataResponse, string>({
-      query: (id) => ({
-        url: `rider/delivery/accept/${id}`,
-        method: "POST",
-        body: id,
+  
+    ridersReject: builder.mutation<SuccessResponse, string>({
+      query: (deliveryId) => ({
+        url: `/rider/delivery/${deliveryId}/reject`,
+        method: 'POST',
       }),
-      invalidatesTags: ["Delivery"],
+      invalidatesTags: ['Delivery']
     }),
 
     updateDeliveryStatus: builder.mutation<
