@@ -1,31 +1,30 @@
-type Cards = {
+interface DashboardCardProps {
     name: string;
     title: string;
     amount: string;
-    color: string;  // Color is passed as a hex code string
-  };
-  
-const DashboardCard: React.FC<Cards> = ({ name, title, amount, color }) => {
+    color: string;
+}
+
+const DashboardCard: React.FC<DashboardCardProps> = ({
+    name,
+    title,
+    amount,
+    color
+}) => {
     return (
-        <div className="flex flex-row bg-white gap-x-2 p-2 items-center rounded-lg shadow lg:flex-grow">
+        <div className="flex flex-row items-center gap-x-2 rounded-lg bg-white p-4 shadow lg:flex-grow">
             <div
-                className="flex items-center justify-center h-8 w-8 rounded-full text-white font-bold"
+                className="flex h-10 w-10 items-center justify-center rounded-full font-bold text-white"
                 style={{ backgroundColor: color }}
             >
                 {name}
             </div>
             <div>
-                <div>
-                <p>{title}</p>
-                </div>
-                <div className="font-bold text-lg">
-                <p>{amount}</p>
-                </div>
+                <p className="text-sm text-gray-600">{title}</p>
+                <p className="text-lg font-bold">{amount}</p>
             </div>
         </div>
     );
 };
-  
 
 export default DashboardCard;
-  

@@ -32,7 +32,7 @@ export interface Delivery {
   delivery_address: string;
   delivery_lat: number;
   delivery_long: number;
-  delivery_type: 'same_day' | 'next_day' | 'scheduled' | 'express';
+  delivery_type: "same_day" | "next_day" | "scheduled" | "express";
   product_name: string;
   product_description: string;
   weight: string;
@@ -86,6 +86,14 @@ export interface BarChartItem {
   delivery_count: number;
 }
 
+export interface RiderStats {
+  data: {
+    total_assignments: number;
+    completed: number;
+    active: number;
+    rejected: number;
+  };
+}
 
 //OLDER TYPES
 export interface Dashboard {
@@ -187,13 +195,6 @@ export interface DeliveryHistoryResponse {
   locale: string;
   message: string;
   data: DeliveryHistoryData;
-}
-
-export interface OrdersStats {
-  totalOrders: number;
-  successfulOrders: number;
-  ongoingOrders: number;
-  cancelledOrders: number;
 }
 
 export interface RiderDeliveries {

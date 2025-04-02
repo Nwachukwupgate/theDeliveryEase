@@ -16,6 +16,7 @@ import {
   dataResponse,
   resetPassword,
   DeliveriesResponse,
+  RiderStats,
 } from "../types/types";
 import { baseUrl } from "@/config";
 
@@ -234,17 +235,25 @@ export const apiSlice = createApi({
       invalidatesTags: ["Delivery"],
     }),
 
-    riderDashboard: builder.query<OrdersStats, void>({
+    riderDashboardStats: builder.query<RiderStats, void>({
       query: () => ({
-        url: `rider/dashboard`,
+        url: `rider/stats`,
         method: "GET",
       }),
       providesTags: ["Dashboard"],
     }),
 
-    riderDeliveries: builder.query<RiderDeliveries, void>({
+    riderAvailableDeliveries: builder.query<DeliveriesResponse, void>({
       query: () => ({
-        url: `rider/deliveries`,
+        url: `deliveries/available`,
+        method: "GET",
+      }),
+      providesTags: ["Delivery"],
+    }),
+
+    riderActiveDeliveries: builder.query<DeliveriesResponse, void>({
+      query: () => ({
+        url: `/rider/deliveries`,
         method: "GET",
       }),
       providesTags: ["Delivery"],
@@ -300,8 +309,6 @@ export const {
   useCreateRiderMutation,
   useGetBikersQuery,
   useAssignRiderMutation,
-  useRiderDashboardQuery,
-  useRiderDeliveriesQuery,
   useGetDeliveryQuery,
   useGetDeliveriesQuery,
   useRidersAcceptMutation,
@@ -309,4 +316,7 @@ export const {
   useUpdateDeliveryStatusMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
+  useRiderAvailableDeliveriesQuery,
+  useRiderActiveDeliveriesQuery,
+  useRiderDashboardStatsQuery,
 } = apiSlice;
