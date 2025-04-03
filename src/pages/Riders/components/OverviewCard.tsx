@@ -1,26 +1,11 @@
+// import DeliveryTrackingMap from "@/components/DeliveryTrackingMap";
 import { Delivery } from "@/types/types";
-import { useEffect, useState } from "react";
 
 type OverviewProps = {
   selectedDelivery: Delivery;
 };
 
 const OverviewCard: React.FC<OverviewProps> = ({ selectedDelivery }) => {
-  const colors = ["rgba(0, 0, 0, 0.5)", "rgba(255, 0, 0, 0.5)", "rgba(0, 255, 0, 0.5)", "rgba(0, 0, 255, 0.5)"];
-  const [currentColor, setCurrentColor] = useState(colors[0]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentColor((prevColor) => {
-        const currentIndex = colors.indexOf(prevColor);
-        const nextIndex = (currentIndex + 1) % colors.length;
-        return colors[nextIndex];
-      });
-    }, 4000);
-
-    return () => clearInterval(interval);
-  }, [colors]);
-
   return (
     <div className="">
       <div className="rounded-lg bg-white p-4 shadow-md">
@@ -48,6 +33,10 @@ const OverviewCard: React.FC<OverviewProps> = ({ selectedDelivery }) => {
           </span>
         </div>
         {/*   SHOW MAP HERE */}
+        {/* <DeliveryTrackingMap
+          deliveryId={selectedDelivery.id}
+          className="h-[300px] my-4 rounded-lg border border-gray-200"
+        /> */}
       </div>
 
       <div className="mt-8 flex flex-col justify-center gap-x-8">

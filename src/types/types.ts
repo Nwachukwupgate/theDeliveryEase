@@ -113,6 +113,22 @@ export interface SuccessResponse {
   data: any;
 }
 
+export interface LoginResponse {
+  message: string;
+  success: boolean;
+  code: number;
+  data: {
+    token: string;
+    user: any;
+  };
+}
+
+export interface GoogleLoginRequest {
+  googleToken: string;
+  email: string;
+  name: string;
+}
+
 //OLDER TYPES
 export interface Dashboard {
   id: number;
