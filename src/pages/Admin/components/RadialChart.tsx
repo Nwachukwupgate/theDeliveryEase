@@ -1,121 +1,97 @@
-import { RadialBar, RadialBarChart } from "recharts"
+import { RadialBar, RadialBarChart, ResponsiveContainer } from "recharts"
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import SameDay from "../../../common/icons/SameDay"
 import ExpressIcon from "../../../common/icons/ExpressIcon"
 import ScheduledIcon from "../../../common/icons/ScheduledIcon"
 import NextDay from "../../../common/icons/NextDay"
-import ArrowIcon from "../../../common/icons/ArrowIcon"
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
-
-interface RadialChartData {
-  name: string;
-  value: number;
-  fill: string;
-}
 
 interface RadialChartProps {
-  data: RadialChartData[];
-  sameDayDelivery?: number;
-  nextDayDelivery?: number;
-  scheduledDelivery?: number;
-  expressDelivery?: number;
+  sameDayDelivery: number;
+  nextDayDelivery: number;
+  expressDelivery: number;
+  scheduledDelivery: number;
 }
 
-export const description = "A radial chart"
-
-// const chartData = [
-//   { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-//   { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-// //   { browser: "firefox", visitors: 187, fill: "var(--color-firefox)" },
-// //   { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-// //   { browser: "other", visitors: 90, fill: "var(--color-other)" },
-// ]
-
-const chartConfig = {
-  Pending: {
-    label: "Pending",
-    color: "#9165B0"
-  },
-  Completed: {
-    label: "Completed",
-    color: "#3F2C4D",
-  },
-} satisfies ChartConfig;
-
-export default function RadialChart({ data, sameDayDelivery, nextDayDelivery, scheduledDelivery, expressDelivery }: RadialChartProps) {
+export default function RadialChart({
+  sameDayDelivery,
+  nextDayDelivery,
+  expressDelivery,
+  scheduledDelivery,
+}: RadialChartProps) {
+  // Prepare data for the radial chart
+  const serviceData = [
+    { name: 'Same Day', value: sameDayDelivery, fill: '#8884d8' },
+    { name: 'Next Day', value: nextDayDelivery, fill: '#83a6ed' },
+    { name: 'Express', value: expressDelivery, fill: '#8dd1e1' },
+    { name: 'Scheduled', value: scheduledDelivery, fill: '#82ca9d' },
+  ];
 
   return (
-    <Card className="flex flex-col">
-      <CardHeader className="flex justify-between content-center items-center w-full flex-row pb-0">
-        <CardTitle>Services</CardTitle>
-        <CardDescription><ArrowIcon /> </CardDescription> 
+    <Card className="h-full">
+      <CardHeader>
+        <CardTitle>Delivery Services</CardTitle>
       </CardHeader>
-      <CardContent className="flex-1 pb-0">
-        {data.length === 0 ? (
-          <div className="text-center text-gray-500">No data available</div>
-        ) : (
-          <ChartContainer
-            config={chartConfig}
-            className="mx-auto aspect-square max-h-[200px]"
-          >
-            <RadialBarChart data={data} innerRadius={60} outerRadius={80} >
-              <ChartTooltip
-                cursor={false}
-                content={<ChartTooltipContent  nameKey="name" />}
+      <CardContent className="grid grid-cols-2 gap-4">
+        <div className="h-[150px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <RadialBarChart
+              innerRadius="60%"
+              outerRadius="100%"
+              data={serviceData}
+              startAngle={180}
+              endAngle={-180}
+            >
+              <RadialBar
+                dataKey="value"
+                background
               />
-              <RadialBar dataKey="value" background />
             </RadialBarChart>
-          </ChartContainer>
-        )}
-      </CardContent>
-      <CardFooter className="flex-col gap-2 text-sm">
-        <div className="grid grid-cols-2">
-        <div className="flex flex-row gap-x-2 p-3 border-r border-b border-dashed border-black">
-            <div className="bg-[#F4E9F4CC] content-center px-2 rounded-full"><SameDay /></div>
+          </ResponsiveContainer>
+        </div>
+        <div className="space-y-4">
+          <div className="flex items-center gap-2">
+            <div className="bg-[#F4E9F4CC] p-1 rounded-full">
+              <SameDay className="h-4 w-4" />
+            </div>
             <div>
-              <div>Same Day Delivery</div>
-              <div className="font-bold text-base">{sameDayDelivery || 0}</div>
+              <div className="text-sm">Same Day</div>
+              <div className="font-bold">{sameDayDelivery}</div>
             </div>
           </div>
-
-          <div className="flex flex-row gap-x-2 p-3 border-b border-dashed border-black">
-            <div className="bg-[#F4E9F4CC] content-center px-2 rounded-full"><ExpressIcon /></div>
+          <div className="flex items-center gap-2">
+            <div className="bg-[#F4E9F4CC] p-1 rounded-full">
+              <NextDay className="h-4 w-4" />
+            </div>
             <div>
-              <div>Express Delivery</div>
-              <div className="font-bold text-base">{expressDelivery || 0}</div>
+              <div className="text-sm">Next Day</div>
+              <div className="font-bold">{nextDayDelivery}</div>
             </div>
           </div>
-
-          <div className="flex flex-row gap-x-2 p-3 border-r border-dashed border-black">
-            <div className="bg-[#F4E9F4CC] content-center px-2 rounded-full"><ScheduledIcon /></div>
+          <div className="flex items-center gap-2">
+            <div className="bg-[#F4E9F4CC] p-1 rounded-full">
+              <ExpressIcon className="h-4 w-4" />
+            </div>
             <div>
-              <div>Scheduled Delivery</div>
-              <div className="font-bold text-base">{scheduledDelivery || 0}</div>
+              <div className="text-sm">Express</div>
+              <div className="font-bold">{expressDelivery}</div>
             </div>
           </div>
-
-          <div className="flex flex-row gap-x-2 p-3">
-            <div className="bg-[#F4E9F4CC] content-center px-2 rounded-full"><NextDay /></div>
+          <div className="flex items-center gap-2">
+            <div className="bg-[#F4E9F4CC] p-1 rounded-full">
+              <ScheduledIcon className="h-4 w-4" />
+            </div>
             <div>
-              <div>Next Day Delivery</div>
-              <div className="font-bold text-base">{nextDayDelivery || 0}</div>
+              <div className="text-sm">Scheduled</div>
+              <div className="font-bold">{scheduledDelivery}</div>
             </div>
           </div>
         </div>
-      </CardFooter>
+      </CardContent>
     </Card>
   )
 }

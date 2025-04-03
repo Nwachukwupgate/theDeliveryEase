@@ -55,7 +55,7 @@ const Login = (): JSX.Element => {
       const isValidRole = role === 'admin' || role === 'user' || role === 'rider';
 
       if (isValidRole) {
-        userStore.loginUser(token, user, role); 
+        userStore.loginUser(token, user, role);
       } else {
         // Handle invalid roles (e.g., show error, default to 'user')
         console.error('Invalid role:', role);
@@ -130,7 +130,19 @@ const Login = (): JSX.Element => {
           userStore.loginUser(token, user, 'user'); // Fallback
         }
         appToast.Success(response?.message || "Successfully logged in with Google");
-        navigate(routes.usersRoutes.DASHBOARD);
+
+        // Navigate based on role
+        switch (role) {
+          case "admin":
+            navigate(routes.AdminRoute.ADMIN_DASHBOARD);
+            break;
+          case "rider":
+            navigate(routes.RidersRoute.RIDER_DASHBOARD);
+            break;
+          default: // regular user
+            navigate(routes.usersRoutes.DASHBOARD);
+        }
+
       } catch (error) {
         console.error('Google login error:', error);
         const typedError = error as ApiError;

@@ -1,103 +1,69 @@
-"use client"
-
-import { TrendingUp } from "lucide-react"
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
-
+import { Line, LineChart, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts"
 import {
   Card,
-  CardContent,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
 
-export const description = "A multiple line chart"
+interface MultipleChartProps {
+  usersData: { month: string; desktop: number }[];
+  deliveriesData: { month: string; desktop: number }[];
+  successfulData: { month: string; desktop: number }[];
+}
 
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
-]
+export default function MultipleChart({ 
+  usersData, 
+  deliveriesData, 
+  successfulData 
+}: MultipleChartProps) {
+  // Combine data for the chart
+  const chartData = usersData.map((userItem, index) => ({
+    month: userItem.month,
+    users: userItem.desktop,
+    deliveries: deliveriesData[index]?.desktop || 0,
+    successful: successfulData[index]?.desktop || 0,
+  }));
 
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "#A371C6",
-  },
-  mobile: {
-    label: "Mobile",
-    color: "#9165B0",
-  },
-} satisfies ChartConfig
-
-export default function MultipleChart() {
   return (
-    <Card>
+    <Card className="h-full">
       <CardHeader>
-        <div className="flex gap-x-4">
-            <CardTitle>Total Users</CardTitle>
-            <CardTitle>Total Deliveries</CardTitle>
-            <CardTitle>Succesful Deliveries</CardTitle>
-        </div>
-        {/* <CardDescription>January - June 2024</CardDescription> */}
+        <CardTitle>Monthly Trends</CardTitle>
       </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig} className="min-h-[300px] h-[100px] w-full">
-          <LineChart
-            accessibilityLayer
-            data={chartData}
-            margin={{
-              left: 12,
-              right: 12,
-            }}
-          >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
+      <div className="h-[300px] px-4 pb-4">
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={chartData}>
+            <XAxis 
+              dataKey="month" 
               tickLine={false}
               axisLine={false}
-              tickMargin={8}
-              tickFormatter={(value) => value.slice(0, 3)}
             />
-            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-            <Line
-              dataKey="desktop"
-              type="monotone"
-              stroke="var(--color-desktop)"
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line 
+              type="monotone" 
+              dataKey="users" 
+              stroke="#8884d8" 
               strokeWidth={2}
-              dot={false}
+              name="Total Users"
             />
-            <Line
-              dataKey="mobile"
-              type="monotone"
-              stroke="var(--color-mobile)"
+            <Line 
+              type="monotone" 
+              dataKey="deliveries" 
+              stroke="#82ca9d" 
               strokeWidth={2}
-              dot={false}
+              name="Total Deliveries"
+            />
+            <Line 
+              type="monotone" 
+              dataKey="successful" 
+              stroke="#ff7300" 
+              strokeWidth={2}
+              name="Successful Deliveries"
             />
           </LineChart>
-        </ChartContainer>
-      </CardContent>
-      <CardFooter>
-        <div className="flex w-full items-start gap-2 text-sm">
-          <div className="grid gap-2">
-            <div className="flex items-center gap-2 font-medium leading-none">
-              Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-            </div>
-            <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              Showing total visitors for the last 6 months
-            </div>
-          </div>
-        </div>
-      </CardFooter>
+        </ResponsiveContainer>
+      </div>
     </Card>
   )
 }
