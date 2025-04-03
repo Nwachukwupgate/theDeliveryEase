@@ -1,88 +1,38 @@
 import { DataTable } from './components/DataTable'
-import MultipleChart from "@/pages/Admin/components/MultipleChart"
-import RadialChart from "@/pages/Admin/components/RadialChart"
-import DatePicker from "@/components/ui/datePicker";
-import { useState, useMemo } from "react"
-import { useGetAdminDashboardStatsQuery, useGetHistoryQuery } from '@/api/apiSlice';
+import { useState } from "react"
+import { useGetDeliveriesQuery } from '@/api/apiSlice';
 import moment from 'moment';
-import {DeliveryItem} from '@/types/types';
-import { format, startOfYear } from 'date-fns';
-import LoadingSpinner from '@/components/LoadingSpinner';
+// import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-
-export type Payment = {
-  id: string;
-  tracker: string;
-  services: string;
-  product: string;
+export interface Delivery {
+  id: number;
+  code: string;
+  delivery_type: "same_day" | "next_day" | "scheduled" | "express";
+  product_name: string;
   weight: string;
-  date: string;
-  status: "Pending" | "Completed" | "Ongoing";
-};
-
-const data: Payment[] = [
-  {
-    id: "m5gr84i9",
-    tracker: "AZ34KLO900",
-    services: "Same Day Delivery",
-    product: "success",
-    weight: "3kg",
-    date: "Feb 13th 2025",
-    status: "Completed",
-  },
-  {
-    id: "3u1reuv4",
-    tracker: "AZ34KLO900",
-    services: "Next Day Delivery",
-    product: "success",
-    weight: "3kg",
-    date: "Feb 13th 2025",
-    status: "Ongoing",
-  },
-  {
-    id: "derv1ws0",
-    tracker: "AZ34KLO900",
-    services: "Scheduled Delivery",
-    product: "success",
-    weight: "3kg",
-    date: "Feb 13th 2025",
-    status: "Ongoing",
-  },
-  {
-    id: "5kma53ae",
-    tracker: "AZ34KLO900",
-    services: "Express Delivery",
-    product: "success",
-    weight: "3kg",
-    date: "Feb 13th 2025",
-    status: "Pending",
-  },
-  {
-    id: "bhqecj4p",
-    tracker: "AZ34KLO900",
-    services: "Same Day Delivery",
-    product: "success",
-    weight: "3kg",
-    date: "Feb 13th 2025",
-    status: "Ongoing",
-  },
-];
+  delivery_status: string;
+  created_at: string;
+}
 
 export const columns = [
   {
-    accessorKey: "tracker",
+    accessorKey: "code",
     header: "Tracking Number",
-    cell: ({ row }: any) => <div className="capitalize">{row.getValue("tracker")}</div>,
+    cell: ({ row }: any) => <div className="capitalize">{row.getValue("code")}</div>,
   },
   {
-    accessorKey: "services",
-    header: "Services",
-    cell: ({ row }: any) => <div className="capitalize">{row.getValue("services")}</div>,
+    accessorKey: "delivery_type",
+    header: "Service Type",
+    cell: ({ row }: any) => {
+      const type = row.getValue("delivery_type");
+      const formattedType = type.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
+      return <div>{formattedType}</div>;
+    },
   },
   {
-    accessorKey: "product",
+    accessorKey: "product_name",
     header: "Product",
-    cell: ({ row }: any) => <div className="capitalize">{row.getValue("product")}</div>,
+    cell: ({ row }: any) => <div className="capitalize">{row.getValue("product_name")}</div>,
   },
   {
     accessorKey: "weight",
@@ -90,122 +40,98 @@ export const columns = [
     cell: ({ row }: any) => <div className="capitalize">{row.getValue("weight")}</div>,
   },
   {
-    accessorKey: "date",
+    accessorKey: "created_at",
     header: "Date",
-    cell: ({ row }: any) => <div className="capitalize">{row.getValue("date")}</div>,
+    cell: ({ row }: any) => (
+      <div>{moment(row.getValue("created_at")).format("MMM Do YYYY")}</div>
+    ),
   },
   {
-    accessorKey: "status",
+    accessorKey: "delivery_status",
     header: "Status",
-    cell: ({ row }: any) => <div className="capitalize">{row.getValue("status")}</div>,
+    cell: ({ row }: any) => {
+      const status = row.getValue("delivery_status");
+      let statusClass = "";
+      switch (status) {
+        case "Pending":
+          statusClass = "bg-yellow-100 text-yellow-800";
+          break;
+        case "Completed":
+          statusClass = "bg-green-100 text-green-800";
+          break;
+        case "Ongoing":
+          statusClass = "bg-blue-100 text-blue-800";
+          break;
+        default:
+          statusClass = "bg-gray-100 text-gray-800";
+      }
+      return (
+        <span className={`px-2 py-1 rounded-full text-xs ${statusClass}`}>
+          {status}
+        </span>
+      );
+    },
   },
 ];
 
-const DashboardPage = () => {  
-
+const ServicesPage = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const { data: historyData, isLoading } = useGetHistoryQuery({ page: currentPage });
-  const [startDate, setStartDate] = useState<string | null>(format(startOfYear(new Date()), 'yyyy-MM-dd'));
-  const [endDate, setEndDate] = useState<string | null>(format(new Date(), 'yyyy-MM-dd'));
+  const [deliveryType, setDeliveryType] = useState<string>("");
 
-  const{ data: Dashboard, isLoading: statLoading } = useGetAdminDashboardStatsQuery({
-    start_date: startDate || undefined,
-    end_date: endDate || undefined,
-  })
+  const { data: deliveriesData, isLoading } = useGetDeliveriesQuery({
+    type: deliveryType,
+    page: currentPage
+  });
 
-  const handleDateChange = (start: Date | null, end: Date | null) => {
-    setStartDate(start ? format(start, 'yyyy-MM-dd') : null);
-    setEndDate(end ? format(end, 'yyyy-MM-dd') : null);
+  const deliveryTypes = [
+    { value: "", label: "All Types" },
+    { value: "same_day", label: "Same Day" },
+    { value: "next_day", label: "Next Day" },
+    { value: "scheduled", label: "Scheduled" },
+    { value: "express", label: "Express" },
+  ];
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
   };
-
-  const radialData = useMemo(() => {
-    if (!Dashboard || isLoading) {
-      return [];
-    }
-
-    const { pieChart } = Dashboard;
-    const { totalDeliveries, pendingDeliveries, completedDeliveries } = pieChart;
-
-    const pendingPercentage = (pendingDeliveries / totalDeliveries) * 100;
-    const completedPercentage = (completedDeliveries / totalDeliveries) * 100;
-
-    return [
-      { name: "Pending Deliveries", value: pendingPercentage, fill: "var(--color-chrome)" },
-      { name: "Completed Deliveries", value: completedPercentage, fill: "var(--color-safari)" },
-    ];
-  }, [data, isLoading]);
-
-  const { sameDayDelivery, nextDayDelivery, scheduledDelivery, expressDelivery } = Dashboard?.serviceStats || {};
-
-  const mergedData = useMemo(() => {
-    return historyData?.data?.deliveries?.data?.map((item: DeliveryItem) => {
-      return {
-        id: item.code || "N/A",
-        tracker: item.code || "N/A",
-        services: item.delivery_type || "N/A",
-        product: item.product_name || "N/A",
-        weight: item.weight || "N/A",
-        date: item.created_at ? moment(item.created_at).format("YYYY-MM-DD") : "N/A",
-        status: item.delivery_status || "N/A",
-      };
-    }) || [];
-  }, [historyData]);
-
-  if (isLoading || statLoading) {
-    return <LoadingSpinner />;
-  }
-
 
   return (
     <div className="p-6">
-
-      <div className='flex justify-between border-b border-gray-400 mb-12 pb-4'>
+      <div className='flex justify-between border-b border-gray-400 mb-6 pb-4'>
         <div className='font-bold text-lg'>
-          Services
+          Delivery Services
         </div>
 
-        <div>
-          <DatePicker
-            date={startDate ? new Date(startDate) : null}   // Convert string to Date object
-            setDate={(date) => handleDateChange(date, endDate ? new Date(endDate) : null)}
-          />
-          
-          {/* Date Picker for selecting endDate */}
-          <DatePicker
-            date={endDate ? new Date(endDate) : null}      // Convert string to Date object
-            setDate={(date) => handleDateChange(startDate ? new Date(startDate) : null, date)}
-          />
-        </div>
+        {/* <div className="flex gap-4">
+          <Select onValueChange={(value) => setDeliveryType(value)}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Filter by type" />
+            </SelectTrigger>
+            <SelectContent>
+              {deliveryTypes.map((type) => (
+                <SelectItem key={type.value} value={type.value}>
+                  {type.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div> */}
       </div>
 
-      {/* <div className='flex gap-x-6 mb-10'>
-        <div> <ChartLine color="#FF8901" data={desktopData1} /> </div>
-
-        <div> <ChartLine color="#FF392B" data={desktopData2} /> </div>
-
-        <div> <ChartLine color="#27BF51" data={desktopData3}  /> </div>
-      </div> */}
-
-      <div className='grid grid-cols-6 gap-x-4 my-10'>
-        <div className='col-span-4'>
-          <MultipleChart />
-        </div>
-
-        <div className='col-span-2'>
-          <RadialChart data={radialData} 
-          sameDayDelivery={sameDayDelivery}
-          nextDayDelivery={nextDayDelivery}
-          scheduledDelivery={scheduledDelivery}
-          expressDelivery={expressDelivery} />
-        </div>
-      </div>
-      
-      <div className='bg-white p-8'>
-        <h1 className="text-xl font-bold mb-4">Order History</h1>      
-          <DataTable data={mergedData} columns={columns} currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={historyData?.data?.deliveries.last_page || 1} />
+      <div className='bg-white p-6 rounded-lg shadow'>
+        <h1 className="text-xl font-bold mb-4">Delivery History</h1>
+        <DataTable
+          data={deliveriesData?.data.items || []}
+          columns={columns}
+          pagination={{
+            currentPage,
+            totalPages: deliveriesData?.data.meta.pagination.total_pages || 1,
+            onPageChange: handlePageChange
+          }}
+        />
       </div>
     </div>
   )
 }
 
-export default DashboardPage
+export default ServicesPage;
