@@ -58,7 +58,6 @@ const UpdateStatus: React.FC = () => {
             className="border p-2 rounded w-full"
           >
             <option value="">Select status</option>
-            <option value={DeliveryStatus.PENDING}>{DeliveryStatus.PENDING}</option>
             <option value={DeliveryStatus.DISPATCHED}>{DeliveryStatus.DISPATCHED}</option>
             <option value={DeliveryStatus.IN_TRANSIT}>{DeliveryStatus.IN_TRANSIT}</option>
             <option value={DeliveryStatus.DELIVERED}>{DeliveryStatus.DELIVERED}</option>

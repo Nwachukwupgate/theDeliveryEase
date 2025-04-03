@@ -4,6 +4,7 @@ import OverviewCard from "./components/OverviewCard";
 import { useGetDeliveryQuery } from "@/api/apiSlice";
 import { CircularProgress } from "@mui/material";
 import UpdateStatus from "./components/UpdateStatus";
+import { DeliveryStatus } from "@/utilities/constants";
 
 const RiderDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -57,7 +58,7 @@ const RiderDetail: React.FC = () => {
       </div>
 
       <div className="mt-4">
-        <UpdateStatus />
+       { delivery_status !== DeliveryStatus.DELIVERED  && <UpdateStatus />}
       </div>
     </div>
   );
