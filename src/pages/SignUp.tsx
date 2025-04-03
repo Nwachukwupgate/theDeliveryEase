@@ -9,7 +9,7 @@ import { Button, CircularProgress } from "@mui/material"; // Import CircularProg
 import GoogleIcon from "@/common/icons/GoogleIcon";
 import { Link } from "react-router-dom";
 import routes from "@/navigation/routes";
-import { useRegisterUserMutation } from "@/api/apiSlice";
+import { useGoogleLoginMutation, useRegisterUserMutation } from "@/api/apiSlice";
 import userStore from "@/utilities/stores";
 import { useGoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
@@ -45,9 +45,12 @@ const SignUp = (): JSX.Element => {
     formState: { errors },
   } = useForm<RegisterApiRequest>({ resolver: joiResolver(schema) });
 
-  const [registerUser, { isLoading }] = useRegisterUserMutation();
+  const [registerUser, { isLoading: isLoginLoading }] = useRegisterUserMutation();
 
-  const onSubmit = handleSubmit(async ({email,first_name,last_name,password,password_confirmation,phone}) => {
+  const [googleSignup, { isLoading: isGoogleLoading }] = useGoogleLoginMutation();
+  const isLoading = isLoginLoading || isGoogleLoading
+
+  const onSubmit = handleSubmit(async ({ email, first_name, last_name, password, password_confirmation, phone }) => {
     try {
       const response = await registerUser({
         first_name,
@@ -75,42 +78,70 @@ const SignUp = (): JSX.Element => {
     }
   });
 
-  const onGoogleSuccess = async (response: any) => {
-    try {
-      const { credential } = response;
-      const googleUser: GoogleUser = jwtDecode<GoogleUser>(credential);
+  // GOOGLE SIGNUP
+  const handleGoogleSignup = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      try {
+        // Get user info from Google
+        const userInfoResponse = await fetch(
+          'https://www.googleapis.com/oauth2/v3/userinfo',
+          {
+            headers: {
+              Authorization: `Bearer ${tokenResponse.access_token}`,
+            },
+          }
+        );
 
-      // Call the registration API with Google details
-      const apiResponse = await registerUser({
-        first_name: googleUser.name.split(" ")[0],
-        last_name: googleUser.name.split(" ")[1] || "",
-        email: googleUser.email,
-        password: "",
-        phone: "",
-        password_confirmation: ""
-      }).unwrap();
+        if (!userInfoResponse.ok) {
+          throw new Error('Failed to get user info from Google');
+        }
 
-      const token = apiResponse.data?.token;
-      const user = { email: apiResponse.data.user?.email };
-      userStore.loginUser(token, user, "user");
-      appToast.Success("Google Sign-Up Successful");
-      navigate(routes.usersRoutes.DASHBOARD);
-    } catch (error) {
-      const errorMessage =
-        (error as ApiError)?.data?.message ||
-        "Google Sign-Up failed. Please try again.";
-      appToast.Error(errorMessage);
-    }
-  };
+        const userInfo = await userInfoResponse.json();
 
-  const onGoogleFailure = () => {
-    appToast.Error("Google Sign-Up failed. Please try again.");
-  };
+        // Call your backend with Google user info
+        const response = await googleSignup({
+          googleToken: tokenResponse.access_token,
+          email: userInfo.email,
+          name: userInfo.name
+        }).unwrap();
 
-  const googleSignup = useGoogleLogin({
-    onSuccess: onGoogleSuccess,
-    onError: onGoogleFailure,
+        const {
+          token,
+          user: { first_name, last_name, role, email },
+        } = response.data;
+
+        const user = {
+          name: `${first_name} ${last_name || ''}`,
+          email: email,
+        };
+
+        // Validate role before login
+        const isValidRole = role === 'admin' || role === 'user' || role === 'rider';
+        const safeRole = isValidRole ? role : 'user';
+
+        userStore.loginUser(token, user, safeRole);
+        appToast.Success(response?.message || "Successfully signed up with Google");
+
+        // Navigate based on role (or to verification if needed)
+        if (response.data.user?.email_verified_at) {
+          navigate(routes.usersRoutes.DASHBOARD);
+        } else {
+          navigate(routes.VERIFY_EMAIL);
+        }
+
+      } catch (error) {
+        console.error('Google signup error:', error);
+        const typedError = error as ApiError;
+        const errorMessage =
+          typedError?.data?.message || "Google Sign-Up failed. Please try again.";
+        appToast.Error(errorMessage);
+      }
+    },
+    onError: () => {
+      appToast.Error("Google Sign-Up failed. Please try again.");
+    },
   });
+
 
   return (
     <div className="bg-successActiveColorLight py-4">
@@ -215,9 +246,17 @@ const SignUp = (): JSX.Element => {
                 borderColor: "#d0d5dd",
                 color: "#344054",
               }}
-              onClick={() => googleSignup()}
+              onClick={() => handleGoogleSignup()}
+              disabled={isLoading}
             >
-              Continue with Google
+              {isGoogleLoading ? (
+                <>
+                  <CircularProgress size={24} color="inherit" />
+                  &nbsp;Processing...
+                </>
+              ) : (
+                "Continue with Google"
+              )}
             </Button>
           </form>
         </div>

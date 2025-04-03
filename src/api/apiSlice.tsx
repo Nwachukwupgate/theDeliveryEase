@@ -17,6 +17,8 @@ import {
   RiderStats,
   SuccessResponse,
   DeliveryResponse,
+  GoogleLoginRequest,
+  LoginResponse,
 } from "../types/types";
 import { baseUrl } from "@/config";
 
@@ -62,6 +64,14 @@ export const apiSlice = createApi({
         body: userData,
       }),
       invalidatesTags: ["User"],
+    }),
+
+    googleLogin: builder.mutation<LoginResponse, GoogleLoginRequest>({
+      query: (googleData) => ({
+        url: '/auth/google-login',
+        method: 'POST',
+        body: googleData,
+      }),
     }),
 
     verifyEmail: builder.mutation<void, verifyRequest>({
@@ -316,4 +326,5 @@ export const {
   useRiderAvailableDeliveriesQuery,
   useRiderAssignedDeliveriesQuery,
   useRiderDashboardStatsQuery,
+  useGoogleLoginMutation
 } = apiSlice;

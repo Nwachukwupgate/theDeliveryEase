@@ -10,28 +10,12 @@ import GoogleIcon from "@/common/icons/GoogleIcon";
 import CheckBox from "@/common/form/CheckBox";
 import { Link } from "react-router-dom";
 import routes from "@/navigation/routes";
-import { useLoginUserMutation } from "@/api/apiSlice";
+import { useLoginUserMutation, useGoogleLoginMutation } from "@/api/apiSlice"; // Update your API slice to include Google login
 import { ApiError, loginApiRequest } from "@/types/types";
 import userStore from "@/utilities/stores";
 import { useNavigate } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
 
-interface GoogleUser {
-  email: string;
-  name: string;
-}
-
-interface ApiResponse {
-  data: {
-    token: string;
-    user: {
-      first_name: string;
-      email: string;
-    };
-  };
-  message: string;
-}
 
 const schema = Joi.object<loginApiRequest>({
   email: joiSchemas.email.required(),
@@ -45,11 +29,10 @@ const Login = (): JSX.Element => {
     formState: { errors },
   } = useForm<loginApiRequest>({ resolver: joiResolver(schema) });
 
-  console.log(errors);
-
   const navigate = useNavigate();
 
-  const [loginUser, { isLoading }] = useLoginUserMutation();
+  const [loginUser, { isLoading: isLoginLoading }] = useLoginUserMutation();
+  const [googleLogin, { isLoading: isGoogleLoading }] = useGoogleLoginMutation();
 
   const onSubmit = handleSubmit(async ({ email: requestEmail, password }) => {
     try {
@@ -57,7 +40,6 @@ const Login = (): JSX.Element => {
         email: requestEmail,
         password,
       }).unwrap();
-      console.log("response", response);
 
       const {
         token,
@@ -65,12 +47,23 @@ const Login = (): JSX.Element => {
       } = response.data;
 
       const user = {
-        name: `${first_name} ${last_name}`,
+        name: `${first_name} ${last_name || ''}`,
         email: email,
       };
 
-      userStore.loginUser(token, user, role);
-      appToast.Success(response?.message);
+      // Check if role is valid
+      const isValidRole = role === 'admin' || role === 'user' || role === 'rider';
+
+      if (isValidRole) {
+        userStore.loginUser(token, user, role); 
+      } else {
+        // Handle invalid roles (e.g., show error, default to 'user')
+        console.error('Invalid role:', role);
+        userStore.loginUser(token, user, 'user'); // Fallback
+      }
+      appToast.Success(response?.message || "Successfully logged in");
+
+      // Navigate based on role
       switch (role) {
         case "admin":
           navigate(routes.AdminRoute.ADMIN_DASHBOARD);
@@ -83,47 +76,75 @@ const Login = (): JSX.Element => {
       }
     } catch (error) {
       const typedError = error as ApiError;
-      console.log("typedError", typedError);
       const errorMessage =
         typedError?.data?.message || "Sign In Failed. Please try again.";
       appToast.Error(errorMessage);
     }
   });
 
-  const onGoogleSuccess = async (response: any) => {
-    try {
-      // Decode JWT response and extract user information
-      const { credential } = response;
-      const googleUser: GoogleUser = jwtDecode<GoogleUser>(credential); // Specify type for jwt_decode
+  // Google login handler
+  const handleGoogleLogin = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      try {
+        // Get user info from Google using the access token
+        const userInfoResponse = await fetch(
+          'https://www.googleapis.com/oauth2/v3/userinfo',
+          {
+            headers: {
+              Authorization: `Bearer ${tokenResponse.access_token}`,
+            },
+          }
+        );
 
-      // Send user data to backend for further processing
-      const apiResponse: ApiResponse = await loginUser({
-        email: googleUser.email,
-      }).unwrap();
+        if (!userInfoResponse.ok) {
+          throw new Error('Failed to get user info from Google');
+        }
 
-      const token = apiResponse.data?.token;
-      const user = {
-        email: apiResponse.data.user?.email,
-      };
-      userStore.loginUser(token, user, "user");
-      appToast.Success(apiResponse?.message);
-      navigate(routes.usersRoutes.DASHBOARD);
-    } catch (error: any) {
-      const errorMessage =
-        error?.data?.message || "Google Sign-In failed. Please try again.";
-      appToast.Error(errorMessage);
-    }
-  };
+        const userInfo = await userInfoResponse.json();
 
-  const onGoogleFailure = () => {
-    // console.error("Google Sign-In Error", error);
-    appToast.Error("Google Sign-In failed. Please try again.");
-  };
+        // Call your backend with Google user info
+        const response = await googleLogin({
+          googleToken: tokenResponse.access_token,
+          email: userInfo.email,
+          name: userInfo.name
+        }).unwrap();
 
-  const login = useGoogleLogin({
-    onSuccess: onGoogleSuccess,
-    onError: onGoogleFailure,
+        const {
+          token,
+          user: { first_name, last_name, role, email },
+        } = response.data;
+
+        const user = {
+          name: `${first_name} ${last_name || ''}`,
+          email: email,
+        };
+
+        // Check if role is valid
+        const isValidRole = role === 'admin' || role === 'user' || role === 'rider';
+
+        if (isValidRole) {
+          userStore.loginUser(token, user, role); // Safe (no cast needed)
+        } else {
+          // Handle invalid roles (e.g., show error, default to 'user')
+          console.error('Invalid role:', role);
+          userStore.loginUser(token, user, 'user'); // Fallback
+        }
+        appToast.Success(response?.message || "Successfully logged in with Google");
+        navigate(routes.usersRoutes.DASHBOARD);
+      } catch (error) {
+        console.error('Google login error:', error);
+        const typedError = error as ApiError;
+        const errorMessage =
+          typedError?.data?.message || "Google Sign-In failed. Please try again.";
+        appToast.Error(errorMessage);
+      }
+    },
+    onError: () => {
+      appToast.Error("Google Sign-In failed. Please try again.");
+    },
   });
+
+  const isLoading = isLoginLoading || isGoogleLoading;
 
   return (
     <div className="h-screen bg-successActiveColorLight">
@@ -166,7 +187,6 @@ const Login = (): JSX.Element => {
                 register={register}
               />
               <p className="text-sm font-bold text-gray-600">
-                {" "}
                 <Link to={routes.FORGOT_PASSWORD_PAGE}>Forget Password</Link>
               </p>
             </div>
@@ -175,13 +195,12 @@ const Login = (): JSX.Element => {
               fullWidth
               type="submit"
               variant="contained"
-              disabled={isLoading} // Disable the button while loading
+              disabled={isLoading}
             >
-              {isLoading ? (
+              {isLoginLoading ? (
                 <>
-                  <CircularProgress size={24} color="inherit" />{" "}
-                  {/* Show spinner */}
-                  &nbsp;Processing... {/* Optional text update */}
+                  <CircularProgress size={24} color="inherit" />
+                  &nbsp;Processing...
                 </>
               ) : (
                 "Sign In"
@@ -191,9 +210,8 @@ const Login = (): JSX.Element => {
             <p className="my-4 text-center text-base md:text-lg">
               Don't have an account?{" "}
               <span className="font-bold">
-                {" "}
                 <Link to={routes.REGISTER_PAGE}>Sign Up</Link>
-              </span>{" "}
+              </span>
             </p>
 
             <p className="mb-2 text-center text-sm font-bold md:text-lg">Or</p>
@@ -208,9 +226,17 @@ const Login = (): JSX.Element => {
                 borderColor: "#d0d5dd",
                 color: "#344054",
               }}
-              onClick={() => login()}
+              onClick={() => handleGoogleLogin()}
+              disabled={isLoading}
             >
-              Continue with Google
+              {isGoogleLoading ? (
+                <>
+                  <CircularProgress size={24} color="inherit" />
+                  &nbsp;Processing...
+                </>
+              ) : (
+                "Continue with Google"
+              )}
             </Button>
           </form>
         </div>
