@@ -1,6 +1,6 @@
 import DeliveringCard from "./components/DeliveringCard";
 import {
-  useRiderActiveDeliveriesQuery,
+  useRiderAssignedDeliveriesQuery,
   useRiderAvailableDeliveriesQuery
 } from "@/api/apiSlice";
 import { CircularProgress, Button, Typography } from "@mui/material";
@@ -21,7 +21,7 @@ const DeliveriesPage = () => {
     isFetching,
   } = isAvailableDeliveries
       ? useRiderAvailableDeliveriesQuery({ page })
-      : useRiderActiveDeliveriesQuery({ page });
+      : useRiderAssignedDeliveriesQuery({ page });
 
   const handleNextPage = () => setPage(prev => prev + 1);
   const handlePrevPage = () => setPage(prev => Math.max(prev - 1, 1));
@@ -30,7 +30,7 @@ const DeliveriesPage = () => {
     <div className="p-3 lg:p-6">
       <div className="flex justify-between border-b border-gray-400 mb-12 pb-4">
         <div className="font-bold text-lg">
-          {isAvailableDeliveries ? 'Available Deliveries' : 'My Active Deliveries'}
+          {isAvailableDeliveries ? 'Available Deliveries' : 'My Assigned Deliveries'}
         </div>
       </div>
 
@@ -50,7 +50,7 @@ const DeliveriesPage = () => {
                 address={delivery.pickup_address}
                 status={delivery.delivery_status}
                 date={delivery.created_at}
-                selected={!isAvailableDeliveries} // Highlight active deliveries
+                selected={!isAvailableDeliveries} 
                 showAction={true}
                 isAvailableDelivery={isAvailableDeliveries}
               />

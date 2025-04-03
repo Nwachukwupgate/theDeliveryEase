@@ -49,6 +49,7 @@ export interface Delivery {
   rider: null | {
     id: number;
     first_name: string;
+    last_name: string;
     email: string;
     phone: string;
   };
@@ -79,6 +80,16 @@ export interface DeliveriesResponse {
   };
 }
 
+export interface DeliveryResponse {
+  success: boolean;
+  code: number;
+  locale: string;
+  message: string;
+  data: {
+    item: Delivery;
+  };
+}
+
 export interface BarChartItem {
   month: number;
   year: number;
@@ -95,7 +106,7 @@ export interface RiderStats {
   };
 }
 
-export interface SuccessResponse{
+export interface SuccessResponse {
   success: boolean;
   code: number;
   message: string;

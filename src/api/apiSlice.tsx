@@ -16,6 +16,7 @@ import {
   DeliveriesResponse,
   RiderStats,
   SuccessResponse,
+  DeliveryResponse,
 } from "../types/types";
 import { baseUrl } from "@/config";
 
@@ -156,9 +157,9 @@ export const apiSlice = createApi({
       providesTags: ["Delivery"],
     }),
 
-    getDelivery: builder.query<Delivery, number>({
+    getDelivery: builder.query<DeliveryResponse, number>({
       query: (id) => ({
-        url: `delivery/${id}`,
+        url: `deliveries/${id}`,
       }),
       providesTags: ["Delivery"],
     }),
@@ -243,7 +244,7 @@ export const apiSlice = createApi({
     }),
 
     riderAvailableDeliveries: builder.query<DeliveriesResponse, { page: number }>({
-      query: ({page}) => ({
+      query: ({ page }) => ({
         url: `deliveries/available`,
         params: { page },
         method: "GET",
@@ -251,7 +252,7 @@ export const apiSlice = createApi({
       providesTags: ["Delivery"],
     }),
 
-    riderActiveDeliveries: builder.query<DeliveriesResponse, { page: number }>({
+    riderAssignedDeliveries: builder.query<DeliveriesResponse, { page: number }>({
       query: ({ page }) => ({
         url: `/rider/deliveries`,
         params: { page },
@@ -265,27 +266,24 @@ export const apiSlice = createApi({
         url: `/deliveries/${deliveryId}/claim`,
         method: 'POST',
       }),
-      invalidatesTags: ['Delivery']
+      invalidatesTags: ['Delivery', 'Dashboard']
     }),
-  
+
     ridersReject: builder.mutation<SuccessResponse, string>({
       query: (deliveryId) => ({
         url: `/rider/delivery/${deliveryId}/reject`,
         method: 'POST',
       }),
-      invalidatesTags: ['Delivery']
+      invalidatesTags: ['Delivery', 'Dashboard']
     }),
 
-    updateDeliveryStatus: builder.mutation<
-      { message: string },
-      { id: number; status: string; location: string }
-    >({
-      query: ({ id, status, location }) => ({
-        url: `delivery/${id}/status`,
+    updateDeliveryStatus: builder.mutation<SuccessResponse, { id: number; status: string }>({
+      query: ({ id, status }) => ({
+        url: `deliveries/${id}/status`,
         method: "PATCH",
-        body: { status, location },
+        body: { status },
       }),
-      invalidatesTags: ["Delivery"], // Adjust tags as needed
+      invalidatesTags: ["Delivery", "Dashboard"],
     }),
   }),
 });
@@ -316,6 +314,6 @@ export const {
   useForgotPasswordMutation,
   useResetPasswordMutation,
   useRiderAvailableDeliveriesQuery,
-  useRiderActiveDeliveriesQuery,
+  useRiderAssignedDeliveriesQuery,
   useRiderDashboardStatsQuery,
 } = apiSlice;

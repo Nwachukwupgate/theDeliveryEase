@@ -7,7 +7,7 @@ import NextDay from "../../common/icons/NextDay";
 import DeliveryCard from "./components/DeliveryCard";
 import ViewIcon from "../../common/icons/ViewIcon";
 import { useGetDeliveriesQuery, useGetDashboardQuery } from "@/api/apiSlice";
-import { Delivery, DeliveriesResponse } from "@/types/types";
+import { Delivery } from "@/types/types";
 import { CircularProgress } from "@mui/material";
 import moment from "moment";
 

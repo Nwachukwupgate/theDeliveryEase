@@ -1,6 +1,6 @@
 import {
   useRiderAvailableDeliveriesQuery,
-  useRiderActiveDeliveriesQuery,
+  useRiderAssignedDeliveriesQuery,
   useRiderDashboardStatsQuery
 } from "@/api/apiSlice";
 import DashboardCard from "./components/DashboardCard";
@@ -19,11 +19,11 @@ const DashboardPage = () => {
     isLoading: loadingAvailable
   } = useRiderAvailableDeliveriesQuery({ page: 1 });
 
-  // Active deliveries (already claimed by rider)
+  // Assigned deliveries (already claimed by rider)
   const {
-    data: activeDeliveries,
+    data: assignedDeliveries,
     isLoading: loadingActive
-  } = useRiderActiveDeliveriesQuery({ page: 1 });
+  } = useRiderAssignedDeliveriesQuery({ page: 1 });
 
   return (
     <div className="p-3 lg:p-6">
@@ -61,13 +61,13 @@ const DashboardPage = () => {
 
       {/* Active Deliveries Section */}
       <div className="my-4 rounded-2xl bg-white p-4">
-        <h2 className="my-3 text-xl font-bold">My Active Deliveries</h2>
+        <h2 className="my-3 text-xl font-bold">Assigned Deliveries</h2>
 
         {loadingActive ? (
           <CircularProgress size={"24px"} color="inherit" />
-        ) : activeDeliveries?.data?.items?.length ? (
+        ) : assignedDeliveries?.data?.items?.length ? (
           <>
-            {activeDeliveries.data.items.slice(0, 6).map((delivery) => (
+            {assignedDeliveries.data.items.slice(0, 6).map((delivery) => (
               <DeliveringCard
                 key={delivery.code}
                 id={`${delivery.id}`}
@@ -85,7 +85,7 @@ const DashboardPage = () => {
             </div>
           </>
         ) : (
-          <p className="text-gray-500">No active deliveries found</p>
+          <p className="text-gray-500">No assigned deliveries found</p>
         )}
       </div>
 
