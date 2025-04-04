@@ -2,7 +2,7 @@ import { DataTable } from './components/DataTable'
 import { useState } from "react"
 import { useGetDeliveriesQuery } from '@/api/apiSlice';
 import moment from 'moment';
-import { DeliveryType } from '@/utilities/constants';
+import { DeliveryStatus, DeliveryType } from '@/utilities/constants';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -50,13 +50,13 @@ export const columns = [
       const status = row.getValue("delivery_status");
       let statusClass = "";
       switch (status) {
-        case "Pending":
+        case DeliveryStatus.DISPATCHED:
           statusClass = "bg-yellow-100 text-yellow-800";
           break;
-        case "Completed":
+        case DeliveryStatus.DELIVERED:
           statusClass = "bg-green-100 text-green-800";
           break;
-        case "Ongoing":
+        case DeliveryStatus.IN_TRANSIT:
           statusClass = "bg-blue-100 text-blue-800";
           break;
         default:
@@ -75,7 +75,7 @@ const ServicesPage = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [deliveryType, setDeliveryType] = useState<string>("");
 
-  const { data: deliveriesData, isLoading } = useGetDeliveriesQuery({
+  const { data: deliveriesData } = useGetDeliveriesQuery({
     type: deliveryType,
     page: currentPage
   });

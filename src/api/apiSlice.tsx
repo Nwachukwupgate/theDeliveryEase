@@ -10,7 +10,6 @@ import {
   DashboardQueryParams,
   BikerReq,
   DeliveryHistoryResponse,
-  Delivery,
   dataResponse,
   resetPassword,
   DeliveriesResponse,
@@ -228,8 +227,12 @@ export const apiSlice = createApi({
       invalidatesTags: ["User"],
     }),
 
-    getBikers: builder.query<Record<string, any>, void>({
-      query: () => "/admin/riders",
+    getAvailableRiders: builder.query({
+      query: ({ page = 1, per_page = 20 }) => ({
+        url: `admin/riders`,
+        params: { available: true, page, per_page },
+        method: "GET",
+      }),
       providesTags: ["Delivery"],
     }),
 
@@ -238,7 +241,7 @@ export const apiSlice = createApi({
       { delivery_id: string; rider_id: number }
     >({
       query: ({ delivery_id, rider_id }) => ({
-        url: `admin/deliveries/${delivery_id}/assign`,
+        url: `admin/delivery/${delivery_id}/assign`,
         method: "POST",
         body: { rider_id },
       }),
@@ -314,7 +317,7 @@ export const {
   useGetDeliveryHistoryStatsQuery,
   useGetAdminDashboardStatsQuery,
   useCreateRiderMutation,
-  useGetBikersQuery,
+  useGetAvailableRidersQuery,
   useAssignRiderMutation,
   useGetDeliveryQuery,
   useGetDeliveriesQuery,
