@@ -6,3 +6,10 @@ export const DeliveryStatus = {
     // REJECTED: "Rejected",
     // CANCELLED: "Cancelled",
   } as const;
+
+export const DeliveryType = {
+    NEXT_DAY: "next_day",
+    SAME_DAY: "same_day",
+    EXPRESS: "express",
+    SCHEDULED: "scheduled",
+  } as const;

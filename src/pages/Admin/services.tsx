@@ -2,17 +2,14 @@ import { DataTable } from './components/DataTable'
 import { useState } from "react"
 import { useGetDeliveriesQuery } from '@/api/apiSlice';
 import moment from 'moment';
-// import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
-export interface Delivery {
-  id: number;
-  code: string;
-  delivery_type: "same_day" | "next_day" | "scheduled" | "express";
-  product_name: string;
-  weight: string;
-  delivery_status: string;
-  created_at: string;
-}
+import { DeliveryType } from '@/utilities/constants';
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
+import { Button } from '@/components/ui/button';
 
 export const columns = [
   {
@@ -25,7 +22,7 @@ export const columns = [
     header: "Service Type",
     cell: ({ row }: any) => {
       const type = row.getValue("delivery_type");
-      const formattedType = type.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
+      const formattedType = type.replace('_', ' ').replace(/\b\w/g, (l: string) => l.toUpperCase());
       return <div>{formattedType}</div>;
     },
   },
@@ -85,15 +82,17 @@ const ServicesPage = () => {
 
   const deliveryTypes = [
     { value: "", label: "All Types" },
-    { value: "same_day", label: "Same Day" },
-    { value: "next_day", label: "Next Day" },
-    { value: "scheduled", label: "Scheduled" },
-    { value: "express", label: "Express" },
+    { value: DeliveryType.SAME_DAY, label: "Same Day" },
+    { value: DeliveryType.NEXT_DAY, label: "Next Day" },
+    { value: DeliveryType.SCHEDULED, label: "Scheduled" },
+    { value: DeliveryType.EXPRESS, label: "Express" },
   ];
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
+
+  const selectedTypeLabel = deliveryTypes.find(type => type.value === deliveryType)?.label || "Filter by type";
 
   return (
     <div className="p-6">
@@ -102,20 +101,26 @@ const ServicesPage = () => {
           Delivery Services
         </div>
 
-        {/* <div className="flex gap-4">
-          <Select onValueChange={(value) => setDeliveryType(value)}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Filter by type" />
-            </SelectTrigger>
-            <SelectContent>
+        <div className="flex gap-4">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="w-[180px] justify-start">
+                {selectedTypeLabel}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-[180px]">
               {deliveryTypes.map((type) => (
-                <SelectItem key={type.value} value={type.value}>
+                <DropdownMenuItem
+                  key={type.value}
+                  onClick={() => setDeliveryType(type.value)}
+                  className={deliveryType === type.value ? "bg-accent" : ""}
+                >
                   {type.label}
-                </SelectItem>
+                </DropdownMenuItem>
               ))}
-            </SelectContent>
-          </Select>
-        </div> */}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
 
       <div className='bg-white p-6 rounded-lg shadow'>
