@@ -6,42 +6,51 @@ import PhoneIcon from "@/common/icons/PhoneIcon"
 import AddressIcon from "@/common/icons/AddressIcon"
 import QuantityIcon from "@/common/icons/QuantityIcon"
 import { useCreateRiderMutation } from "@/api/apiSlice";
-import { ApiError } from "@/types/types";
+import { ApiError, RegisterApiRequest } from "@/types/types";
 import { appToast } from "@/utilities/appToast";
+import Joi from "joi";
+import { joiSchemas } from "@/utilities/schema";
+import { joiResolver } from "@hookform/resolvers/joi";
 
 
-interface DeliveryReq {
-    first_name: string;
-    last_name: string;
-    email: string;
-    password: string;
-    phone: string;
-}
+const schema = Joi.object<RegisterApiRequest>({
+    first_name: joiSchemas.first_name,
+    last_name: joiSchemas.last_name,
+    email: joiSchemas.email,
+    phone: joiSchemas.phone,
+    password: joiSchemas.password,
+    password_confirmation: joiSchemas.confirmPassword,
+});
 
 const RiderForm: React.FC = () => {
+
     const {
         handleSubmit,
         register,
         formState: { errors },
-        reset
-    } = useForm<DeliveryReq>();
+        reset,
+    } = useForm<RegisterApiRequest>({ resolver: joiResolver(schema) });
 
-    const [ createRider, { isLoading }] = useCreateRiderMutation()
+    console.log(errors);
+    
 
-    const onSubmit = handleSubmit(async (data) => {
+    const [createRider, { isLoading }] = useCreateRiderMutation()
+
+    const onSubmit = handleSubmit(async ({ email, first_name, last_name, password, password_confirmation, phone }) => {
         try {
             const response = await createRider({
-            first_name: data.first_name,
-            last_name: data.last_name,
-            email: data.email,
-            password: data.password,
-            phone: data.phone
-            }).unwrap(); 
+                first_name,
+                last_name,
+                email,
+                password,
+                phone,
+                password_confirmation
+            }).unwrap();
             appToast.Success(response?.message);
             reset()
         } catch (error) {
-            const typedError = error as ApiError;   
-            const errorMessage = typedError?.data?.message || "Sign Up Failed. Please try again.";     
+            const typedError = error as ApiError;
+            const errorMessage = typedError?.data?.message || "Create rider failed. Please try again.";
             appToast.Error(errorMessage)
         }
     });
@@ -51,16 +60,16 @@ const RiderForm: React.FC = () => {
             <div>
                 <h3 className="font-bold text-lg mb-4">Create Riders</h3>
                 <div className="grid grid-cols-2 gap-8">
-                    
-                    <IconInput 
-                        placeholder="Bikers First Name"
+
+                    <IconInput
+                        placeholder="Rider First Name"
                         name="first_name"
                         register={register}
                         error={errors.first_name}
                         icon={<NameIcon />}
                     />
 
-                    <IconInput 
+                    <IconInput
                         placeholder="Last Name"
                         name="last_name"
                         register={register}
@@ -68,51 +77,64 @@ const RiderForm: React.FC = () => {
                         icon={<NameIcon />}
                     />
 
-                    <IconInput 
+                    <IconInput
                         placeholder="Phone Number"
                         name="phone"
                         register={register}
                         error={errors.phone}
                         icon={<PhoneIcon />}
+                        type="tel"
                     />
 
-                    <IconInput 
+                    <IconInput
                         placeholder="Email"
                         name="email"
                         register={register}
                         error={errors.email}
                         icon={<AddressIcon />}
+                        type="email"
                     />
 
-                    <IconInput 
+                    <IconInput
                         placeholder="Password"
                         name="password"
                         register={register}
                         error={errors.password}
                         icon={<QuantityIcon />}
+                        type="password"
+                        showPasswordToggle
+                    />
+                    <IconInput
+                        placeholder="Confirm Password"
+                        name="password_confirmation"
+                        register={register}
+                        error={errors.password_confirmation}
+                        icon={<QuantityIcon />}
+                        type="password"
+                        showPasswordToggle
                     />
 
                 </div>
             </div>
 
             <div className="flex justify-center mt-4">
-                <Button  
-                    type="submit" 
+                <Button
+                    type="submit"
                     variant="contained"
-                    sx={{width: "250px"}}
-                    disabled={isLoading}  
+                    sx={{ width: "250px" }}
+                    disabled={isLoading}
                 >
                     {isLoading ? (
                         <>
-                          <CircularProgress size={24} color="inherit" /> 
-                          &nbsp;Processing...
+                            <CircularProgress size={24} color="inherit" />
+                            &nbsp;Processing...
                         </>
-                      ) : (
+                    ) : (
                         'Save'
-                    )}                   
+                    )}
                 </Button>
             </div>
-            
+
         </form>
     );
 }

@@ -36,7 +36,7 @@ const SettingsPage = lazy(
 );
 const RiderDashBoard = lazy(() => import("@/pages/Riders"));
 const DeliveryDetails = lazy(() => import("@/pages/Riders/DeliveryDetails"));
-const CreateRiders = lazy(() => import("@/pages/Admin/rider"));
+const CreateRiders = lazy(() => import("@/pages/Admin/createRider"));
 const RiderDeliveries = lazy(
   () => import("@/pages/Riders/deliveries"),
 );

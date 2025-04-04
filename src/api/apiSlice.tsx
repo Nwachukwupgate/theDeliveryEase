@@ -8,7 +8,6 @@ import {
   EditUser,
   PasswordtReq,
   DashboardQueryParams,
-  BikerReq,
   DeliveryHistoryResponse,
   dataResponse,
   resetPassword,
@@ -218,7 +217,7 @@ export const apiSlice = createApi({
       providesTags: ["User"],
     }),
 
-    createRider: builder.mutation<dataResponse, BikerReq>({
+    createRider: builder.mutation<SuccessResponse, RegisterApiRequest>({
       query: (userData) => ({
         url: "admin/create-rider",
         method: "POST",

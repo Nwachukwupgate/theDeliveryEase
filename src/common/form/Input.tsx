@@ -51,11 +51,10 @@ const Input = ({
           type={inputType}
           disabled={disabled}
           {...register(name)}
-          className={`w-full rounded-3xl border px-4 py-2.5 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary ${
-            error
+          className={`w-full rounded-3xl border px-4 py-2.5 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary ${error
               ? "border-error bg-errorBg placeholder-errorLight"
               : "border-gray-300 bg-primaryActiveColorLight hover:border-gray-400"
-          } ${disabled ? "cursor-not-allowed bg-gray-100" : ""}`}
+            } ${disabled ? "cursor-not-allowed bg-gray-100" : ""}`}
           aria-invalid={error ? "true" : "false"}
         />
 
@@ -76,7 +75,7 @@ const Input = ({
       </div>
 
       {error && (
-        <p className="text-error mt-1 text-sm" id={`${name}-error`}>
+        <p className="text-red-500 mt-1 text-sm" id={`${name}-error`}>
           {error.message}
         </p>
       )}

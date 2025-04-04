@@ -257,14 +257,6 @@ export interface DashboardQueryParams {
   end_date?: string;
 }
 
-export interface BikerReq {
-  first_name: string;
-  last_name: string;
-  email: string;
-  password: string;
-  phone: string;
-}
-
 export interface DeliveryData {
   name: string;
   recieverName: string;

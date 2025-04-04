@@ -12,14 +12,8 @@ import routes from "@/navigation/routes";
 import { useGoogleLoginMutation, useRegisterUserMutation } from "@/api/apiSlice";
 import userStore from "@/utilities/stores";
 import { useGoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { RegisterApiRequest } from "@/types/types";
-
-interface GoogleUser {
-  email: string;
-  name: string;
-}
 
 interface ApiError {
   data?: {
