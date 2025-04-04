@@ -2,7 +2,7 @@ import UsersNav from "@/layout/SideBar/UsersNav"
 import RidersNav from "./RidersNav";
 import userStore from '@/utilities/stores'; 
 import { useSnapshot } from 'valtio';
-import AdminNav from "@/layout/SideBar/Admin";
+import AdminNav from "@/layout/SideBar/AdminNav";
 
 
 const Nav: React.FC = () => {

@@ -10,11 +10,11 @@ const normalBar = [
     link: routes.usersRoutes.DASHBOARD,
     iconSize: 30,
   },
-  {
-    icon: "TrackingIcon",
-    text: "Tracking",
-    link: routes.usersRoutes.TRACKING,
-  },
+  // {
+  //   icon: "TrackingIcon",
+  //   text: "Tracking",
+  //   link: routes.usersRoutes.TRACKING,
+  // },
   {
     icon: "DeliveryIcon",
     text: "Add Deliveries",
@@ -30,21 +30,21 @@ const normalBar = [
     text: "Contact",
     link: routes.usersRoutes.CONTACT,
   },
-  {
-    icon: "SettingIcon",
-    text: "Settings",
-    link: routes.usersRoutes.SETTING,
-  },
+  // {
+  //   icon: "SettingIcon",
+  //   text: "Settings",
+  //   link: routes.usersRoutes.SETTING,
+  // },
 ];
 
 const UsersNav: React.FC = () => {
-    return (
-      <>
-        {...normalBar.map((props) => {
-          return <SideNavLink key={props.text} {...props} />;
-        })}
-      </>
-    );
-  };
-  
-  export default UsersNav;
+  return (
+    <>
+      {...normalBar.map((props) => {
+        return <SideNavLink key={props.text} {...props} />;
+      })}
+    </>
+  );
+};
+
+export default UsersNav;
