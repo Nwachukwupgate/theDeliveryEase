@@ -1,6 +1,5 @@
 import { Delivery } from "@/types/types";
 import { useEffect, useState } from "react";
-import { DeliverySteps } from "..";
 
 // type Stop = {
 //     label: string;
@@ -99,15 +98,6 @@ const OverviewCard: React.FC<OverviewProps> = ({ selectedDelivery }) => {
                         </>
                       ) : <></>
                     }
-                </div>
-            </div>
-
-            <div className="border border-gray-300 rounded-lg p-4 mt-4 lg:mt-0">
-                <h4 className="font-bold">Stops</h4>
-                <div className="relative mt-6">
-                {/* Vertical Line */}
-                    <div className="absolute w-px h-full bg-[#581756] left-2.5 top-0"></div>
-                    <DeliverySteps showExtras={true} delivery={selectedDelivery} />
                 </div>
             </div>
         </div>

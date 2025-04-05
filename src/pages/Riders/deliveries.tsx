@@ -4,7 +4,7 @@ import {
   useRiderAvailableDeliveriesQuery
 } from "@/api/apiSlice";
 import { CircularProgress, Button, Typography } from "@mui/material";
-import { Link, useLocation } from 'react-router-dom';
+import {  useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import routes from '@/navigation/routes';
 

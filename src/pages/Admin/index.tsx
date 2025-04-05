@@ -49,7 +49,7 @@ const DashboardPage = () => {
   const [startDate, setStartDate] = useState<string | null>(format(startOfYear(new Date()), 'yyyy-MM-dd'));
   const [endDate, setEndDate] = useState<string | null>(format(new Date(), 'yyyy-MM-dd'));
 
-  const { data: dashboardData, isLoading } = useGetAdminDashboardStatsQuery({
+  const { data: dashboardData } = useGetAdminDashboardStatsQuery({
     start_date: startDate || undefined,
     end_date: endDate || undefined,
   });
