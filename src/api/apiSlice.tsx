@@ -20,7 +20,7 @@ import {
 } from "../types/types";
 // import { baseUrl } from "@/config";
 
-const api_origin = import.meta.env.VITE_API_URL
+const api_origin = import.meta.env.VITE_APP_BASE_URL
 
 export const apiSlice = createApi({
   reducerPath: "api",
