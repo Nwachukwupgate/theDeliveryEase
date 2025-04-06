@@ -154,7 +154,7 @@ export const apiSlice = createApi({
         method: "POST",
         body: userData,
       }),
-      invalidatesTags: ["Delivery"],
+      invalidatesTags: ["Delivery", "Dashboard"],
     }),
 
     getHistory: builder.query<Record<string, any>, { page: number }>({
