@@ -1,7 +1,7 @@
 import {
-  useRiderAvailableDeliveriesQuery,
   useRiderAssignedDeliveriesQuery,
-  useRiderDashboardStatsQuery
+  useRiderDashboardStatsQuery,
+  useGetDeliveriesQuery
 } from "@/api/apiSlice";
 import DashboardCard from "./components/DashboardCard";
 import DeliveringCard from "./components/DeliveringCard";
@@ -14,10 +14,10 @@ const DashboardPage = () => {
   const { data: dashboardData } = useRiderDashboardStatsQuery();
 
   // Available deliveries (not yet claimed)
-  const {
-    data: availableDeliveries,
-    isLoading: loadingAvailable
-  } = useRiderAvailableDeliveriesQuery({ page: 1 });
+  const { data: availableDeliveries,
+    isLoading: loadingAvailable } = useGetDeliveriesQuery({
+      page: 1
+    });
 
   // Assigned deliveries (already claimed by rider)
   const {

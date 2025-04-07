@@ -174,11 +174,12 @@ export const apiSlice = createApi({
 
     getDeliveries: builder.query<
       DeliveriesResponse,
-      { type?: string; page?: number }
+      { type?: string; page?: number, status?: string }
     >({
-      query: ({ type, page }) => {
+      query: ({ type, page,status }) => {
         const params = new URLSearchParams();
         if (type) params.append("type", type);
+        if (status) params.append("status", status);
         if (page) params.append("page", page.toString());
 
         return {
@@ -244,7 +245,7 @@ export const apiSlice = createApi({
         method: "POST",
         body: { rider_id },
       }),
-      invalidatesTags: ["Delivery"],
+      invalidatesTags: ["Deliveries", "Dashboard","Delivery"],
     }),
 
     riderDashboardStats: builder.query<RiderStats, void>({
@@ -253,15 +254,6 @@ export const apiSlice = createApi({
         method: "GET",
       }),
       providesTags: ["Dashboard"],
-    }),
-
-    riderAvailableDeliveries: builder.query<DeliveriesResponse, { page: number }>({
-      query: ({ page }) => ({
-        url: `deliveries/available`,
-        params: { page },
-        method: "GET",
-      }),
-      providesTags: ["Delivery"],
     }),
 
     riderAssignedDeliveries: builder.query<DeliveriesResponse, { page: number }>({
@@ -325,7 +317,6 @@ export const {
   useUpdateDeliveryStatusMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
-  useRiderAvailableDeliveriesQuery,
   useRiderAssignedDeliveriesQuery,
   useRiderDashboardStatsQuery,
   useGoogleLoginMutation

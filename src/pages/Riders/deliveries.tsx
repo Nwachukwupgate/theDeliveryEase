@@ -1,12 +1,13 @@
 import DeliveringCard from "./components/DeliveringCard";
 import {
+  useGetDeliveriesQuery,
   useRiderAssignedDeliveriesQuery,
-  useRiderAvailableDeliveriesQuery
 } from "@/api/apiSlice";
 import { CircularProgress, Button, Typography } from "@mui/material";
 import {  useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import routes from '@/navigation/routes';
+import { DeliveryStatus } from "@/utilities/constants";
 
 const DeliveriesPage = () => {
   const location = useLocation();
@@ -20,7 +21,7 @@ const DeliveriesPage = () => {
     isLoading,
     isFetching,
   } = isAvailableDeliveries
-      ? useRiderAvailableDeliveriesQuery({ page })
+      ? useGetDeliveriesQuery({ page, status: DeliveryStatus.PENDING })
       : useRiderAssignedDeliveriesQuery({ page });
 
   const handleNextPage = () => setPage(prev => prev + 1);

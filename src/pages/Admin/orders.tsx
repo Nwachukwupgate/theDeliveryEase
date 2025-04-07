@@ -1,19 +1,20 @@
 import { useState } from "react"
 import { DataTable } from './components/DataTable'
 import {
-  useRiderAvailableDeliveriesQuery,
+  useGetDeliveriesQuery,
 } from '@/api/apiSlice';
 import moment from 'moment';
 import AssignRiderModal from "./components/AssignRiderModal";
+import { DeliveryStatus } from "@/utilities/constants";
 
 const OrdersPage = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [selectedDeliveryId, setSelectedDeliveryId] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Fetch available deliveries
-  const { data: deliveriesData } = useRiderAvailableDeliveriesQuery({
-    page: currentPage
+  const { data: deliveriesData } = useGetDeliveriesQuery({
+    page: currentPage,
+    status:DeliveryStatus.PENDING
   });
 
   const { meta: { pagination }, items } = deliveriesData?.data || { meta: {}, items: [] };
