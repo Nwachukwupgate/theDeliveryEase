@@ -69,12 +69,42 @@ export const joiSchemas = {
       "any.required": "Password is a required field",
     }),
 
-  confirmPassword: Joi.any()
-    .valid(Joi.ref("password")) // Ensures it matches the password
+  confirmPassword: Joi.any().valid(Joi.ref("password")).required().messages({
+    "any.only": "Confirm password must match the password",
+    "any.required": "Confirm password is required",
+  }),
+
+  old_password: Joi.string().required().messages({
+    "string.empty": "Old password is required",
+    "any.required": "Old password is a required field",
+  }),
+
+  new_password: Joi.string()
+    .min(4)
+    .max(30)
+    .pattern(new RegExp("(?=.*[a-z])"))
+    .pattern(new RegExp("(?=.*[A-Z])"))
+    .pattern(new RegExp("(?=.*\\d)"))
+    .pattern(new RegExp("(?=.*[!@#$%^&*])"))
+    .required()
+    .not(Joi.ref("old_password"))
+    .messages({
+      "string.min": "Password must be at least 4 characters long",
+      "string.max": "Password must not exceed 30 characters",
+      "string.pattern.base":
+        "Password must include at least one uppercase letter, one lowercase letter, one digit, and one special character",
+      "string.empty": "Password is required and cannot be empty",
+      "any.required": "Password is a required field",
+      "any.not": "New password cannot be same as old password",
+    }),
+
+  confirm_new_password: Joi.string()
+    .valid(Joi.ref("new_password"))
     .required()
     .messages({
-      "any.only": "Confirm password must match the password",
-      "any.required": "Confirm password is required",
+      "any.only": "Confirm new password must match new password",
+      "string.empty": "Confirm new password is required",
+      "any.required": "Confirm new password is a required field",
     }),
 };
 
