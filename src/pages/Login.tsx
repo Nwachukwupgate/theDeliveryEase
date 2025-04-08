@@ -43,12 +43,13 @@ const Login = (): JSX.Element => {
 
       const {
         token,
-        user: { first_name, last_name, role, email },
+        user: { first_name, last_name, role, email,id:userId },
       } = response.data;
 
       const user = {
         name: `${first_name} ${last_name || ''}`,
         email: email,
+        id:userId
       };
 
       // Check if role is valid
@@ -111,12 +112,13 @@ const Login = (): JSX.Element => {
 
         const {
           token,
-          user: { first_name, last_name, role, email },
+          user: { first_name, last_name, role, email,id },
         } = response.data;
 
         const user = {
           name: `${first_name} ${last_name || ''}`,
           email: email,
+          id
         };
 
         // Check if role is valid

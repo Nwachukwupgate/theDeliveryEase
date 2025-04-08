@@ -6,12 +6,8 @@ const userStore = proxy({
   user: null as { name?: string; email: string,  id?: number;  } | null,
   userType: null as 'admin' | 'user' | 'rider' | null,
 
-  get userId() {
-    return this.user?.id;
-  },
-
   // Method to log in the user and save to localStorage
-  loginUser(token: string, user: { name?: string; email: string }, userType: 'admin' | 'user' | 'rider') {
+  loginUser(token: string, user: {id?: number; name?: string; email: string }, userType: 'admin' | 'user' | 'rider') {
     this.token = token;
     this.user = user;
     this.userType = userType;
