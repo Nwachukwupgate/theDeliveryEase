@@ -1,4 +1,4 @@
-import { FieldError, UseFormRegister } from "react-hook-form";
+import { FieldError, RegisterOptions, UseFormRegister } from "react-hook-form";
 import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material"; // Using MUI icons
 
@@ -12,6 +12,7 @@ interface InputProps {
   showPasswordToggle?: boolean;
   className?: string;
   disabled?: boolean;
+  rules?: RegisterOptions;
 }
 
 const Input = ({
@@ -24,6 +25,7 @@ const Input = ({
   showPasswordToggle = false,
   className = "",
   disabled = false,
+  rules = {},
 }: InputProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -50,10 +52,10 @@ const Input = ({
           placeholder={placeholder}
           type={inputType}
           disabled={disabled}
-          {...register(name)}
+          {...register(name, rules)}
           className={`w-full rounded-3xl border px-4 py-2.5 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary ${error
-              ? "border-error bg-errorBg placeholder-errorLight"
-              : "border-gray-300 bg-primaryActiveColorLight hover:border-gray-400"
+            ? "border-error bg-errorBg placeholder-errorLight"
+            : "border-gray-300 bg-primaryActiveColorLight hover:border-gray-400"
             } ${disabled ? "cursor-not-allowed bg-gray-100" : ""}`}
           aria-invalid={error ? "true" : "false"}
         />

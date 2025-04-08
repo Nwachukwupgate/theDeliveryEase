@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import SettingsNav from './components/SettingsNav';
 import MyDetails from './components/MyDetails';
-import ProfilePage from './components/ProfilePage';
 import ChangePassword from './components/ChangePassword';
 import NotificationPage from './components/NotificationPage';
 
@@ -22,7 +21,6 @@ const SettingsPage = () => {
 
       {/* Render the appropriate component based on the active page */}
       {activePage === 'myDetails' && <MyDetails />}
-      {activePage === 'profile' && <ProfilePage />}
       {activePage === 'changePassword' && <ChangePassword />}
       {activePage === 'notifications' && <NotificationPage />}
     </div>

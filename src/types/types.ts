@@ -266,10 +266,10 @@ export interface RiderDeliveries {
 export interface EditUser {
   first_name: string;
   last_name: string;
-  email: string;
+  email?: string;
   occupation: string;
   address: string;
-  file: File | null | string;
+  file?: File | null | string;
 }
 
 export interface PasswordtReq {

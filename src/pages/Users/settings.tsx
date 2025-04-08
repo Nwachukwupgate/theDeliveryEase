@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import SettingsNav from './components/SettingsNav';
-import MyDetails from './components/MyDetails';
-import ProfilePage from './components/ProfilePage';
 import ChangePassword from './components/ChangePassword';
-import NotificationPage from './components/NotificationPage';
+import EditUserProfile from './components/EditUserProfile';
 
 const SettingsPage = () => {
   // State to manage the active page
@@ -21,10 +19,8 @@ const SettingsPage = () => {
       <div className="w-full border border-dashed my-6"></div>
 
       {/* Render the appropriate component based on the active page */}
-      {activePage === 'myDetails' && <MyDetails />}
-      {activePage === 'profile' && <ProfilePage />}
+      {activePage === 'myDetails' && <EditUserProfile />}
       {activePage === 'changePassword' && <ChangePassword />}
-      {activePage === 'notifications' && <NotificationPage />}
     </div>
   );
 };

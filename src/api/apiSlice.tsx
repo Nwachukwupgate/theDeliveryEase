@@ -172,7 +172,7 @@ export const apiSlice = createApi({
       providesTags: ["Deliveries"],
     }),
 
-    editUser: builder.mutation<dataResponse, EditUser>({
+    editUser: builder.mutation<SuccessResponse, EditUser>({
       query: (userData) => ({
         url: "settings/profile",
         method: "POST",
