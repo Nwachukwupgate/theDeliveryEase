@@ -5,13 +5,13 @@ import ExpressIcon from "../../common/icons/ExpressIcon";
 import ScheduledIcon from "../../common/icons/ScheduledIcon";
 import NextDay from "../../common/icons/NextDay";
 import DeliveryCard from "./components/DeliveryCard";
-import ViewIcon from "../../common/icons/ViewIcon";
 import { useGetDeliveriesQuery, useGetDashboardQuery } from "@/api/apiSlice";
 import { Delivery } from "@/types/types";
 import { CircularProgress } from "@mui/material";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import routes from "@/navigation/routes";
+import { DeliveryType } from "@/utilities/constants";
 
 const DashboardPage = () => {
   const [deliveryType, setDeliveryType] = useState<string | undefined>(
@@ -73,6 +73,10 @@ const DashboardPage = () => {
     setDeliveryType((currentType) => (currentType === type ? undefined : type));
   };
 
+  const handleClearFilter = () => {
+    setDeliveryType(undefined);
+  };
+
   // Set first delivery as selected when data loads or changes
   useEffect(() => {
     if (deliveries.length > 0 && !selectedDelivery) {
@@ -119,7 +123,7 @@ const DashboardPage = () => {
                   icon={<SameDay />}
                   label="Same Day"
                   amount="Delivery"
-                  borderClasses={`border border-dashed ${deliveryType === "same_day"
+                  borderClasses={`border border-dashed ${deliveryType === DeliveryType.SAME_DAY
                     ? "border-[#581756]"
                     : "border-gray-300"
                     }`}
@@ -133,7 +137,7 @@ const DashboardPage = () => {
                   icon={<NextDay />}
                   label="Next Day"
                   amount="Delivery"
-                  borderClasses={`border border-dashed ${deliveryType === "next_day"
+                  borderClasses={`border border-dashed ${deliveryType === DeliveryType.NEXT_DAY
                     ? "border-[#581756]"
                     : "border-gray-300"
                     }`}
@@ -147,7 +151,7 @@ const DashboardPage = () => {
                   icon={<ScheduledIcon />}
                   label="Scheduled"
                   amount="Delivery"
-                  borderClasses={`border border-dashed ${deliveryType === "scheduled"
+                  borderClasses={`border border-dashed ${deliveryType === DeliveryType.SCHEDULED
                     ? "border-[#581756]"
                     : "border-gray-300"
                     }`}
@@ -161,7 +165,7 @@ const DashboardPage = () => {
                   icon={<ExpressIcon />}
                   label="Express"
                   amount="Delivery"
-                  borderClasses={`border border-dashed ${deliveryType === "express"
+                  borderClasses={`border border-dashed ${deliveryType === DeliveryType.EXPRESS
                     ? "border-[#581756]"
                     : "border-gray-300"
                     }`}
@@ -174,14 +178,19 @@ const DashboardPage = () => {
           <div className="mt-10 rounded-lg bg-white p-4 lg:p-8">
             <div className="flex items-center justify-between">
               <p className="text-lg font-bold">Deliveries</p>
-              <div className="flex items-center gap-2">
-                {deliveryType && (
+              {deliveryType &&
+                <div className=" flex flex-col md:flex-row items-center gap-2 ">
                   <span className="text-sm text-gray-600">
                     Filtered by: {deliveryType.replace("_", " ")}
                   </span>
-                )}
-                <ViewIcon />
-              </div>
+                  <button
+                    onClick={handleClearFilter}
+                    className="ml-2 text-sm text-blue-500 hover:underline focus:outline-none"
+                  >
+                    Clear Filter
+                  </button>
+                </div>
+              }
             </div>
 
             {/* List of Deliveries */}
@@ -202,11 +211,11 @@ const DashboardPage = () => {
                       onClick={() => handleDeliveryClick(delivery)}
                     >
                       <div className="content-center rounded-full bg-[#B57EDC] p-2">
-                        {delivery.delivery_type === "same_day" ? (
+                        {delivery.delivery_type === DeliveryType.SAME_DAY ? (
                           <SameDay />
-                        ) : delivery.delivery_type === "express" ? (
+                        ) : delivery.delivery_type === DeliveryType.EXPRESS ? (
                           <ExpressIcon />
-                        ) : delivery.delivery_type === "scheduled" ? (
+                        ) : delivery.delivery_type === DeliveryType.SCHEDULED ? (
                           <ScheduledIcon />
                         ) : (
                           <NextDay />
