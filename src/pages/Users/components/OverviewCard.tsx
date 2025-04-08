@@ -1,13 +1,6 @@
 import { Delivery } from "@/types/types";
 import { useEffect, useState } from "react";
 
-// type Stop = {
-//     label: string;
-//     location: string;
-//     status: string;
-//     time: string;
-// };
-
 type OverviewProps = {
   selectedDelivery: Delivery | null;
 };

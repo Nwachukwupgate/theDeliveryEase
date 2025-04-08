@@ -8,6 +8,7 @@ import DeliveringCard from "./components/DeliveringCard";
 import { CircularProgress } from "@mui/material";
 import { Link } from 'react-router-dom';
 import routes from '@/navigation/routes';
+import TrackDelivery from "@/components/tracker/trackDeliveries";
 
 const DashboardPage = () => {
   // Dashboard stats
@@ -121,6 +122,7 @@ const DashboardPage = () => {
           <p className="text-gray-500">No available deliveries at this time</p>
         )}
       </div>
+      <TrackDelivery/>
     </div>
   );
 };

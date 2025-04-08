@@ -17,10 +17,11 @@ import {
   DeliveryResponse,
   GoogleLoginRequest,
   LoginResponse,
+  DeliveryRoute,
 } from "../types/types";
 // import { baseUrl } from "@/config";
 
-const api_origin = import.meta.env.VITE_APP_BASE_URL
+const api_origin = import.meta.env.VITE_APP_API_URL
 
 export const apiSlice = createApi({
   reducerPath: "api",
@@ -176,7 +177,7 @@ export const apiSlice = createApi({
       DeliveriesResponse,
       { type?: string; page?: number, status?: string }
     >({
-      query: ({ type, page,status }) => {
+      query: ({ type, page, status }) => {
         const params = new URLSearchParams();
         if (type) params.append("type", type);
         if (status) params.append("status", status);
@@ -245,7 +246,7 @@ export const apiSlice = createApi({
         method: "POST",
         body: { rider_id },
       }),
-      invalidatesTags: ["Deliveries", "Dashboard","Delivery"],
+      invalidatesTags: ["Deliveries", "Dashboard", "Delivery"],
     }),
 
     riderDashboardStats: builder.query<RiderStats, void>({
@@ -289,6 +290,33 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["Delivery", "Dashboard"],
     }),
+
+    getDeliveryRoute: builder.query<DeliveryRoute, number>({
+      query: (deliveryId) => ({
+        url: `delivery/${deliveryId}/route`,
+        method: "GET"
+      }),
+      providesTags: ["Delivery"]
+    }),
+
+    updateDriverLocation: builder.mutation<
+      void,
+      {
+        deliveryId: number;
+        latitude: number;
+        longitude: number;
+        speed?: number
+      }
+    >({
+      query: ({ deliveryId, latitude, longitude, speed }) => ({
+        url: `delivery/${deliveryId}/locations`,
+        method: "POST",
+        body: { latitude, longitude, speed }
+      }),
+      invalidatesTags: ["Delivery"]
+    }),
+
+
   }),
 });
 
@@ -319,5 +347,7 @@ export const {
   useResetPasswordMutation,
   useRiderAssignedDeliveriesQuery,
   useRiderDashboardStatsQuery,
-  useGoogleLoginMutation
+  useGoogleLoginMutation,
+  useGetDeliveryRouteQuery,
+  useUpdateDriverLocationMutation
 } = apiSlice;

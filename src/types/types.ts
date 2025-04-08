@@ -129,6 +129,32 @@ export interface GoogleLoginRequest {
   name: string;
 }
 
+
+export interface Location {
+  latitude: number;
+  longitude: number;
+  created_at?: string;
+}
+
+export interface DeliveryPoint {
+  address: string;
+  latitude: number;
+  longitude: number;
+}
+
+export interface DeliveryRoute {
+  start_point: DeliveryPoint;
+  end_point: DeliveryPoint;
+  tracking_points: Location[];
+}
+
+export interface LocationUpdate {
+  delivery_id: number;
+  latitude: number;
+  longitude: number;
+  timestamp: string;
+}
+
 //OLDER TYPES
 export interface Dashboard {
   id: number;

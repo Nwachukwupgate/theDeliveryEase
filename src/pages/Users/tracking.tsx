@@ -1,84 +1,37 @@
-import { useEffect, useState, useRef } from "react";
-import DeliveringCard from "./components/DeliveringCard";
-import OverviewCard from "./components/OverviewCard";
-import { Button, CircularProgress } from "@mui/material";
-import PlusIcon from '@/common/icons/PlusIcon'
-import { useGetDeliveryHistoryQuery } from "@/api/apiSlice";
-import { Delivery } from "@/types/types";
-import { Link } from 'react-router-dom'; 
-import routes from "@/navigation/routes";
-
+import { useParams } from "react-router-dom";
+import { useGetDeliveryQuery } from "@/api/apiSlice";
+import DriverLocationUpdater from "@/components/tracker/driverLocationUpdater";
+import { DeliveryTracker } from "@/components/tracker/DeliveryTracker";
+import userStore from "@/utilities/stores";
 
 const TrackingPage = () => {
-  const { data, isLoading } = useGetDeliveryHistoryQuery({ page: 1 });
-  const [selectedDeliveryId, setSelectedDeliveryId] = useState<Delivery | null>(null);
+  const { id } = useParams<{ id: string }>();
+  const deliveryId = Number(id);
 
-  const targetRef = useRef<HTMLDivElement | null>(null);
+  // Get delivery data to check if current user is the assigned rider
+  const { data: delivery } = useGetDeliveryQuery(deliveryId);
 
-  useEffect(() => {
-    if(data) {
-      setSelectedDeliveryId(data?.data?.deliveries?.data[0]);
-    }
-  }, [data])
+  // Determine if current user should see driver controls
+  const shouldShowDriverControls = () => {
+    // User must be a rider
+    if (userStore.userType !== 'rider') return false;
 
+    // Either:
+    // 1. Is the assigned rider for this delivery
     return (
-        <div className="p-3 lg:p-6">
-            <div className="flex justify-between border-b border-gray-400 mb-12 pb-4">
-                <div className="font-bold text-lg">Tracking</div>
-            </div>
-
-            <div className="flex flex-col lg:flex-row gap-8 p-2 lg:p-8">
-                {/* Left section with delivery cards */}
-                <div className="lg:w-[40%] space-y-6">
-
-                    <Link to={routes.usersRoutes.DELIVERY}>
-                      <Button
-                          fullWidth
-                          variant="outlined"
-                          startIcon={<PlusIcon />}
-                          className="my-2"
-                          size="small"
-                          sx={{
-                              borderColor :'#751F72',
-                              color:'#751F72',
-                              }}
-                          >
-                          New Delivery
-                      </Button>
-                    </Link>
-
-                    {
-                      isLoading ? (
-                        <CircularProgress size={"24px"} color="inherit" />
-                      ) : (
-                      data?.data?.deliveries?.data?.map((delivery) => (
-                          <DeliveringCard
-                              key={delivery.id}
-                              id={delivery.id}
-                              delivery={delivery.delivery_address}
-                              address={delivery.pickup_address}
-                              status={delivery.delivery_status}
-                              date={delivery.created_at}
-                              selected={delivery.id === selectedDeliveryId?.id}
-                              onClick={() => {
-                                setSelectedDeliveryId(delivery);
-                                if (targetRef.current) {
-                                  targetRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                                }
-                              }}
-                          />
-                      ))
-                    )}
-                </div>
-
-                {/* Right section with overview */}
-                <div className="lg:w-[60%]" ref={targetRef}>
-                  <OverviewCard selectedDelivery={selectedDeliveryId}/>
-                    {/* <DeliverySteps delivery={selectedDeliveryId} showExtras={false} /> */}
-                </div>
-            </div>
-      </div>
+      delivery?.data?.item?.rider?.id === userStore.user?.id
     );
+  };
+
+  return (
+    <div className="tracking-page">
+      {shouldShowDriverControls() && (
+        <DriverLocationUpdater deliveryId={deliveryId} />
+      )}
+
+      <DeliveryTracker deliveryId={deliveryId} />
+    </div>
+  );
 };
 
 export default TrackingPage;
