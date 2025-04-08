@@ -5,9 +5,13 @@ import { useGetDeliveryQuery } from "@/api/apiSlice";
 import { CircularProgress } from "@mui/material";
 import UpdateStatus from "./components/UpdateStatus";
 import { DeliveryStatus } from "@/utilities/constants";
+import userStore from "@/utilities/stores";
+import { useSnapshot } from "valtio";
 
 const RiderDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+
+  const { user } = useSnapshot(userStore)
 
   if (!id) {
     return <div>Delivery ID is missing.</div>;
@@ -58,7 +62,7 @@ const RiderDetail: React.FC = () => {
       </div>
 
       <div className="mt-4">
-       { delivery_status !== DeliveryStatus.DELIVERED  && <UpdateStatus />}
+        {delivery_status !== DeliveryStatus.DELIVERED && deliveryItem.rider_id == user?.id && <UpdateStatus />}
       </div>
     </div>
   );
