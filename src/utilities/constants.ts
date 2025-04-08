@@ -1,10 +1,10 @@
+
 export const DeliveryStatus = {
     PENDING: "Pending",
     IN_TRANSIT: "In_Transit",
     DISPATCHED: "Dispatched",
     DELIVERED: "Delivered",
-    // REJECTED: "Rejected",
-    // CANCELLED: "Cancelled",
+     CANCELLED: "Cancelled",
   } as const;
 
 export const DeliveryType = {

@@ -1,73 +1,50 @@
-// import DefaultDpDisplay from "@/common/display/DefaultDpDisplay";
-// import SettingsIcon from "@/common/icons/pack/SettingsIcon";
-// import SignOutIcon from "@/common/icons/pack/SignOut";
-// import UserProfileFill from "@/common/icons/pack/UserProfileFill";
-import AppMenuWrapper from "@/common/utilities/AppMenuWrapper";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"; // Keep Link
 import { useGetUserQuery } from "@/api/apiSlice";
-
+import { usersRoutes } from "@/navigation/routes";
+import { FaUser } from "react-icons/fa";
 
 const Profile: React.FC = () => {
-  const { data } = useGetUserQuery()
+  // Consider adding isLoading/isError for better UX
+  const { data, isLoading, isError } = useGetUserQuery();
 
-  const defaultImage = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4mYGiDHOtUVcSxuzNfeds4xWXNOpQ-lIMPA&s";
-  const userImage = data?.data?.item?.photo 
-  ? `https://deliver.door-steps.pro/storage/${data.data.item.photo}`
-  : defaultImage;
+  if (isLoading) {
+    // You can return a placeholder, spinner, or null
+    return <div className="w-10 h-10 rounded-full bg-gray-300 animate-pulse"></div>;
+  }
 
-  
+  // Decide what to show if the user data fails to load
+  if (isError || !data?.data?.item) {
+    return (
+      <Link to={usersRoutes.SETTING} aria-label="User Settings">
+        <FaUser  className="w-6 h-6 md:w-8 md:h-8" />
+      </Link>
+    );
+  }
+
+  // TODO REMOVE FORMER API URL
+
+  const user = data.data.item;
+  const userImage = user.photo
+    ? `https://deliver.door-steps.pro/storage/${user.photo}`
+    :  <FaUser  className="w-6 h-6 md:w-8 md:h-8" />
+
+  // Wrap the entire visible profile display in a Link
   return (
-    <div className={`cursor-pointer`}>
-      <AppMenuWrapper
-        header={
-          <div className="flex items-center">
-            <div className="block lg:hidden">
-              {/* <UserProfileFill fill="#008CDB" /> */}
-              {/* <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4mYGiDHOtUVcSxuzNfeds4xWXNOpQ-lIMPA&s"
-                alt="profile image"
-                className="w-10 h-10 rounded-full" // Controls size for small screens
-              /> */}
-            </div>
-            <div className={`hidden lg:block`}>
-              {/* <UserProfileFill /> */}
-              <img
-                src={userImage}
-                alt="profile image"
-                className="w-10 h-10 rounded-full" // Controls size for larger screens
-              />
-            </div>
-            <div className="ml-4 hidden flex-col items-start lg:flex">
-              <span>{data?.data?.item?.first_name} {data?.data?.item?.last_name}</span>
-            </div>
-          </div>
-        }
-        border={false}
-      >
-        <nav className="w-[300px] rounded-xl bg-white [box-shadow:0px_0px_10px_rgba(230,244,251,1)]">
-          <div className={`flex flex-col gap-4 px-6 py-8`}>
-            {/* <DefaultDpDisplay
-              bg="rgba(230, 244, 251, 1)"
-              fullName="Charles Paul"
-              role="Facility Manager"
-            /> */}
-            <Link to={""} className="flex items-center gap-2">
-              <span>
-                {/* <SettingsIcon /> */}
-              </span>
-              <span>Settings</span>
-            </Link>
-            <button className="flex items-center gap-2 [appearance:none]">
-              <span>
-                {/* <SignOutIcon /> */}
-              </span>
-              <span>Sign Out</span>
-            </button>
-          </div>
-        </nav>
-      </AppMenuWrapper>
-    </div>
+    <Link to={usersRoutes.SETTING} className="flex items-center cursor-pointer group" aria-label="User Settings">
+      {/* <img
+        src={userImage}
+        alt="User profile image"
+        className="w-10 h-10 rounded-full transition-all duration-200 ease-in-out group-hover:opacity-80" // Example hover effect
+      /> */}
+      <div className="ml-3 hidden lg:flex flex-col items-start">
+        <span className="transition-colors duration-200 ease-in-out group-hover:text-gray-600">
+          {user.first_name} {user.last_name}
+        </span>
+      </div>
+    </Link>
   );
 };
+
+
 
 export default Profile;

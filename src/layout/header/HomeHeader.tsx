@@ -9,7 +9,7 @@ const HomeHeader = () => {
 
   return (
     <nav className={`${isOpen ? 'bg-primaryHoverColorDark' : 'bg-white'}  opacity-100 shadow fixed top-0 w-full z-50`}>
-      <div className="container px-6 py-6 mx-auto md:flex md:justify-between md:items-center">
+      <div className="container px-6 py-4 mx-auto md:flex md:justify-between md:items-center">
         <div className="flex items-center justify-between">
           <a href="#">
             <img className="w-auto h-6 lg:h-12" src={Icon} alt="Logo" />
