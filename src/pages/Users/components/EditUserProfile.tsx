@@ -35,6 +35,7 @@ const EditUserProfile = () => {
 
     const userState = useSnapshot(userStore);
     const isRider = userState.isRider;
+    const dynamicInputStyle = isRider ? "text-gray-400 cursor-not-allowed" : "";
 
     const { data: userData, isLoading: isUserLoading, isFetching: isUserFetching, error: fetchError } = useGetUserQuery();
 
@@ -172,6 +173,7 @@ const EditUserProfile = () => {
                                 type="text"
                                 rules={{ required: "First name is required" }} // Add validation
                                 disabled={isRider}
+                                className={dynamicInputStyle}
                             />
                         </div>
                         <div className="flex-1">
@@ -183,6 +185,7 @@ const EditUserProfile = () => {
                                 type="text"
                                 rules={{ required: "Last name is required" }} // Add validation
                                 disabled={isRider}
+                                className={dynamicInputStyle}
                             />
                         </div>
                     </div>
@@ -202,7 +205,7 @@ const EditUserProfile = () => {
                             error={errors.email}
                             type="email"
                             disabled={true} // Disable the input
-                            className="bg-gray-100 cursor-not-allowed"
+                            className="text-gray-400 cursor-not-allowed"
                         />
                     </div>
                 </div>
@@ -263,6 +266,7 @@ const EditUserProfile = () => {
                             error={errors.occupation}
                             type="text"
                             disabled={isRider}
+                            className={dynamicInputStyle}
                         />
                     </div>
                 </div>
@@ -281,6 +285,8 @@ const EditUserProfile = () => {
                             error={errors.address}
                             type="text"
                             disabled={isRider}
+                            className={dynamicInputStyle}
+
                         />
                     </div>
                 </div>
