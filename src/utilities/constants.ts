@@ -1,4 +1,3 @@
-
 export const DeliveryStatus = {
     PENDING: "Pending",
     IN_TRANSIT: "In_Transit",
@@ -13,3 +12,9 @@ export const DeliveryType = {
     EXPRESS: "express",
     SCHEDULED: "scheduled",
   } as const;
+
+  export const userRoles ={
+    ADMIN: "admin",
+    RIDER: "rider",
+    USER: "user",
+  }

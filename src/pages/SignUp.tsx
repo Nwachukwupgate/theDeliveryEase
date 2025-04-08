@@ -13,14 +13,8 @@ import { useGoogleLoginMutation, useRegisterUserMutation } from "@/api/apiSlice"
 import userStore from "@/utilities/stores";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
-import { RegisterApiRequest } from "@/types/types";
-
-interface ApiError {
-  data?: {
-    message?: string;
-  };
-  status?: number;
-}
+import { ApiError, RegisterApiRequest } from "@/types/types";
+import { userRoles } from "@/utilities/constants";
 
 const schema = Joi.object<RegisterApiRequest>({
   first_name: joiSchemas.first_name,
@@ -44,6 +38,7 @@ const SignUp = (): JSX.Element => {
   const [googleSignup, { isLoading: isGoogleLoading }] = useGoogleLoginMutation();
   const isLoading = isLoginLoading || isGoogleLoading
 
+  // BASIC SIGNUP
   const onSubmit = handleSubmit(async ({ email, first_name, last_name, password, password_confirmation, phone }) => {
     try {
       const response = await registerUser({
@@ -54,15 +49,8 @@ const SignUp = (): JSX.Element => {
         password_confirmation,
         phone,
       }).unwrap();
-      const token = response.data?.token;
-      const user = {
-        name: response.data.user?.first_name,
-        email: response.data.user?.email,
-      };
-      const userType = "user";
-      userStore.loginUser(token, user, userType);
-      appToast.Success("Sign Up Successful");
-      navigate(routes.VERIFY_EMAIL);
+      processSignupResponse(response);
+      navigate(routes.LOGIN)
     } catch (error) {
       const typedError = error as ApiError;
       console.log("Full API error:", typedError);
@@ -99,35 +87,36 @@ const SignUp = (): JSX.Element => {
           name: userInfo.name
         }).unwrap();
 
-        const {
-          token,
-          user: { first_name, last_name, role, email },
-        } = response.data;
-
-        const user = {
-          name: `${first_name} ${last_name || ''}`,
-          email: email,
+        const firstNameFromGoogle = userInfo.name.split(' ')[0];
+        const lastNameFromGoogle = userInfo.name.split(' ').slice(1).join(' ');
+        response.data.user = { // Mock the structure to match normal signup response
+          first_name: firstNameFromGoogle,
+          last_name: lastNameFromGoogle,
+          email: userInfo.email,
+          ...response.data.user // Keep any other user data from the backend
         };
+        processSignupResponse(response);
 
-        // Validate role before login
-        const isValidRole = role === 'admin' || role === 'user' || role === 'rider';
-        const safeRole = isValidRole ? role : 'user';
+        const role = response.data?.user?.role;
 
-        userStore.loginUser(token, user, safeRole);
-        appToast.Success(response?.message || "Successfully signed up with Google");
-
-        // Navigate based on role (or to verification if needed)
-        if (response.data.user?.email_verified_at) {
-          navigate(routes.usersRoutes.DASHBOARD);
-        } else {
-          navigate(routes.VERIFY_EMAIL);
+        switch (role) {
+          case userRoles.ADMIN:
+            navigate(routes.AdminRoute.ADMIN_DASHBOARD);
+            break;
+          case userRoles.RIDER:
+            navigate(routes.RidersRoute.RIDER_DASHBOARD);
+            break;
+          default:
+            navigate(routes.usersRoutes.DASHBOARD);
         }
+
+
 
       } catch (error) {
         console.error('Google signup error:', error);
         const typedError = error as ApiError;
         const errorMessage =
-          typedError?.data?.message || "Google Sign-Up failed. Please try again.";
+          typedError?.data?.error || "Google Sign-Up failed. Please try again.";
         appToast.Error(errorMessage);
       }
     },
@@ -257,6 +246,27 @@ const SignUp = (): JSX.Element => {
       </div>
     </div>
   );
+};
+
+const processSignupResponse = (response: { data: { user: any; token?: any; }; message: any; }) => {
+  const {
+    token,
+    user: { first_name, last_name, email },
+  } = response.data;
+
+  const user = {
+    name: `${first_name} ${last_name || ''}`,
+    email: email,
+  };
+
+  // Determine the role (default to 'user' if not present or invalid)
+  const role = response.data?.user?.role;
+  const isValidRole = role === userRoles.ADMIN || userRoles.RIDER || userRoles.USER;
+  const safeRole = isValidRole ? role : 'user';
+
+  userStore.loginUser(token, user, safeRole);
+  appToast.Success(response?.message || "Sign Up Successful");
+
 };
 
 export default SignUp;

@@ -225,7 +225,7 @@ const DashboardPage = () => {
                         {delivery.delivery_address}
                       </p>
 
-                      <div className="flex items-center gap-x-3 lg:gap-x-6">
+                      {/* <div className="flex items-center gap-x-3 lg:gap-x-6">
                         {delivery.receipt && (
                           <img
                             className="h-6 w-6 rounded-full object-cover lg:h-8 lg:w-8"
@@ -237,7 +237,7 @@ const DashboardPage = () => {
                             }}
                           />
                         )}
-                      </div>
+                      </div> */}
 
                       <div>
                         <p

@@ -15,6 +15,7 @@ import { ApiError, loginApiRequest } from "@/types/types";
 import userStore from "@/utilities/stores";
 import { useNavigate } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
+import { userRoles } from "@/utilities/constants";
 
 
 const schema = Joi.object<loginApiRequest>({
@@ -34,6 +35,7 @@ const Login = (): JSX.Element => {
   const [loginUser, { isLoading: isLoginLoading }] = useLoginUserMutation();
   const [googleLogin, { isLoading: isGoogleLoading }] = useGoogleLoginMutation();
 
+  //BASIC LOGIN
   const onSubmit = handleSubmit(async ({ email: requestEmail, password }) => {
     try {
       const response = await loginUser({
@@ -41,49 +43,23 @@ const Login = (): JSX.Element => {
         password,
       }).unwrap();
 
-      const {
-        token,
-        user: { first_name, last_name, role, email,id:userId },
-      } = response.data;
-
-      const user = {
-        name: `${first_name} ${last_name || ''}`,
-        email: email,
-        id:userId
-      };
-
-      // Check if role is valid
-      const isValidRole = role === 'admin' || role === 'user' || role === 'rider';
-
-      if (isValidRole) {
-        userStore.loginUser(token, user, role);
-      } else {
-        // Handle invalid roles (e.g., show error, default to 'user')
-        console.error('Invalid role:', role);
-        userStore.loginUser(token, user, 'user'); // Fallback
+      // Check if email is verified for normal login
+      if (!response.data?.user?.email_verified_at) {
+        appToast.Error("Please verify your email address before logging in.");
+        return; // Prevent further login actions
       }
-      appToast.Success(response?.message || "Successfully logged in");
 
-      // Navigate based on role
-      switch (role) {
-        case "admin":
-          navigate(routes.AdminRoute.ADMIN_DASHBOARD);
-          break;
-        case "rider":
-          navigate(routes.RidersRoute.RIDER_DASHBOARD);
-          break;
-        default: // regular user
-          navigate(routes.usersRoutes.DASHBOARD);
-      }
+      processLoginResponse(response, navigate);
+
     } catch (error) {
       const typedError = error as ApiError;
       const errorMessage =
-        typedError?.data?.message || "Sign In Failed. Please try again.";
+        typedError?.data?.error || "Sign In Failed. Please try again.";
       appToast.Error(errorMessage);
     }
   });
 
-  // Google login handler
+  //  GOOGLE LOGIN
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       try {
@@ -110,46 +86,13 @@ const Login = (): JSX.Element => {
           name: userInfo.name
         }).unwrap();
 
-        const {
-          token,
-          user: { first_name, last_name, role, email,id },
-        } = response.data;
-
-        const user = {
-          name: `${first_name} ${last_name || ''}`,
-          email: email,
-          id
-        };
-
-        // Check if role is valid
-        const isValidRole = role === 'admin' || role === 'user' || role === 'rider';
-
-        if (isValidRole) {
-          userStore.loginUser(token, user, role); // Safe (no cast needed)
-        } else {
-          // Handle invalid roles (e.g., show error, default to 'user')
-          console.error('Invalid role:', role);
-          userStore.loginUser(token, user, 'user'); // Fallback
-        }
-        appToast.Success(response?.message || "Successfully logged in with Google");
-
-        // Navigate based on role
-        switch (role) {
-          case "admin":
-            navigate(routes.AdminRoute.ADMIN_DASHBOARD);
-            break;
-          case "rider":
-            navigate(routes.RidersRoute.RIDER_DASHBOARD);
-            break;
-          default: // regular user
-            navigate(routes.usersRoutes.DASHBOARD);
-        }
+        processLoginResponse(response, navigate);
 
       } catch (error) {
         console.error('Google login error:', error);
         const typedError = error as ApiError;
         const errorMessage =
-          typedError?.data?.message || "Google Sign-In failed. Please try again.";
+          typedError?.data?.error || "Google Sign-In failed. Please try again.";
         appToast.Error(errorMessage);
       }
     },
@@ -258,5 +201,42 @@ const Login = (): JSX.Element => {
     </div>
   );
 };
+
+
+const processLoginResponse = (response: { data: { token: any; user: { first_name: any; last_name: any; role: any; email: any; id: any; }; }; message: any; }, navigate: (arg0: string) => void) => {
+  const {
+    token,
+    user: { first_name, last_name, role, email, id: userId },
+  } = response.data;
+
+  const user = {
+    name: `${first_name} ${last_name || ''}`,
+    email: email,
+    id: userId,
+  };
+
+  const isValidRole = role === userRoles.ADMIN || userRoles.RIDER || userRoles.USER;
+
+  if (isValidRole) {
+    userStore.loginUser(token, user, role);
+  } else {
+    console.error('Invalid role:', role);
+    userStore.loginUser(token, user, 'user');
+  }
+
+  appToast.Success(response?.message || "Successfully logged in");
+
+  switch (role) {
+    case userRoles.ADMIN:
+      navigate(routes.AdminRoute.ADMIN_DASHBOARD);
+      break;
+    case userRoles.RIDER:
+      navigate(routes.RidersRoute.RIDER_DASHBOARD);
+      break;
+    default:
+      navigate(routes.usersRoutes.DASHBOARD);
+  }
+};
+
 
 export default Login;
