@@ -10,6 +10,8 @@ import { useGetDeliveriesQuery, useGetDashboardQuery } from "@/api/apiSlice";
 import { Delivery } from "@/types/types";
 import { CircularProgress } from "@mui/material";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
+import routes from "@/navigation/routes";
 
 const DashboardPage = () => {
   const [deliveryType, setDeliveryType] = useState<string | undefined>(
@@ -117,11 +119,10 @@ const DashboardPage = () => {
                   icon={<SameDay />}
                   label="Same Day"
                   amount="Delivery"
-                  borderClasses={`border border-dashed ${
-                    deliveryType === "same_day"
-                      ? "border-[#581756]"
-                      : "border-gray-300"
-                  }`}
+                  borderClasses={`border border-dashed ${deliveryType === "same_day"
+                    ? "border-[#581756]"
+                    : "border-gray-300"
+                    }`}
                 />
               </button>
               <button
@@ -132,11 +133,10 @@ const DashboardPage = () => {
                   icon={<NextDay />}
                   label="Next Day"
                   amount="Delivery"
-                  borderClasses={`border border-dashed ${
-                    deliveryType === "next_day"
-                      ? "border-[#581756]"
-                      : "border-gray-300"
-                  }`}
+                  borderClasses={`border border-dashed ${deliveryType === "next_day"
+                    ? "border-[#581756]"
+                    : "border-gray-300"
+                    }`}
                 />
               </button>
               <button
@@ -147,11 +147,10 @@ const DashboardPage = () => {
                   icon={<ScheduledIcon />}
                   label="Scheduled"
                   amount="Delivery"
-                  borderClasses={`border border-dashed ${
-                    deliveryType === "scheduled"
-                      ? "border-[#581756]"
-                      : "border-gray-300"
-                  }`}
+                  borderClasses={`border border-dashed ${deliveryType === "scheduled"
+                    ? "border-[#581756]"
+                    : "border-gray-300"
+                    }`}
                 />
               </button>
               <button
@@ -162,11 +161,10 @@ const DashboardPage = () => {
                   icon={<ExpressIcon />}
                   label="Express"
                   amount="Delivery"
-                  borderClasses={`border border-dashed ${
-                    deliveryType === "express"
-                      ? "border-[#581756]"
-                      : "border-gray-300"
-                  }`}
+                  borderClasses={`border border-dashed ${deliveryType === "express"
+                    ? "border-[#581756]"
+                    : "border-gray-300"
+                    }`}
                 />
               </button>
             </div>
@@ -197,11 +195,10 @@ const DashboardPage = () => {
                   {deliveries.map((delivery: Delivery) => (
                     <div
                       key={delivery.id}
-                      className={`mb-4 flex cursor-pointer flex-row items-center justify-between space-x-4 text-nowrap rounded-lg p-3 transition-colors lg:py-2 ${
-                        selectedDelivery?.id === delivery.id
-                          ? "bg-[#EBE1F1] text-gray-800"
-                          : "hover:bg-gray-50"
-                      }`}
+                      className={`mb-4 flex cursor-pointer flex-row items-center justify-between space-x-4 text-nowrap rounded-lg p-3 transition-colors lg:py-2 ${selectedDelivery?.id === delivery.id
+                        ? "bg-[#EBE1F1] text-gray-800"
+                        : "hover:bg-gray-50"
+                        }`}
                       onClick={() => handleDeliveryClick(delivery)}
                     >
                       <div className="content-center rounded-full bg-[#B57EDC] p-2">
@@ -220,11 +217,10 @@ const DashboardPage = () => {
                         {delivery.code}
                       </p>
                       <p
-                        className={`hidden text-nowrap text-sm sm:block ${
-                          selectedDelivery?.id === delivery.id
-                            ? "text-gray-600"
-                            : "text-gray-500"
-                        }`}
+                        className={`hidden text-nowrap text-sm sm:block ${selectedDelivery?.id === delivery.id
+                          ? "text-gray-600"
+                          : "text-gray-500"
+                          }`}
                       >
                         {delivery.delivery_address}
                       </p>
@@ -245,17 +241,15 @@ const DashboardPage = () => {
 
                       <div>
                         <p
-                          className={`text-sm ${
-                            delivery.delivery_status === "Pending"
-                              ? "text-yellow-500"
-                              : delivery.delivery_status === "Delivered"
-                                ? "text-green-500"
-                                : "text-gray-500"
-                          } ${
-                            selectedDelivery?.id === delivery.id
+                          className={`text-sm ${delivery.delivery_status === "Pending"
+                            ? "text-yellow-500"
+                            : delivery.delivery_status === "Delivered"
+                              ? "text-green-500"
+                              : "text-gray-500"
+                            } ${selectedDelivery?.id === delivery.id
                               ? "font-bold"
                               : ""
-                          }`}
+                            }`}
                         >
                           {delivery.delivery_status}
                         </p>
@@ -311,6 +305,8 @@ interface DeliveryDetailsProps {
 }
 
 const DeliveryDetails: React.FC<DeliveryDetailsProps> = ({ delivery }) => {
+  const navigate = useNavigate();
+
   if (!delivery) {
     return (
       <div className="flex h-full items-center justify-center p-8">
@@ -334,15 +330,14 @@ const DeliveryDetails: React.FC<DeliveryDetailsProps> = ({ delivery }) => {
           </p>
         </div>
         <span
-          className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
-            delivery.delivery_status === "Pending"
-              ? "bg-yellow-100 text-yellow-800"
-              : delivery.delivery_status === "In Transit"
-                ? "bg-blue-100 text-blue-800"
-                : delivery.delivery_status === "Delivered"
-                  ? "bg-green-100 text-green-800"
-                  : "bg-red-100 text-red-800"
-          }`}
+          className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${delivery.delivery_status === "Pending"
+            ? "bg-yellow-100 text-yellow-800"
+            : delivery.delivery_status === "In Transit"
+              ? "bg-blue-100 text-blue-800"
+              : delivery.delivery_status === "Delivered"
+                ? "bg-green-100 text-green-800"
+                : "bg-red-100 text-red-800"
+            }`}
         >
           {delivery.delivery_status}
         </span>
@@ -401,7 +396,9 @@ const DeliveryDetails: React.FC<DeliveryDetailsProps> = ({ delivery }) => {
 
       {/* Action Buttons (optional) */}
       <div className="flex space-x-2 pt-2">
-        <button className="flex-1 rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none">
+        <button className="flex-1 rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none"
+          onClick={() => navigate(routes.usersRoutes.TRACKING.replace(':trackingId', `${delivery.id}`))}
+        >
           Track
         </button>
         <button className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none">

@@ -4,10 +4,12 @@ import DriverLocationUpdater from "@/components/tracker/driverLocationUpdater";
 import { DeliveryTracker } from "@/components/tracker/DeliveryTracker";
 import userStore from "@/utilities/stores";
 import { useSnapshot } from "valtio";
+import { DeliveryStatus } from "@/utilities/constants";
 
 const TrackingPage = () => {
-  const { id } = useParams<{ id: string }>();
-  const deliveryId = Number(id);
+  const { trackingId } = useParams<{ trackingId: string }>();
+
+  const deliveryId = Number(trackingId);
   const { user, userType } = useSnapshot(userStore);
 
   // Get delivery data to check if current user is the assigned rider
@@ -24,6 +26,17 @@ const TrackingPage = () => {
       delivery?.data?.item?.rider?.id === user?.id
     );
   };
+
+  // Check if delivery is in transit
+  const isInTransit = delivery?.data?.item?.delivery_status === DeliveryStatus.IN_TRANSIT;
+
+  if (!isInTransit) {
+    return (
+      <div className="tracking-page">
+        <p>This delivery is not in transit and cannot be tracked.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="tracking-page">

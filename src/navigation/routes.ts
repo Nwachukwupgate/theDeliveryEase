@@ -4,7 +4,7 @@ export const parentRoutes = Object.freeze({
 
   export const usersRoutes = Object.freeze({
     DASHBOARD: "/dashboard",
-    TRACKING: "/tracking",
+    TRACKING: "/tracking/:trackingId",
     DELIVERY: "/delivery",
     HISTORY: "/history",
     CONTACT: "/contact",
