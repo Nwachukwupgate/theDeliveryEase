@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi} from "@reduxjs/toolkit/query/react";
 import {
   Dashboard,
   RegisterApiRequest,
@@ -19,31 +19,12 @@ import {
   LoginResponse,
   DeliveryRoute,
 } from "../types/types";
+import { baseQueryWithReauth } from "./baseQueryWithReauth";
 // import { baseUrl } from "@/config";
-
-const api_origin = import.meta.env.VITE_APP_API_URL
 
 export const apiSlice = createApi({
   reducerPath: "api",
-  baseQuery: fetchBaseQuery({
-    baseUrl: api_origin,
-    mode: "cors",
-    prepareHeaders: (headers) => {
-      // Dynamically fetch the token from localStorage
-      const token = localStorage.getItem("DELogisticsToken");
-      if (token) {
-        headers.set("authorization", `Bearer ${token}`);
-      }
-      headers.set("Accept", "*/*");
-      headers.set("Access-Control-Allow-Origin", "*");
-      headers.set("Accept", "application/json");
-      headers.set(
-        "Access-Control-Allow-Headers",
-        "Origin, X-Requested-With, Content-Type, Accept",
-      );
-      return headers;
-    },
-  }),
+  baseQuery: baseQueryWithReauth,
   tagTypes: ["Department", "User", "Dashboard", "Deliveries", "Delivery"],
 
   endpoints: (builder) => ({
