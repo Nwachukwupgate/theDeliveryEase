@@ -5,6 +5,8 @@ import Input from "@/common/form/Input"; // Assuming Input component can handle 
 import { useGetUserQuery, useEditUserMutation } from "@/api/apiSlice"; // Import updated hooks
 import { appToast } from "@/utilities/appToast";
 import { ApiError } from "@/types/types"; // Keep ApiError type
+import { useSnapshot } from "valtio";
+import userStore from "@/utilities/stores";
 
 // Interface for form data (photo removed)
 interface AccountFormData {
@@ -30,6 +32,9 @@ const EditUserProfile = () => {
         formState: { errors },
         reset, // Use reset to populate form
     } = useForm<AccountFormData>();
+
+    const userState = useSnapshot(userStore);
+    const isRider = userState.isRider;
 
     const { data: userData, isLoading: isUserLoading, isFetching: isUserFetching, error: fetchError } = useGetUserQuery();
 
@@ -166,6 +171,7 @@ const EditUserProfile = () => {
                                 error={errors.firstName}
                                 type="text"
                                 rules={{ required: "First name is required" }} // Add validation
+                                disabled={isRider}
                             />
                         </div>
                         <div className="flex-1">
@@ -176,6 +182,7 @@ const EditUserProfile = () => {
                                 error={errors.lastName}
                                 type="text"
                                 rules={{ required: "Last name is required" }} // Add validation
+                                disabled={isRider}
                             />
                         </div>
                     </div>
@@ -255,6 +262,7 @@ const EditUserProfile = () => {
                             register={register}
                             error={errors.occupation}
                             type="text"
+                            disabled={isRider}
                         />
                     </div>
                 </div>
@@ -272,6 +280,7 @@ const EditUserProfile = () => {
                             register={register}
                             error={errors.address}
                             type="text"
+                            disabled={isRider}
                         />
                     </div>
                 </div>
@@ -281,7 +290,7 @@ const EditUserProfile = () => {
                     <Button
                         type="submit"
                         variant="contained"
-                        disabled={isUpdating} // Disable button while updating
+                        disabled={isUpdating || isRider} // Disable button while updating
                         sx={{ minWidth: 100 }} // Give button minimum width
                     >
                         {isUpdating ? (
