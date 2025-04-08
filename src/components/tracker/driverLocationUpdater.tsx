@@ -50,8 +50,18 @@ const DriverLocationUpdater: React.FC<DriverLocationUpdaterProps> = ({
 
     useEffect(() => {
         let watchId: number | null = null;
+        let intervalId: ReturnType<typeof setInterval> | null = null;
 
         if (isTracking) {
+            // Start interval to update location periodically based on `updateInterval`
+            intervalId = setInterval(() => {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(updateLocation, (err) => {
+                        setError(`Geolocation error: ${err.message}`);
+                    });
+                }
+            }, updateInterval);
+
             watchId = navigator.geolocation.watchPosition(
                 updateLocation,
                 (err) => {
@@ -69,8 +79,11 @@ const DriverLocationUpdater: React.FC<DriverLocationUpdaterProps> = ({
             if (watchId !== null) {
                 navigator.geolocation.clearWatch(watchId);
             }
+            if (intervalId !== null) {
+                clearInterval(intervalId);
+            }
         };
-    }, [isTracking, updateLocation]);
+    }, [isTracking, updateLocation, updateInterval]);
 
     return (
         <div className="driver-location-updater">
