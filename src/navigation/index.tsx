@@ -40,8 +40,6 @@ const CreateRiders = lazy(() => import("@/pages/Admin/createRider"));
 const RiderDeliveries = lazy(
   () => import("@/pages/Riders/deliveries"),
 );
-const RiderContact = lazy(() => import("@/pages/Riders/contact"));
-const RiderSetting = lazy(() => import("@/pages/Riders/settings"));
 
 const protectedRoutes: ExtendedRouteObject[] = [
   {
@@ -109,12 +107,8 @@ const protectedRoutes: ExtendedRouteObject[] = [
       },
       {
         path: routes.RidersRoute.RIDER_CONTACT,
-        element: <RiderContact />
+        element: <ContactPage />
       },
-      {
-        path: routes.RidersRoute.RIDER_SETTINGS,
-        element: <RiderSetting />
-      }
     ],
   },
 ];
@@ -164,14 +158,7 @@ const unProtectedRoute: ExtendedRouteObject[] = [
             element: <Home />,  
             },
         ],
-    },
-    // {
-    //     path: "/",
-    //     hasErrorBoundary: true,
-    //     element: <Layout />,
-    //     errorElement: <AppErrorBoundary />,
-    //     children: [],
-    // },
+    }
 ];
 
 const allRoutes: ExtendedRouteObject[] = [

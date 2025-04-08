@@ -20,11 +20,6 @@ const normalBar = [
     text: "Contact",
     link: routes.RidersRoute.RIDER_CONTACT,
   },
-  {
-    icon: "SettingIcon",
-    text: "Settings",
-    link: routes.RidersRoute.RIDER_SETTINGS,
-  },
 ];
 
 const RidersNav: React.FC = () => {

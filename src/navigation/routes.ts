@@ -24,7 +24,6 @@ export const parentRoutes = Object.freeze({
     RIDER_DELIVERIES: "/rider/deliveries",
     AVAILABLE_DELIVERIES: '/rider/available-deliveries',
     RIDER_CONTACT: "/rider/contact",
-    RIDER_SETTINGS: "/rider/setting",
   })
   
   export default Object.freeze({
