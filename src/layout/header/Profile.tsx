@@ -24,9 +24,9 @@ const Profile: React.FC = () => {
   // TODO REMOVE FORMER API URL
 
   const user = data.data.item;
-  const userImage = user.photo
-    ? `https://deliver.door-steps.pro/storage/${user.photo}`
-    :  <FaUser  className="w-6 h-6 md:w-8 md:h-8" />
+  // const userImage = user.photo
+  //   ? `https://deliver.door-steps.pro/storage/${user.photo}`
+  //   :  <FaUser  className="w-6 h-6 md:w-8 md:h-8" />
 
   // Wrap the entire visible profile display in a Link
   return (
