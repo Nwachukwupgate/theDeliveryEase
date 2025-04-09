@@ -52,7 +52,6 @@ export const baseQueryWithReauth: BaseQueryFn<
                 } else {
                     // Refresh failed - logout the user
                     userStore.logoutUser();
-                    window.location.href = '/login'; // Redirect to login
                 }
             } finally {
                 // Release the mutex

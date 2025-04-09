@@ -1,4 +1,4 @@
-import { createApi} from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import {
   Dashboard,
   RegisterApiRequest,
@@ -48,7 +48,7 @@ export const apiSlice = createApi({
 
     googleLogin: builder.mutation<LoginResponse, GoogleLoginRequest>({
       query: (googleData) => ({
-        url: '/auth/google-login',
+        url: 'auth/google-login',
         method: 'POST',
         body: googleData,
       }),
@@ -56,11 +56,18 @@ export const apiSlice = createApi({
 
     verifyEmail: builder.mutation<void, verifyRequest>({
       query: (userData) => ({
-        url: "email/verify",
+        url: "auth/verify-email",
         method: "POST",
         body: userData,
       }),
       invalidatesTags: ["User"],
+    }),
+
+    resendVerification: builder.query<{ message: string }, void>({ 
+      query: () => ({
+        url: 'auth/resend-verification',
+        method: 'GET',
+      }),
     }),
 
     resetPassword: builder.mutation<dataResponse, resetPassword>({
@@ -82,7 +89,7 @@ export const apiSlice = createApi({
     }),
 
     getDashboard: builder.query<Dashboard, void>({
-      query: () => "/dashboard",
+      query: () => "dashboard",
       providesTags: ["Dashboard"],
     }),
 
@@ -99,7 +106,7 @@ export const apiSlice = createApi({
     }),
 
     getDeliveryStat: builder.query<Dashboard, void>({
-      query: () => "/delivery-stats",
+      query: () => "delivery-stats",
       providesTags: ["Dashboard"],
     }),
 
@@ -240,7 +247,7 @@ export const apiSlice = createApi({
 
     riderAssignedDeliveries: builder.query<DeliveriesResponse, { page: number }>({
       query: ({ page }) => ({
-        url: `/rider/deliveries`,
+        url: `rider/deliveries`,
         params: { page },
         method: "GET",
       }),
@@ -249,7 +256,7 @@ export const apiSlice = createApi({
 
     ridersAccept: builder.mutation<SuccessResponse, string>({
       query: (deliveryId) => ({
-        url: `/deliveries/${deliveryId}/claim`,
+        url: `deliveries/${deliveryId}/claim`,
         method: 'POST',
       }),
       invalidatesTags: ['Delivery', 'Dashboard']
@@ -257,7 +264,7 @@ export const apiSlice = createApi({
 
     ridersReject: builder.mutation<SuccessResponse, string>({
       query: (deliveryId) => ({
-        url: `/rider/delivery/${deliveryId}/reject`,
+        url: `rider/delivery/${deliveryId}/reject`,
         method: 'POST',
       }),
       invalidatesTags: ['Delivery', 'Dashboard']
@@ -306,6 +313,7 @@ export const {
   useGetDeliveryHistoryQuery,
   useLoginUserMutation,
   useVerifyEmailMutation,
+  useResendVerificationQuery,
   useGetDashboardQuery,
   useCreateDeliveryMutation,
   useGetHistoryQuery,

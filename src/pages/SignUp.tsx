@@ -50,7 +50,7 @@ const SignUp = (): JSX.Element => {
         phone,
       }).unwrap();
       processSignupResponse(response);
-      navigate(routes.LOGIN)
+      navigate(routes.VERIFY_EMAIL)
     } catch (error) {
       const typedError = error as ApiError;
       console.log("Full API error:", typedError);

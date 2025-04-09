@@ -43,13 +43,7 @@ const Login = (): JSX.Element => {
         password,
       }).unwrap();
 
-      // Check if email is verified for normal login
-      if (!response.data?.user?.email_verified_at) {
-        appToast.Error("Please verify your email address before logging in.");
-        return; // Prevent further login actions
-      }
-
-      processLoginResponse(response, navigate);
+      processLoginResponse(response, navigate, false);
 
     } catch (error) {
       const typedError = error as ApiError;
@@ -86,7 +80,7 @@ const Login = (): JSX.Element => {
           name: userInfo.name
         }).unwrap();
 
-        processLoginResponse(response, navigate);
+        processLoginResponse(response, navigate, true);
 
       } catch (error) {
         console.error('Google login error:', error);
@@ -202,11 +196,27 @@ const Login = (): JSX.Element => {
   );
 };
 
-
-const processLoginResponse = (response: { data: { token: any; user: { first_name: any; last_name: any; role: any; email: any; id: any; }; }; message: any; }, navigate: (arg0: string) => void) => {
+const processLoginResponse = (
+  response: {
+    data: {
+      token: any;
+      user: {
+        first_name: any;
+        last_name: any;
+        role: any;
+        email: any;
+        id: any;
+        email_verified_at: any;
+      };
+    };
+    message: any;
+  },
+  navigate: (arg0: string) => void,
+  googleTrue: boolean
+) => {
   const {
     token,
-    user: { first_name, last_name, role, email, id: userId },
+    user: { first_name, last_name, role, email, id: userId, email_verified_at },
   } = response.data;
 
   const user = {
@@ -215,7 +225,7 @@ const processLoginResponse = (response: { data: { token: any; user: { first_name
     id: userId,
   };
 
-  const isValidRole = role === userRoles.ADMIN || userRoles.RIDER || userRoles.USER;
+  const isValidRole = [userRoles.ADMIN, userRoles.RIDER, userRoles.USER].includes(role);
 
   if (isValidRole) {
     userStore.loginUser(token, user, role);
@@ -226,17 +236,28 @@ const processLoginResponse = (response: { data: { token: any; user: { first_name
 
   appToast.Success(response?.message || "Successfully logged in");
 
-  switch (role) {
-    case userRoles.ADMIN:
-      navigate(routes.AdminRoute.ADMIN_DASHBOARD);
-      break;
-    case userRoles.RIDER:
-      navigate(routes.RidersRoute.RIDER_DASHBOARD);
-      break;
-    default:
-      navigate(routes.usersRoutes.DASHBOARD);
+  function navigateToDashboard() {
+    switch (role) {
+      case userRoles.ADMIN:
+        return routes.AdminRoute.ADMIN_DASHBOARD;
+      case userRoles.RIDER:
+        return routes.RidersRoute.RIDER_DASHBOARD;
+      default:
+        return routes.usersRoutes.DASHBOARD;
+    }
+  }
+
+  if (googleTrue) {
+    navigate(navigateToDashboard());
+  } else {
+    if (!email_verified_at) {
+      navigate(routes.VERIFY_EMAIL);
+    } else {
+      navigate(navigateToDashboard());
+    }
   }
 };
+
 
 
 export default Login;
