@@ -186,11 +186,12 @@ export interface verifyRequest {
   code: string;
 }
 
-export interface resetPassword {
-  password: string;
-  token: string;
+export interface ResetPasswordReq {
+  email: string,
+  code: string,
+  password: string,
+  password_confirmation: string
 }
-
 export interface DeliveryItem {
   id?: number;
   user_id?: number;

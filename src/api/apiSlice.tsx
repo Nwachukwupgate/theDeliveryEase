@@ -10,7 +10,6 @@ import {
   DashboardQueryParams,
   DeliveryHistoryResponse,
   dataResponse,
-  resetPassword,
   DeliveriesResponse,
   RiderStats,
   SuccessResponse,
@@ -18,6 +17,7 @@ import {
   GoogleLoginRequest,
   LoginResponse,
   DeliveryRoute,
+  ResetPasswordReq,
 } from "../types/types";
 import { baseQueryWithReauth } from "./baseQueryWithReauth";
 // import { baseUrl } from "@/config";
@@ -70,9 +70,9 @@ export const apiSlice = createApi({
       }),
     }),
 
-    resetPassword: builder.mutation<dataResponse, resetPassword>({
+    resetPassword: builder.mutation<dataResponse, ResetPasswordReq>({
       query: (userData) => ({
-        url: "password/reset",
+        url: "auth/reset-password",
         method: "POST",
         body: userData,
       }),
@@ -81,7 +81,7 @@ export const apiSlice = createApi({
 
     forgotPassword: builder.mutation<dataResponse, loginApiRequest>({
       query: (userData) => ({
-        url: "password/email",
+        url: "auth/forgot-password",
         method: "POST",
         body: userData,
       }),
