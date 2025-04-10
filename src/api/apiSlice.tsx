@@ -63,7 +63,7 @@ export const apiSlice = createApi({
       invalidatesTags: ["User"],
     }),
 
-    resendVerification: builder.query<{ message: string }, void>({ 
+    resendVerification: builder.query<{ message: string }, void>({
       query: () => ({
         url: 'auth/resend-verification',
         method: 'GET',
@@ -182,7 +182,7 @@ export const apiSlice = createApi({
     editUser: builder.mutation<SuccessResponse, EditUser>({
       query: (userData) => ({
         url: "settings/profile",
-        method: "POST",
+        method: "PATCH",
         body: userData,
       }),
       invalidatesTags: ["User"],
