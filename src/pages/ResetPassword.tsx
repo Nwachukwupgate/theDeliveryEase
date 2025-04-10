@@ -107,7 +107,7 @@ const ResetPassword = (): JSX.Element => {
             </div>
 
             <div className="flex justify-center my-4">
-              <p className="text-sm text-gray-600">Back to <span className="font-bold">Sign In</span></p>
+              <button className="text-sm text-gray-600" onClick={() => navigate(routes.LOGIN)}>Back to <span className="font-bold">Sign In</span></button>
             </div>
 
 
