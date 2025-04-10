@@ -4,11 +4,11 @@ export interface DeliveryReq {
   receiver_name: string;
   receiver_phone: string;
   pickup_address: string;
-  pickup_lat?: number;
-  pickup_long?: number;
+  pickup_lat?: number | null;
+  pickup_long?: number | null;
   delivery_address: string;
-  delivery_lat?: number;
-  delivery_long?: number;
+  delivery_lat?: number | null;
+  delivery_long?: number | null;
   delivery_type: string;
   product_name: string;
   product_description: string;
@@ -129,7 +129,6 @@ export interface GoogleLoginRequest {
   name: string;
 }
 
-
 export interface Location {
   latitude: number;
   longitude: number;
@@ -187,10 +186,10 @@ export interface verifyRequest {
 }
 
 export interface ResetPasswordReq {
-  email: string,
-  code: string,
-  password: string,
-  password_confirmation: string
+  email: string;
+  code: string;
+  password: string;
+  password_confirmation: string;
 }
 export interface DeliveryItem {
   id?: number;
