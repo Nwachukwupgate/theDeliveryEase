@@ -43,15 +43,14 @@ export const DeliveryTracker: React.FC<DeliveryTrackerProps> = ({ deliveryId }) 
   if (!route) return <div>No route data available</div>;
 
   return (
-    <div className="delivery-tracker">
-      <h2>Delivery Tracking</h2>
-      <div className="route-info">
+    <div className="p-2">
+      <div className="flex gap-x-3">
         <div>
-          <h3>Pickup</h3>
+          <h3 className=' font-semibold'>Pickup address</h3>
           <p>{route.start_point.address}</p>
         </div>
         <div>
-          <h3>Delivery</h3>
+          <h3 className=' font-semibold'>Delivery address</h3>
           <p>{route.end_point.address}</p>
         </div>
       </div>

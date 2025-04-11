@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useUpdateDriverLocationMutation } from '@/api/apiSlice';
 
 interface DriverLocationUpdaterProps {
@@ -8,14 +8,21 @@ interface DriverLocationUpdaterProps {
 
 const DriverLocationUpdater: React.FC<DriverLocationUpdaterProps> = ({
     deliveryId,
-    updateInterval = 10000 // Default update every 10 seconds
+    updateInterval = 240000 // Default update every 10 seconds
 }) => {
     const [isTracking, setIsTracking] = useState(false);
     const [lastLocation, setLastLocation] = useState<{ lat: number, lng: number } | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [updateDriverLocation] = useUpdateDriverLocationMutation();
+    const lastUpdateTime = useRef<number | null>(null);
 
     const updateLocation = useCallback(async (position: GeolocationPosition) => {
+
+        const now = Date.now();
+        if (lastUpdateTime.current && now - lastUpdateTime.current < updateInterval) {
+            return; // Skip update if not enough time has passed
+        }
+
         const { latitude, longitude } = position.coords;
         const speed = position.coords.speed || undefined;
 
@@ -50,18 +57,8 @@ const DriverLocationUpdater: React.FC<DriverLocationUpdaterProps> = ({
 
     useEffect(() => {
         let watchId: number | null = null;
-        let intervalId: ReturnType<typeof setInterval> | null = null;
 
         if (isTracking) {
-            // Start interval to update location periodically based on `updateInterval`
-            intervalId = setInterval(() => {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(updateLocation, (err) => {
-                        setError(`Geolocation error: ${err.message}`);
-                    });
-                }
-            }, updateInterval);
-
             watchId = navigator.geolocation.watchPosition(
                 updateLocation,
                 (err) => {
@@ -79,36 +76,45 @@ const DriverLocationUpdater: React.FC<DriverLocationUpdaterProps> = ({
             if (watchId !== null) {
                 navigator.geolocation.clearWatch(watchId);
             }
-            if (intervalId !== null) {
-                clearInterval(intervalId);
-            }
         };
     }, [isTracking, updateLocation, updateInterval]);
 
     return (
-        <div className="driver-location-updater">
-            <h3>Location Tracking</h3>
+        <div>
+            <h3 className="text-lg font-semibold mb-2">Location Tracking</h3>
 
-            {error && <div className="error">{error}</div>}
+            {error && <div className="text-red-500 mb-2">{error}</div>}
 
-            <div className="tracking-controls">
+            <div className="tracking-controls flex gap-2">
                 {!isTracking ? (
-                    <button onClick={startTracking}>Start Tracking</button>
+                    <button
+                        onClick={startTracking}
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                        Start Tracking
+                    </button>
                 ) : (
-                    <button onClick={stopTracking}>Stop Tracking</button>
+                    <button
+                        onClick={stopTracking}
+                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                        Stop Tracking
+                    </button>
                 )}
             </div>
 
             {lastLocation && (
-                <div className="last-location">
-                    <p>Last updated location:</p>
+                <div className="last-location mt-4">
+                    <p className="font-semibold">Last updated location:</p>
                     <p>Latitude: {lastLocation.lat}</p>
                     <p>Longitude: {lastLocation.lng}</p>
                 </div>
             )}
 
-            <div className="tracking-status">
-                Status: {isTracking ? 'Tracking active' : 'Tracking inactive'}
+            <div className="tracking-status mt-2">
+                Status: <span className={isTracking ? 'font-semibold text-green-500' : 'font-semibold text-gray-500'}>
+                    {isTracking ? 'Tracking active' : 'Tracking inactive'}
+                </span>
             </div>
         </div>
     );

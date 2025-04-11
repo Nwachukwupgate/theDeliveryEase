@@ -32,14 +32,15 @@ const TrackingPage = () => {
 
   if (!isInTransit) {
     return (
-      <div className="tracking-page">
-        <p>This delivery is not in transit and cannot be tracked.</p>
+      <div className=" h-screen p-2">
+        <p className=" text-lg mb-2">This delivery is not in transit and cannot be tracked.</p>
+        <p><span className=" font-semibold"> Delivery status:</span> <span className=" text-sm">{delivery?.data?.item?.delivery_status}</span></p>
       </div>
     );
   }
 
   return (
-    <div className="tracking-page">
+    <div>
       {shouldShowDriverControls() && (
         <DriverLocationUpdater deliveryId={deliveryId} />
       )}
