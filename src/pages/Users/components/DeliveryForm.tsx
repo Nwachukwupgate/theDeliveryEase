@@ -71,6 +71,7 @@ const DeliveryForm: React.FC<{ onSubmit: (data: DeliveryReq) => void }> = ({
       delivery_lat: 9.07466,
       delivery_long: 7.476005,
     };
+    
     onSubmit(finalData);
   };
 

@@ -4,7 +4,6 @@ import {
   RegisterApiRequest,
   loginApiRequest,
   verifyRequest,
-  DeliveryItem,
   EditUser,
   PasswordtReq,
   DashboardQueryParams,
@@ -18,6 +17,7 @@ import {
   LoginResponse,
   DeliveryRoute,
   ResetPasswordReq,
+  DeliveryReq,
 } from "../types/types";
 import { baseQueryWithReauth } from "./baseQueryWithReauth";
 // import { baseUrl } from "@/config";
@@ -137,7 +137,7 @@ export const apiSlice = createApi({
       providesTags: ["Dashboard"],
     }),
 
-    createDelivery: builder.mutation<dataResponse, DeliveryItem>({
+    createDelivery: builder.mutation<dataResponse, DeliveryReq>({
       query: (userData) => ({
         url: "deliveries",
         method: "POST",

@@ -2,28 +2,14 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { appToast } from "@/utilities/appToast";
 import { useCreateDeliveryMutation } from "@/api/apiSlice";
-import { ApiError } from "@/types/types";
+import { ApiError, DeliveryReq } from "@/types/types";
 import { Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-
-interface DeliveryData {
-  contact_name: string;
-  contact_phone: string;
-  receiver_name: string;
-  receiver_phone: string;
-  pickup_address: string;
-  delivery_address: string;
-  delivery_type: string;
-  product_name: string;
-  product_description: string;
-  weight: string;
-  quantity: string;
-}
 
 const bankName = import.meta.env.VITE_APP_BANK_NAME;
 const bankAcc = import.meta.env.VITE_APP_BANK_ACC;
 
-const CheckoutCard: React.FC<{ deliveryData: DeliveryData }> = ({
+const CheckoutCard: React.FC<{ deliveryData: DeliveryReq }> = ({
   deliveryData,
 }) => {
   const navigate = useNavigate();
@@ -49,6 +35,10 @@ const CheckoutCard: React.FC<{ deliveryData: DeliveryData }> = ({
         product_description: deliveryData?.product_description || "",
         weight: deliveryData?.weight || "",
         quantity: deliveryData?.quantity || "",
+        pickup_lat: deliveryData?.pickup_lat,
+        pickup_long: deliveryData?.pickup_long,
+        delivery_lat: deliveryData?.delivery_lat,
+        delivery_long: deliveryData.delivery_long,
         // Omitting price and receipt for now
       }).unwrap();
 
