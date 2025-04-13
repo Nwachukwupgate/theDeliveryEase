@@ -4,8 +4,8 @@ import { useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import NameIcon from "@/common/icons/NameIcon";
 import PhoneIcon from "@/common/icons/PhoneIcon";
-// import AddressIcon from "@/common/icons/AddressIcon";
-// import UnknownIcon from "@/common/icons/UnknownIcon";
+import AddressIcon from "@/common/icons/AddressIcon";
+import UnknownIcon from "@/common/icons/UnknownIcon";
 import ProductNameIcon from "@/common/icons/ProductNameIcon";
 import ProductDescriptionIcon from "@/common/icons/ProductDescriptionIcon";
 import WeightIcon from "@/common/icons/WeightIcon";
@@ -13,10 +13,10 @@ import QuantityIcon from "@/common/icons/QuantityIcon";
 import WalletIcon from "@/common/icons/WalletIcon";
 import { DeliveryReq } from "@/types/types";
 import { DeliveryType } from "@/utilities/constants";
-import { useState } from "react";
-import Autocomplete from 'react-google-autocomplete';
+// import { useState } from "react";
+// import Autocomplete from 'react-google-autocomplete';
 
-const googlemapskey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
+// const googlemapskey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
 
 const DeliveryForm: React.FC<{ onSubmit: (data: DeliveryReq) => void }> = ({
   onSubmit,
@@ -25,51 +25,51 @@ const DeliveryForm: React.FC<{ onSubmit: (data: DeliveryReq) => void }> = ({
     handleSubmit,
     register,
     formState: { errors },
-    setValue
+    // setValue
   } = useForm<DeliveryReq>();
 
 
-  const [pickupCoordinates, setPickupCoordinates] = useState<{
-    latitude: number | null;
-    longitude: number | null;
-  }>({ latitude: null, longitude: null });
+  // const [pickupCoordinates, setPickupCoordinates] = useState<{
+  //   latitude: number | null;
+  //   longitude: number | null;
+  // }>({ latitude: null, longitude: null });
 
-  const [deliveryCoordinates, setDeliveryCoordinates] = useState<{
-    latitude: number | null;
-    longitude: number | null;
-  }>({ latitude: null, longitude: null });
+  // const [deliveryCoordinates, setDeliveryCoordinates] = useState<{
+  //   latitude: number | null;
+  //   longitude: number | null;
+  // }>({ latitude: null, longitude: null });
 
-  const handlePickupSelect = (place: google.maps.places.PlaceResult | null) => {
-    setValue('pickup_address', place?.formatted_address || '');
-    if (place?.geometry?.location) {
-      setPickupCoordinates({
-        latitude: place.geometry.location.lat(),
-        longitude: place.geometry.location.lng(),
-      });
-    } else {
-      setPickupCoordinates({ latitude: null, longitude: null });
-    }
-  };
+  // const handlePickupSelect = (place: google.maps.places.PlaceResult | null) => {
+  //   setValue('pickup_address', place?.formatted_address || '');
+  //   if (place?.geometry?.location) {
+  //     setPickupCoordinates({
+  //       latitude: place.geometry.location.lat(),
+  //       longitude: place.geometry.location.lng(),
+  //     });
+  //   } else {
+  //     setPickupCoordinates({ latitude: null, longitude: null });
+  //   }
+  // };
 
-  const handleDeliverySelect = (place: google.maps.places.PlaceResult | null) => {
-    setValue('delivery_address', place?.formatted_address || '');
-    if (place?.geometry?.location) {
-      setDeliveryCoordinates({
-        latitude: place.geometry.location.lat(),
-        longitude: place.geometry.location.lng(),
-      });
-    } else {
-      setDeliveryCoordinates({ latitude: null, longitude: null });
-    }
-  };
+  // const handleDeliverySelect = (place: google.maps.places.PlaceResult | null) => {
+  //   setValue('delivery_address', place?.formatted_address || '');
+  //   if (place?.geometry?.location) {
+  //     setDeliveryCoordinates({
+  //       latitude: place.geometry.location.lat(),
+  //       longitude: place.geometry.location.lng(),
+  //     });
+  //   } else {
+  //     setDeliveryCoordinates({ latitude: null, longitude: null });
+  //   }
+  // };
 
   const onSubmitHandler = (data: DeliveryReq) => {
     const finalData = {
       ...data,
-      pickup_lat: pickupCoordinates.latitude,
-      pickup_long: pickupCoordinates.longitude,
-      delivery_lat: deliveryCoordinates.latitude,
-      delivery_long: deliveryCoordinates.longitude,
+      pickup_lat: 9.066667,
+      pickup_long: 7.483333,
+      delivery_lat: 9.07466,
+      delivery_long: 7.476005,
     };
     onSubmit(finalData);
   };
@@ -117,15 +117,15 @@ const DeliveryForm: React.FC<{ onSubmit: (data: DeliveryReq) => void }> = ({
       <h3 className="mt-4 text-lg font-bold">Delivery Details</h3>
 
       <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-2">
-        {/* <IconInput
+        <IconInput
           placeholder="Pickup Address"
           name="pickup_address"
           register={register}
           error={errors.pickup_address}
           icon={<AddressIcon />}
-        /> */}
+        />
 
-        <div>
+        {/* <div>
           <label htmlFor="pickup_address" className="block text-sm font-medium text-gray-700">
             Pickup Address
           </label>
@@ -150,17 +150,17 @@ const DeliveryForm: React.FC<{ onSubmit: (data: DeliveryReq) => void }> = ({
           {errors.pickup_address && (
             <p className="mt-1 text-red-500 text-sm">{errors.pickup_address.message}</p>
           )}
-        </div>
+        </div> */}
 
-        {/* <IconInput
+        <IconInput
           placeholder="Delivery Address"
           name="delivery_address"
           register={register}
           error={errors.delivery_address}
           icon={<UnknownIcon />}
-        /> */}
+        />
 
-        <div>
+        {/* <div>
           <label htmlFor="delivery_address" className="block text-sm font-medium text-gray-700">
             Delivery Address
           </label>
@@ -185,7 +185,7 @@ const DeliveryForm: React.FC<{ onSubmit: (data: DeliveryReq) => void }> = ({
           {errors.delivery_address && (
             <p className="mt-1 text-red-500 text-sm">{errors.delivery_address.message}</p>
           )}
-        </div>
+        </div> */}
 
         <IconInput
           placeholder="Product Name"
