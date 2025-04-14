@@ -87,6 +87,7 @@ const DeliveryForm: React.FC<{ onSubmit: (data: DeliveryReq) => void }> = ({
             register={register}
             error={errors.contact_name}
             icon={<NameIcon />}
+            rules={{required:"required field"}}
           />
 
           <IconInput
@@ -95,6 +96,7 @@ const DeliveryForm: React.FC<{ onSubmit: (data: DeliveryReq) => void }> = ({
             register={register}
             error={errors.receiver_name}
             icon={<NameIcon />}
+            rules={{required:"required field"}}
           />
 
           <IconInput
@@ -103,6 +105,7 @@ const DeliveryForm: React.FC<{ onSubmit: (data: DeliveryReq) => void }> = ({
             register={register}
             error={errors.contact_phone}
             icon={<PhoneIcon />}
+            rules={{required:"required field"}}
           />
 
           <IconInput
@@ -111,6 +114,7 @@ const DeliveryForm: React.FC<{ onSubmit: (data: DeliveryReq) => void }> = ({
             register={register}
             error={errors.receiver_phone}
             icon={<PhoneIcon />}
+            rules={{required:"required field"}}
           />
         </div>
       </div>
@@ -124,6 +128,7 @@ const DeliveryForm: React.FC<{ onSubmit: (data: DeliveryReq) => void }> = ({
           register={register}
           error={errors.pickup_address}
           icon={<AddressIcon />}
+          rules={{required:"required field"}}
         />
 
         {/* <div>
@@ -159,6 +164,7 @@ const DeliveryForm: React.FC<{ onSubmit: (data: DeliveryReq) => void }> = ({
           register={register}
           error={errors.delivery_address}
           icon={<UnknownIcon />}
+          rules={{required:"required field"}}
         />
 
         {/* <div>
@@ -194,6 +200,7 @@ const DeliveryForm: React.FC<{ onSubmit: (data: DeliveryReq) => void }> = ({
           register={register}
           error={errors.product_name}
           icon={<ProductNameIcon />}
+          rules={{required:"required field"}}
         />
 
         <IconInput
@@ -202,6 +209,7 @@ const DeliveryForm: React.FC<{ onSubmit: (data: DeliveryReq) => void }> = ({
           register={register}
           error={errors.product_description}
           icon={<ProductDescriptionIcon />}
+          rules={{required:"required field"}}
         />
 
         <IconInput
@@ -210,6 +218,7 @@ const DeliveryForm: React.FC<{ onSubmit: (data: DeliveryReq) => void }> = ({
           register={register}
           error={errors.weight}
           icon={<WeightIcon />}
+          rules={{required:"required field"}}
         />
 
         <IconInput
@@ -218,6 +227,7 @@ const DeliveryForm: React.FC<{ onSubmit: (data: DeliveryReq) => void }> = ({
           register={register}
           error={errors.quantity}
           icon={<QuantityIcon />}
+          rules={{required:"required field"}}
         />
       </div>
 

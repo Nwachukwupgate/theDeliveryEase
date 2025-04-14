@@ -8,43 +8,23 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 const bankName = import.meta.env.VITE_APP_BANK_NAME;
 const bankAcc = import.meta.env.VITE_APP_BANK_ACC;
+// const customerNo = import.meta.env.VITE_APP_CUSTOMER_NO;
 
 const CheckoutCard: React.FC<{ deliveryData: DeliveryReq }> = ({
   deliveryData,
 }) => {
   const navigate = useNavigate();
   const [createDelivery] = useCreateDeliveryMutation();
-  const [dialogOpen, setDialogOpen] = useState(false);
-
-  const handleOpenDialog = () => {
-    setDialogOpen(true);
-  };
+  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
+  const [paymentDialogOpen, setPaymentDialogOpen] = useState(false);
 
   const handleCompleteDelivery = async () => {
     try {
-      // Create the delivery without payment information
-      const response = await createDelivery({
-        contact_name: deliveryData?.contact_name || "",
-        contact_phone: deliveryData?.contact_phone || "",
-        receiver_name: deliveryData?.receiver_name || "",
-        receiver_phone: deliveryData?.receiver_phone || "",
-        pickup_address: deliveryData?.pickup_address || "",
-        delivery_address: deliveryData?.delivery_address || "",
-        delivery_type: deliveryData?.delivery_type || "Standard",
-        product_name: deliveryData?.product_name || "",
-        product_description: deliveryData?.product_description || "",
-        weight: deliveryData?.weight || "",
-        quantity: deliveryData?.quantity || "",
-        pickup_lat: deliveryData?.pickup_lat,
-        pickup_long: deliveryData?.pickup_long,
-        delivery_lat: deliveryData?.delivery_lat,
-        delivery_long: deliveryData.delivery_long,
-        // Omitting price and receipt for now
-      }).unwrap();
+      const response = await createDelivery({ ...deliveryData }).unwrap();
 
       appToast.Success(response?.message || "Delivery created successfully!");
-      setDialogOpen(false);
-      navigate("/history");
+      setConfirmDialogOpen(false);
+      setPaymentDialogOpen(true); // 🔥 Show payment dialog now
     } catch (error) {
       const typedError = error as ApiError;
       const errorMessage =
@@ -95,21 +75,45 @@ const CheckoutCard: React.FC<{ deliveryData: DeliveryReq }> = ({
           <Button
             fullWidth
             variant="contained"
-            onClick={handleOpenDialog}
+            onClick={() => setConfirmDialogOpen(true)}
             disabled={!deliveryData}
           >
             Create Delivery
           </Button>
+
         </div>
       </div>
 
-      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+      {/* confirm delivery */}
+      <Dialog open={confirmDialogOpen} onClose={() => setConfirmDialogOpen(false)}>
         <DialogTitle className="font-bold">Confirm Delivery</DialogTitle>
         <DialogContent>
           <p className="mb-4">
             You're about to create this delivery request. Would you like to proceed?
           </p>
+        </DialogContent>
+        <div className="flex justify-center gap-4 py-4">
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={() => setConfirmDialogOpen(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleCompleteDelivery}
+          >
+            Confirm
+          </Button>
+        </div>
+      </Dialog>
 
+      {/* payment dialog */}
+      <Dialog open={paymentDialogOpen} onClose={() => setPaymentDialogOpen(false)}>
+        <DialogTitle className="font-bold">Payment Info</DialogTitle>
+        <DialogContent>
           <div className="mb-6 rounded bg-[#f1f5f9] p-3 text-sm">
             <p className="mb-2 font-semibold">Pay into this account number:</p>
             <div className="flex items-center justify-between rounded bg-white px-3 py-2 shadow-sm">
@@ -148,6 +152,73 @@ const CheckoutCard: React.FC<{ deliveryData: DeliveryReq }> = ({
           </div>
         </DialogContent>
 
+        <div className="flex justify-center gap-4 py-4">
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={() => setPaymentDialogOpen(false)}
+          >
+            Close
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              setPaymentDialogOpen(false);
+              navigate("/dashboard");
+            }}
+          >
+            Done
+          </Button>
+        </div>
+      </Dialog>
+
+
+      {/* <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+        <DialogTitle className="font-bold">Confirm Delivery</DialogTitle>
+        <DialogContent>
+          <p className="mb-4">
+            You're about to create this delivery request. Would you like to proceed?
+          </p>
+
+          <div className="mb-6 rounded bg-[#f1f5f9] p-3 text-sm">
+            <p className="mb-2 font-semibold">Pay into this account number:</p>
+            <div className="flex items-center justify-between rounded bg-white px-3 py-2 shadow-sm">
+              <span className="font-mono text-base">{bankAcc} {bankName}</span>
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(`${bankAcc}`);
+                  appToast.Success("Account number copied!");
+                }}
+                className="ml-2 p-1 text-gray-500 hover:text-black"
+                title="Copy"
+              >
+                <ContentCopyIcon style={{ fontSize: 16 }} />
+              </button>
+            </div>
+            <p className="mt-2 text-gray-600">
+              After payment, kindly{" "}
+              <a
+                href={`tel:${customerNo}`}
+                className="text-blue-600 underline hover:text-blue-800"
+              >
+                contact our sales rep
+              </a>{" "}
+              to inform them.
+            </p>
+          </div>
+
+          <div className="mt-4">
+            <p className="font-semibold">Delivery Details:</p>
+            <ul className="mt-2 list-disc space-y-1 pl-5">
+              <li>From: {deliveryData?.pickup_address}</li>
+              <li>To: {deliveryData?.delivery_address}</li>
+              <li>Product: {deliveryData?.product_name}</li>
+              <li>Delivery Type: {deliveryData?.delivery_type}</li>
+            </ul>
+          </div>
+        </DialogContent>
+
 
         <div className="flex justify-center gap-4 py-4">
           <Button
@@ -165,7 +236,7 @@ const CheckoutCard: React.FC<{ deliveryData: DeliveryReq }> = ({
             Confirm Delivery
           </Button>
         </div>
-      </Dialog>
+      </Dialog> */}
     </>
   );
 };
