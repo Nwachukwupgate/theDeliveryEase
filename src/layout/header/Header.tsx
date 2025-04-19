@@ -41,12 +41,12 @@ const Header: React.FC = () => {
 
   return (
     <header
-      className={`fixed right-0 top-0 z-50  py-4 lg:grid lg:h-[70px] w-full lg:grid-cols-12  lg:bg-white px-4 md:px-8 lg:w-[calc(100%-250px)] lg:border-b lg:pl-8 lg:pr-12 xl:pr-16 
+      className={`fixed right-0 top-0 z-50  py-4 lg:grid lg:h-[70px] w-full lg:grid-cols-12  lg:bg-white px-3 md:px-8 lg:w-[calc(100%-250px)]  
       ${isScrolled ? 'bg-primaryColor100 shadow-md' : 'bg-transparent'} transition-colors duration-300 ease-in-out`}
     >
 
       {/* TODO: ADD SEARCH,NOTIFICATIONS IN MOBILE AND DESKTOP */}
-      <div className=" px-4 lg:p-0 lg:hidden">
+      <div className="  lg:p-0 lg:hidden">
         {/* MOBILE NAV  */}
         <div className="flex justify-between ">
           <div className="flex lg:hidden">

@@ -19,13 +19,15 @@ const DashboardPage = () => {
   const [deliveryType, setDeliveryType] = useState<string | undefined>(
     undefined,
   );
+  const [currentPage, setCurrentPage] = useState(1);
+
   const {
     data: deliveriesResponse,
     isLoading: isDeliveriesLoading,
     isFetching: isDeliveriesFetching,
   } = useGetDeliveriesQuery({
     type: deliveryType,
-    page: 1,
+    page: currentPage,
   });
 
   const { data: dashboardData, isLoading: isDashboardLoading } =
@@ -89,7 +91,7 @@ const DashboardPage = () => {
     false
   );
 
-  const handleDeliveryClick = (delivery: Delivery) => {
+  function handleDeliveryClick(delivery: Delivery) {
     setSelectedDelivery(delivery);
 
     // hide other dashboard details when a delivery is clicked
@@ -102,16 +104,29 @@ const DashboardPage = () => {
     }
   };
 
-  const handleDeliveryTypeChange = (type: string) => {
+  function handleDeliveryTypeChange(type: string) {
     // Toggle filter - if same type is clicked again, remove filter
     setDeliveryType((currentType) => (currentType === type ? undefined : type));
   };
 
-  const handleClearFilter = () => {
+  function handleClearFilter() {
     setDeliveryType(undefined);
   };
 
-  // Set first delivery as selected when data loads or changes
+  // Handle pagination button clicks
+  function handleNextPage() {
+    if (pagination?.links.next) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  function handlePreviousPage() {
+    if (pagination?.links.previous) {
+      setCurrentPage((prevPage) => prevPage - 1);
+    }
+  };
+
+  // Set first delivery as selected when data loads or changes 
   useEffect(() => {
     if (deliveries.length > 0 && !selectedDelivery && window.innerWidth > 1023) {
       setSelectedDelivery(deliveries[0]);
@@ -119,7 +134,7 @@ const DashboardPage = () => {
   }, [deliveries, selectedDelivery]);
 
   return (
-    <div className="p-3 lg:p-6">
+    <div className="p-3 md:p-6">
       {/* Dashboard Stats */}
       {!smallScreenView && <div>
         <div className="mb-6 flex justify-between">
@@ -127,7 +142,7 @@ const DashboardPage = () => {
         </div>
 
         {/* Dashboard Cards */}
-        <div className=" w-full grid grid-cols-2 gap-4">
+        <div className=" w-full grid grid-cols-2 gap-4 mb-6">
           {isDashboardLoading ? (
             <p>Loading...</p>
           ) : (
@@ -264,19 +279,21 @@ const DashboardPage = () => {
 
                 {/* Pagination */}
                 {pagination && pagination.total_pages > 1 && (
-                  <div className="mt-4 flex items-center justify-between">
+                  <div className="mt-4 text-xs flex items-center justify-between">
                     <button
+                      onClick={handlePreviousPage}
                       disabled={!pagination.links.previous}
-                      className="rounded bg-[#581756] px-4 py-2 text-white disabled:opacity-50"
+                      className="rounded bg-[#581756] px-4 py-1 text-white disabled:opacity-50"
                     >
-                      Previous
+                      Prev
                     </button>
                     <span>
                       Page {pagination.current_page} of {pagination.total_pages}
                     </span>
                     <button
+                      onClick={handleNextPage}
                       disabled={!pagination.links.next}
-                      className="rounded bg-[#581756] px-4 py-2 text-white disabled:opacity-50"
+                      className="rounded bg-[#581756] px-4 py-1 text-white disabled:opacity-50"
                     >
                       Next
                     </button>
