@@ -4,14 +4,16 @@ import SameDay from "../../common/icons/SameDay";
 import ExpressIcon from "../../common/icons/ExpressIcon";
 import ScheduledIcon from "../../common/icons/ScheduledIcon";
 import NextDay from "../../common/icons/NextDay";
-import DeliveryCard from "./components/DeliveryCard";
+import DeliveryTypeButtons from "./components/DeliveryTypeButtons";
 import { useGetDeliveriesQuery, useGetDashboardQuery } from "@/api/apiSlice";
 import { Delivery } from "@/types/types";
 import { CircularProgress } from "@mui/material";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import routes from "@/navigation/routes";
-import { DeliveryType } from "@/utilities/constants";
+import { DeliveryStatus, DeliveryType } from "@/utilities/constants";
+import { ChevronLeft } from "lucide-react";
+import { QuickAccessPanel } from "./components/quickAccessPanel";
 
 const DashboardPage = () => {
   const [deliveryType, setDeliveryType] = useState<string | undefined>(
@@ -37,32 +39,64 @@ const DashboardPage = () => {
     {
       title: "Total Orders",
       amount: dashboardData?.data?.total_orders || 0,
-      color: "#B57EDC",
+      color: "rgba(181, 126, 220, 0.5)",
     },
     {
       title: "Successful Orders",
       amount: dashboardData?.data?.successful_orders || 0,
-      color: "#7EDCA4",
+      color: "rgba(126, 220, 164, 0.5)",
     },
     {
       title: "Ongoing Orders",
       amount: dashboardData?.data?.ongoing_orders || 0,
-      color: "#DF20E3",
+      color: "rgba(223, 32, 227, 0.3)",
     },
     {
       title: "Cancelled Orders",
       amount: dashboardData?.data?.cancelled_orders || 0,
-      color: "#C31919",
+      color: "rgba(195, 25, 25, 0.4)",
     },
   ];
+
+  const deliveryTypeData = [
+    {
+      icon: <SameDay />,
+      label: "Same Day",
+      type: DeliveryType.SAME_DAY
+    },
+    {
+      icon: <NextDay />,
+      label: "Next Day",
+      type: DeliveryType.NEXT_DAY
+    },
+    {
+      icon: <ExpressIcon />,
+      label: "Express",
+      type: DeliveryType.EXPRESS
+    },
+    {
+      icon: <ScheduledIcon />,
+      label: "Scheduled",
+      type: DeliveryType.SCHEDULED
+    },
+  ]
 
   const targetRef = useRef<HTMLDivElement | null>(null);
   const [selectedDelivery, setSelectedDelivery] = useState<Delivery | null>(
     null,
   );
+  const [smallScreenView, setSmallScreenView] = useState<boolean>(
+    false
+  );
 
   const handleDeliveryClick = (delivery: Delivery) => {
     setSelectedDelivery(delivery);
+
+    // hide other dashboard details when a delivery is clicked
+    if (window.innerWidth < 1024) {
+      setSmallScreenView(true)
+    }
+
     if (targetRef.current) {
       targetRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
@@ -79,7 +113,7 @@ const DashboardPage = () => {
 
   // Set first delivery as selected when data loads or changes
   useEffect(() => {
-    if (deliveries.length > 0 && !selectedDelivery) {
+    if (deliveries.length > 0 && !selectedDelivery && window.innerWidth > 1023) {
       setSelectedDelivery(deliveries[0]);
     }
   }, [deliveries, selectedDelivery]);
@@ -87,13 +121,13 @@ const DashboardPage = () => {
   return (
     <div className="p-3 lg:p-6">
       {/* Dashboard Stats */}
-      <div>
-        <div className="mb-12 flex justify-between border-b border-gray-400 pb-4">
+      {!smallScreenView && <div>
+        <div className="mb-6 flex justify-between">
           <div className="text-lg font-bold">Dashboard</div>
         </div>
 
         {/* Dashboard Cards */}
-        <div className="flex w-full flex-row flex-wrap gap-4">
+        <div className=" w-full grid grid-cols-2 gap-4">
           {isDashboardLoading ? (
             <p>Loading...</p>
           ) : (
@@ -108,73 +142,36 @@ const DashboardPage = () => {
             ))
           )}
         </div>
-      </div>
+      </div>}
+      {/* back button on medium screen below */}
+      {smallScreenView && <button onClick={() => setSmallScreenView(false)}>
+        <ChevronLeft size={24} className=" text-primaryColor700 mb-8" />
+      </button>}
 
-      {/* Delivery Types */}
-      <div className="mt-10 grid-cols-1 gap-8 lg:grid lg:grid-cols-6">
-        <div className="col-span-4">
-          <div>
-            <div className="flex flex-row flex-wrap justify-center gap-8">
-              <button
-                onClick={() => handleDeliveryTypeChange("same_day")}
+      <div className=" grid-cols-1 gap-8 lg:grid lg:grid-cols-6">
+
+        {/* Delivery type filter buttons */}
+        {!smallScreenView && <div className="col-span-4">
+          <div className=" flex gap-2 items-center justify-between">
+            {
+              deliveryTypeData.map(({ type, icon, label }, index) => <button
+                key={index}
+                onClick={() => handleDeliveryTypeChange(type)}
                 aria-label="Filter same day deliveries"
               >
-                <DeliveryCard
-                  icon={<SameDay />}
-                  label="Same Day"
-                  amount="Delivery"
-                  borderClasses={`border border-dashed ${deliveryType === DeliveryType.SAME_DAY
+                <DeliveryTypeButtons
+                  icon={icon}
+                  label={label}
+                  borderClasses={`border border-dashed ${deliveryType === type
                     ? "border-[#581756]"
                     : "border-gray-300"
                     }`}
                 />
-              </button>
-              <button
-                onClick={() => handleDeliveryTypeChange("next_day")}
-                aria-label="Filter next day deliveries"
-              >
-                <DeliveryCard
-                  icon={<NextDay />}
-                  label="Next Day"
-                  amount="Delivery"
-                  borderClasses={`border border-dashed ${deliveryType === DeliveryType.NEXT_DAY
-                    ? "border-[#581756]"
-                    : "border-gray-300"
-                    }`}
-                />
-              </button>
-              <button
-                onClick={() => handleDeliveryTypeChange("scheduled")}
-                aria-label="Filter scheduled deliveries"
-              >
-                <DeliveryCard
-                  icon={<ScheduledIcon />}
-                  label="Scheduled"
-                  amount="Delivery"
-                  borderClasses={`border border-dashed ${deliveryType === DeliveryType.SCHEDULED
-                    ? "border-[#581756]"
-                    : "border-gray-300"
-                    }`}
-                />
-              </button>
-              <button
-                onClick={() => handleDeliveryTypeChange("express")}
-                aria-label="Filter express deliveries"
-              >
-                <DeliveryCard
-                  icon={<ExpressIcon />}
-                  label="Express"
-                  amount="Delivery"
-                  borderClasses={`border border-dashed ${deliveryType === DeliveryType.EXPRESS
-                    ? "border-[#581756]"
-                    : "border-gray-300"
-                    }`}
-                />
-              </button>
-            </div>
+              </button>)
+            }
           </div>
 
-          {/* Deliveries Section */}
+          {/* Deliveries list Section */}
           <div className="mt-10 rounded-lg bg-white p-4 lg:p-8">
             <div className="flex items-center justify-between">
               <p className="text-lg font-bold">Deliveries</p>
@@ -222,11 +219,11 @@ const DashboardPage = () => {
                         )}
                       </div>
 
-                      <p className="text-nowrap font-semibold">
+                      <p className="text-nowrap text-[8px] md:text-sm font-semibold">
                         {delivery.code}
                       </p>
                       <p
-                        className={`hidden text-nowrap text-sm sm:block ${selectedDelivery?.id === delivery.id
+                        className={`hidden text-nowrap text-[8px] md:text-sm  md:block ${selectedDelivery?.id === delivery.id
                           ? "text-gray-600"
                           : "text-gray-500"
                           }`}
@@ -248,21 +245,19 @@ const DashboardPage = () => {
                         )}
                       </div> */}
 
-                      <div>
-                        <p
-                          className={`text-sm ${delivery.delivery_status === "Pending"
-                            ? "text-yellow-500"
-                            : delivery.delivery_status === "Delivered"
-                              ? "text-green-500"
-                              : "text-gray-500"
-                            } ${selectedDelivery?.id === delivery.id
-                              ? "font-bold"
-                              : ""
-                            }`}
-                        >
-                          {delivery.delivery_status}
-                        </p>
-                      </div>
+                      <p
+                        className={`text-[8px] md:text-sm  ${delivery.delivery_status === DeliveryStatus.PENDING
+                          ? "text-[#FFAA05]"
+                          : delivery.delivery_status === DeliveryStatus.DELIVERED
+                            ? "text-[#0DE622]"
+                            : delivery.delivery_status === DeliveryStatus.IN_TRANSIT ? " text-gray-500" : "text-[#E60D0D]"
+                          } ${selectedDelivery?.id === delivery.id
+                            ? "font-bold"
+                            : "font-medium"
+                          }`}
+                      >
+                        {delivery.delivery_status}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -296,12 +291,12 @@ const DashboardPage = () => {
               </div>
             )}
           </div>
-        </div>
-
-        {/* Delivery Details Sidebar */}
-        <div className="mt-4 h-full rounded-lg bg-white shadow-sm lg:col-span-2 lg:mt-0">
+        </div>}
+        {/* Quick Access Sidebar */}
+        {smallScreenView && selectedDelivery && <QuickAccessPanel delivery={selectedDelivery} />}
+        {/* <div className="mt-4 h-full rounded-lg bg-white shadow-sm lg:col-span-2 lg:mt-0">
           <DeliveryDetails delivery={selectedDelivery} />
-        </div>
+        </div> */}
       </div>
     </div>
   );

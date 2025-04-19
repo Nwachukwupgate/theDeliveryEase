@@ -12,16 +12,16 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
   color,
 }) => {
   return (
-    <div className="flex w-full max-w-[202px] flex-row items-center gap-x-4 rounded-lg bg-white p-4 shadow lg:w-fit lg:flex-grow">
+    <div className="flex gap-x-2 max-w-[161px] rounded-3xl bg-white p-2 shadow-sm">
       <div
-        className="flex h-10 w-10 items-center justify-center rounded-full font-bold text-white"
+        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-bold text-black text-sm  "
         style={{ backgroundColor: color }}
       >
         {name}
       </div>
       <div>
-        <p>{title}</p>
-        <p className="text-lg font-bold">{amount ?? "-"}</p>
+        <p className=" text-[10px] font-medium">{title}</p>
+        <p className="text-xl font-medium">{amount ?? "-"}</p>
       </div>
     </div>
   );

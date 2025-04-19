@@ -10,6 +10,7 @@ import LogoutIcon from '@/common/icons/LogoutIcon';
 import userStore from '@/utilities/stores';
 import { useNavigate } from 'react-router-dom';
 import routes from '@/navigation/routes';
+import { SlMenu } from "react-icons/sl";
 
 
 const Header: React.FC = () => {
@@ -41,7 +42,7 @@ const Header: React.FC = () => {
   return (
     <header
       className={`fixed right-0 top-0 z-50  py-4 lg:grid lg:h-[70px] w-full lg:grid-cols-12  lg:bg-white px-4 md:px-8 lg:w-[calc(100%-250px)] lg:border-b lg:pl-8 lg:pr-12 xl:pr-16 
-      ${isScrolled ? 'bg-white shadow-md' : 'bg-transparent'} transition-colors duration-300 ease-in-out`}
+      ${isScrolled ? 'bg-primaryColor100 shadow-md' : 'bg-transparent'} transition-colors duration-300 ease-in-out`}
     >
 
       {/* TODO: ADD SEARCH,NOTIFICATIONS IN MOBILE AND DESKTOP */}
@@ -60,9 +61,7 @@ const Header: React.FC = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               ) : (
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 8h16M4 16h16" />
-                </svg>
+                <SlMenu size={24} className='text-primaryColor600' />
               )}
             </button>
           </div>
@@ -86,7 +85,7 @@ const Header: React.FC = () => {
         </div> */}
         <Divider sx={{ height: "80%" }} orientation="vertical" className="hidden lg:block" />
         <Profile />
-        <button  onClick={handleLogout}> <LogoutIcon /> </button>
+        <button onClick={handleLogout}> <LogoutIcon /> </button>
       </div>
     </header>
   );

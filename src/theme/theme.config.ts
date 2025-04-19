@@ -76,12 +76,12 @@ export function customizeTheme(theme?: ThemeOptions) {
       borderRadius: 10,
     },
     typography: {
-      fontFamily: [
-        "'Poppins'",        // Add Ezra as the primary font
-        "-apple-system",
-        "BlinkMacSystemFont",
-        "sans-serif",    // Fallback to sans-serif
-      ].join(","),
+      // fontFamily: [
+             // Add Ezra as the primary font
+      //   "-apple-system",
+      //   "BlinkMacSystemFont",
+      //   "sans-serif",    // Fallback to sans-serif
+      // ].join(","),
       button: {
         textTransform: "none",
       },
