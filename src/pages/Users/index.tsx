@@ -8,12 +8,9 @@ import DeliveryTypeButtons from "./components/DeliveryTypeButtons";
 import { useGetDeliveriesQuery, useGetDashboardQuery } from "@/api/apiSlice";
 import { Delivery } from "@/types/types";
 import { CircularProgress } from "@mui/material";
-import moment from "moment";
-import { useNavigate } from "react-router-dom";
-import routes from "@/navigation/routes";
 import { DeliveryStatus, DeliveryType } from "@/utilities/constants";
 import { ChevronLeft } from "lucide-react";
-import { QuickAccessPanel } from "./components/quickAccessPanel";
+import { DeliveryDetailsPanel } from "./components/deliveryDetailsPanel";
 
 const DashboardPage = () => {
   const [deliveryType, setDeliveryType] = useState<string | undefined>(
@@ -310,122 +307,10 @@ const DashboardPage = () => {
           </div>
         </div>}
         {/* Quick Access Sidebar */}
-        {smallScreenView && selectedDelivery && <QuickAccessPanel delivery={selectedDelivery} />}
-        {/* <div className="mt-4 h-full rounded-lg bg-white shadow-sm lg:col-span-2 lg:mt-0">
-          <DeliveryDetails delivery={selectedDelivery} />
-        </div> */}
+        {smallScreenView && selectedDelivery && <DeliveryDetailsPanel delivery={selectedDelivery} />}
       </div>
     </div>
   );
 };
 
 export default DashboardPage;
-
-interface DeliveryDetailsProps {
-  delivery: Delivery | null;
-}
-
-const DeliveryDetails: React.FC<DeliveryDetailsProps> = ({ delivery }) => {
-  const navigate = useNavigate();
-
-  if (!delivery) {
-    return (
-      <div className="flex h-full items-center justify-center p-8">
-        <p className="text-center text-gray-500">
-          Select a delivery to view details
-        </p>
-      </div>
-    );
-  }
-
-  return (
-    <div className="space-y-4 p-4">
-      {/* Header with status */}
-      <div className="flex items-start justify-between">
-        <div>
-          <h3 className="text-lg font-semibold text-gray-900">
-            {delivery.code}
-          </h3>
-          <p className="text-sm text-gray-500">
-            {moment(delivery.created_at).format("MMM D, h:mm A")}
-          </p>
-        </div>
-        <span
-          className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${delivery.delivery_status === "Pending"
-            ? "bg-yellow-100 text-yellow-800"
-            : delivery.delivery_status === "In Transit"
-              ? "bg-blue-100 text-blue-800"
-              : delivery.delivery_status === "Delivered"
-                ? "bg-green-100 text-green-800"
-                : "bg-red-100 text-red-800"
-            }`}
-        >
-          {delivery.delivery_status}
-        </span>
-      </div>
-
-      {/* Product Summary */}
-      <div className="rounded-lg bg-gray-50 p-3">
-        <h4 className="text-sm font-medium text-gray-700">Product</h4>
-        <div className="mt-1">
-          <p className="font-medium">{delivery.product_name}</p>
-          <p className="text-sm text-gray-600">
-            {delivery.product_description}
-          </p>
-        </div>
-      </div>
-
-      {/* Quick Info Grid */}
-      <div className="grid grid-cols-2 gap-3">
-        <div className="rounded-lg bg-gray-50 p-3">
-          <h4 className="text-xs font-medium text-gray-500">From</h4>
-          <p className="mt-1 truncate text-sm font-medium">
-            {delivery.contact_name}
-          </p>
-          <p className="truncate text-xs text-gray-500">
-            {delivery.pickup_address}
-          </p>
-        </div>
-        <div className="rounded-lg bg-gray-50 p-3">
-          <h4 className="text-xs font-medium text-gray-500">To</h4>
-          <p className="mt-1 truncate text-sm font-medium">
-            {delivery.receiver_name}
-          </p>
-          <p className="truncate text-xs text-gray-500">
-            {delivery.delivery_address}
-          </p>
-        </div>
-      </div>
-
-      {/* Key Metrics */}
-      <div className="grid grid-cols-3 gap-2 rounded-lg bg-gray-50 p-3">
-        <div className="text-center">
-          <p className="text-xs text-gray-500">Type</p>
-          <p className="text-sm font-medium capitalize">
-            {delivery.delivery_type.replace("_", " ")}
-          </p>
-        </div>
-        <div className="text-center">
-          <p className="text-xs text-gray-500">Weight</p>
-          <p className="text-sm font-medium">{delivery.weight}kg</p>
-        </div>
-        <div className="text-center">
-          <p className="text-xs text-gray-500">Price</p>
-          <p className="text-sm font-medium">₦{delivery.price}</p>
-        </div>
-      </div>
-
-      {/* Action Buttons (optional) */}
-      <div className="flex space-x-2 pt-2">
-        <button className="flex-1 rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none"
-          onClick={() => navigate(routes.usersRoutes.TRACKING.replace(':trackingId', `${delivery.id}`))}
-        >
-          Track
-        </button>
-        <button className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none">
-          Contact
-        </button>
-      </div>
-    </div>
-  );
-};

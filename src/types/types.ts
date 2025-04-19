@@ -45,7 +45,10 @@ export interface Delivery {
   rider_id: number | null;
   stage: number;
   assignment_type: string;
-  claimed_at: string | null;
+  dispatched_at: string | null;
+  in_transit_at: string | null;
+  delivered_at: string | null;
+  cancelled_at: string | null;
   rider: null | {
     id: number;
     first_name: string;
