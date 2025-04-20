@@ -25,7 +25,7 @@ const AdminDashBoard = lazy(() => import("@/pages/Admin"));
 const AdminOrder = lazy(() => import("@/pages/Admin/orders"));
 const AdminService = lazy(() => import("@/pages/Admin/services"));
 const UserDashoard = lazy(() => import("@/pages/Users"))
-const TrackingPage = lazy(() => import("@/pages/Users/tracking"))
+// const TrackingPage = lazy(() => import("@/pages/Users/tracking"))
 const AddDelivery = lazy(
   () => import("@/pages/Users/deliveries"),
 );
@@ -69,10 +69,10 @@ const protectedRoutes: ExtendedRouteObject[] = [
         path: routes.usersRoutes.DASHBOARD,
         element: <UserDashoard />,
       },
-      {
-        path: routes.usersRoutes.TRACKING,
-        element: <TrackingPage />,
-      },
+      // {
+      //   path: routes.usersRoutes.TRACKING,
+      //   element: <TrackingPage />,
+      // },
       {
         path: routes.usersRoutes.DELIVERY,
         element: <AddDelivery />
