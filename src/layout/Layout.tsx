@@ -8,7 +8,7 @@ const Layout = () => {
     <>
       <Header />
       <SideBar />
-      <main className="w-full min-h-full bg-[#F4E9F4CC] pt-[64px] pb-8 lg:pt-[70px] lg:pl-[250px]">
+      <main className="px-3 md:px-16 w-full min-h-full bg-[#F4E9F4CC] pt-[64px] pb-8 lg:pt-[70px] lg:pl-[314px]">
         <Outlet />
       </main>
     </>

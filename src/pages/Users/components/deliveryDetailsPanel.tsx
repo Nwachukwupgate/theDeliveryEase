@@ -122,7 +122,7 @@ export const DeliveryDetailsPanel: React.FC<QuickAccessPanelProps> = ({ delivery
 
     return (
         <div>
-            <h2 className="mb-4 font-semibold text-sm">
+            <h2 className="mb-4 font-semibold text-sm lg:hidden">
                 {delivery.delivery_status === DeliveryStatus.DISPATCHED ||
                     delivery.delivery_status === DeliveryStatus.IN_TRANSIT
                     ? "Ongoing Delivery"

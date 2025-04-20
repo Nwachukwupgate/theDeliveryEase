@@ -20,7 +20,7 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
+      if (window.scrollY > 20) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -41,7 +41,7 @@ const Header: React.FC = () => {
 
   return (
     <header
-      className={`fixed right-0 top-0 z-50  py-4 lg:grid lg:h-[70px] w-full lg:grid-cols-12  lg:bg-white px-3 md:px-8 lg:w-[calc(100%-250px)]  
+      className={`fixed right-0 top-0 z-50  py-4 lg:grid lg:h-[70px] w-full lg:grid-cols-12   px-3 md:px-16  lg:w-[calc(100%-250px)]  
       ${isScrolled ? 'bg-primaryColor100 shadow-md' : 'bg-transparent'} transition-colors duration-300 ease-in-out`}
     >
 

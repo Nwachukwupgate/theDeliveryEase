@@ -13,6 +13,7 @@ export default {
         primaryColor600: "#581756",
         primaryColor700: "#421240",
         primaryColor800: "#330E32",
+        primaryColor900: "#3F2C4D",
       },
     },
   },

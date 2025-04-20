@@ -9,8 +9,9 @@ import { useGetDeliveriesQuery, useGetDashboardQuery } from "@/api/apiSlice";
 import { Delivery } from "@/types/types";
 import { CircularProgress } from "@mui/material";
 import { DeliveryStatus, DeliveryType } from "@/utilities/constants";
-import { ChevronLeft } from "lucide-react";
+import { X } from "lucide-react"; // Added X icon for close button
 import { DeliveryDetailsPanel } from "./components/deliveryDetailsPanel";
+import WelcomeGreeting from "./components/welcomeGreeting";
 
 const DashboardPage = () => {
   const [deliveryType, setDeliveryType] = useState<string | undefined>(
@@ -84,16 +85,14 @@ const DashboardPage = () => {
   const [selectedDelivery, setSelectedDelivery] = useState<Delivery | null>(
     null,
   );
-  const [smallScreenView, setSmallScreenView] = useState<boolean>(
-    false
-  );
+  const [showDeliveryModal, setShowDeliveryModal] = useState<boolean>(false);
 
   function handleDeliveryClick(delivery: Delivery) {
     setSelectedDelivery(delivery);
 
-    // hide other dashboard details when a delivery is clicked
+    // Show modal on medium screens and below
     if (window.innerWidth < 1024) {
-      setSmallScreenView(true)
+      setShowDeliveryModal(true);
     }
 
     if (targetRef.current) {
@@ -125,21 +124,21 @@ const DashboardPage = () => {
 
   // Set first delivery as selected when data loads or changes 
   useEffect(() => {
-    if (deliveries.length > 0 && !selectedDelivery && window.innerWidth > 1023) {
+    if (deliveries.length > 0 && !selectedDelivery) {
       setSelectedDelivery(deliveries[0]);
     }
   }, [deliveries, selectedDelivery]);
 
   return (
-    <div className="p-3 md:p-6">
-      {/* Dashboard Stats */}
-      {!smallScreenView && <div>
-        <div className="mb-6 flex justify-between">
-          <div className="text-lg font-bold">Dashboard</div>
+    <div className="flex flex-col gap-y-6 md:gap-y-10 pt-6">
+      <div>
+        {/* header */}
+        <div className="text-lg flex justify-between items-center font-bold mb-6 md:mb-8">
+          <div>Dashboard</div>
+          <WelcomeGreeting />
         </div>
-
-        {/* Dashboard Cards */}
-        <div className=" w-full grid grid-cols-2 gap-4 mb-6">
+        {/* Dashboard Stats */}
+        <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-4">
           {isDashboardLoading ? (
             <p>Loading...</p>
           ) : (
@@ -154,17 +153,12 @@ const DashboardPage = () => {
             ))
           )}
         </div>
-      </div>}
-      {/* back button on medium screen below */}
-      {smallScreenView && <button onClick={() => setSmallScreenView(false)}>
-        <ChevronLeft size={24} className=" text-primaryColor700 mb-8" />
-      </button>}
+      </div>
 
-      <div className=" grid-cols-1 gap-8 lg:grid lg:grid-cols-6">
-
-        {/* Delivery type filter buttons */}
-        {!smallScreenView && <div className="col-span-4">
-          <div className=" flex gap-2 items-center justify-between">
+      <div className=" lg:flex justify-between items-baseline lg:gap-x-8">
+        <div className=" grid gap-y-6 md:gap-y-10 ">
+          {/* Delivery type filter buttons */}
+          <div className="flex gap-2 items-center justify-between md:justify-evenly">
             {
               deliveryTypeData.map(({ type, icon, label }, index) => <button
                 key={index}
@@ -184,17 +178,17 @@ const DashboardPage = () => {
           </div>
 
           {/* Deliveries list Section */}
-          <div className="mt-10 rounded-lg bg-white p-4 lg:p-8">
+          <div className="rounded-lg bg-white p-4 lg:p-8">
             <div className="flex items-center justify-between">
               <p className="text-lg font-bold">Deliveries</p>
               {deliveryType &&
-                <div className=" flex flex-col md:flex-row items-center gap-2 ">
+                <div className="flex flex-col md:flex-row items-center gap-2">
                   <span className="text-sm text-gray-600">
                     Filtered by: {deliveryType.replace("_", " ")}
                   </span>
                   <button
                     onClick={handleClearFilter}
-                    className="ml-2 text-sm text-blue-500 hover:underline focus:outline-none"
+                    className="ml-2 text-sm text-primaryColor500 font-bold hover:underline focus:outline-none"
                   >
                     Clear Filter
                   </button>
@@ -209,17 +203,18 @@ const DashboardPage = () => {
               </div>
             ) : deliveries.length > 0 ? (
               <div className="mt-4">
-                <div className="overflow-x-auto">
+                <div className="overflow-x-auto flex flex-col gap-y-4">
                   {deliveries.map((delivery: Delivery) => (
                     <div
                       key={delivery.id}
-                      className={`mb-4 flex cursor-pointer flex-row items-center justify-between space-x-4 text-nowrap rounded-lg p-3 transition-colors lg:py-2 ${selectedDelivery?.id === delivery.id
+                      className={`p-2 grid grid-cols-3 items-center place-items-stretch md:grid-cols-4 cursor-pointer  text-nowrap rounded-lg transition-colors ${selectedDelivery?.id === delivery.id
                         ? "bg-[#EBE1F1] text-gray-800"
                         : "hover:bg-gray-50"
                         }`}
                       onClick={() => handleDeliveryClick(delivery)}
                     >
-                      <div className="content-center rounded-full bg-[#B57EDC] p-2">
+                      {/* icons */}
+                      <div className="   rounded-full bg-[#B57EDC] h-fit w-fit grid place-items-center p-2">
                         {delivery.delivery_type === DeliveryType.SAME_DAY ? (
                           <SameDay />
                         ) : delivery.delivery_type === DeliveryType.EXPRESS ? (
@@ -231,11 +226,11 @@ const DashboardPage = () => {
                         )}
                       </div>
 
-                      <p className="text-nowrap text-[8px] md:text-sm font-semibold">
+                      <p className="text-nowrap md:-ml-20 text-[8px] md:text-sm font-semibold mr-auto">
                         {delivery.code}
                       </p>
                       <p
-                        className={`hidden text-nowrap text-[8px] md:text-sm  md:block ${selectedDelivery?.id === delivery.id
+                        className={`hidden text-nowrap text-[8px] md:text-sm md:block ${selectedDelivery?.id === delivery.id
                           ? "text-gray-600"
                           : "text-gray-500"
                           }`}
@@ -243,26 +238,12 @@ const DashboardPage = () => {
                         {delivery.delivery_address}
                       </p>
 
-                      {/* <div className="flex items-center gap-x-3 lg:gap-x-6">
-                        {delivery.receipt && (
-                          <img
-                            className="h-6 w-6 rounded-full object-cover lg:h-8 lg:w-8"
-                            src={`https://deliver.door-steps.pro/storage/${delivery.receipt}`}
-                            alt={`Delivery ${delivery.code}`}
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).src =
-                                "/default-delivery-image.png";
-                            }}
-                          />
-                        )}
-                      </div> */}
-
                       <p
-                        className={`text-[8px] md:text-sm  ${delivery.delivery_status === DeliveryStatus.PENDING
+                        className={`text-[8px] ml-auto md:text-sm ${delivery.delivery_status === DeliveryStatus.PENDING
                           ? "text-[#FFAA05]"
                           : delivery.delivery_status === DeliveryStatus.DELIVERED
                             ? "text-[#0DE622]"
-                            : delivery.delivery_status === DeliveryStatus.IN_TRANSIT ? " text-gray-500" : "text-[#E60D0D]"
+                            : delivery.delivery_status === DeliveryStatus.IN_TRANSIT ? "text-gray-500" : "text-[#E60D0D]"
                           } ${selectedDelivery?.id === delivery.id
                             ? "font-bold"
                             : "font-medium"
@@ -276,7 +257,7 @@ const DashboardPage = () => {
 
                 {/* Pagination */}
                 {pagination && pagination.total_pages > 1 && (
-                  <div className="mt-4 text-xs flex items-center justify-between">
+                  <div className=" text-xs flex items-center w-fit mx-auto gap-x-2 mt-6">
                     <button
                       onClick={handlePreviousPage}
                       disabled={!pagination.links.previous}
@@ -305,10 +286,34 @@ const DashboardPage = () => {
               </div>
             )}
           </div>
-        </div>}
-        {/* Quick Access Sidebar */}
-        {smallScreenView && selectedDelivery && <DeliveryDetailsPanel delivery={selectedDelivery} />}
+        </div>
+
+        {/* Delivery Details Panel - shown as modal on medium screens and below */}
+        {selectedDelivery && (
+          <>
+            {/* Desktop view - always visible */}
+            <div className="hidden lg:block  bg-white">
+              <DeliveryDetailsPanel delivery={selectedDelivery} />
+            </div>
+
+            {/* Mobile/Tablet view - modal */}
+            {showDeliveryModal && (
+              <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-start lg:hidden overflow-y-auto p-8">
+                <div className="bg-primaryColor100 rounded-lg w-full max-w-2xl mt-4 relative p-8">
+                  <button
+                    onClick={() => setShowDeliveryModal(false)}
+                    className="absolute top-4 right-4 p-1 rounded-full bg-gray-100 hover:bg-gray-200"
+                  >
+                    <X size={24} className=" text-primaryColor800" />
+                  </button>
+                  <DeliveryDetailsPanel delivery={selectedDelivery} />
+                </div>
+              </div>
+            )}
+          </>
+        )}
       </div>
+
     </div>
   );
 };
