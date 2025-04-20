@@ -19,7 +19,7 @@ const HomeFooter = () => {
   };  
 
   return (
-    <div className='bg-primaryColorDarker text-white'>
+    <div className='bg-primaryColor900 text-white'>
         <div className='flex flex-col lg:flex-row justify-between mx-6 lg:mx-20 py-14 lg:py-28 gap-y-12'>
 
           <div className='space-y-8'>
@@ -71,7 +71,7 @@ const HomeFooter = () => {
 
             <div className="lg:space-y-2">
               <p className='font-bold text-lg'>Contact Us</p>
-              <p>Thedeliveryeaselogistics@gmail.com</p>
+              <p>support@thedeliveryeaselogistics.com</p>
               <p>+234 904 049 9422 | 08035327006</p>
             </div>
           </div>

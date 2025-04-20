@@ -26,10 +26,10 @@ const CardCarousel: React.FC = () => {
                         {deliveryOptions.map((item, index) => (
                             <div
                                 key={index}
-                                className='relative rounded-2xl bg-white hover:bg-primaryColorDarker hover:text-white transition-colors duration-300 p-4 md:p-10'
+                                className={`relative rounded-2xl border border-[#9165B0]  hover:text-white transition-all duration-300 p-4 md:p-10`}
                             >
                                 <div className='flex flex-row justify-between pb-4 md:pb-6'>
-                                    <div className='hover:text-white transition-colors duration-300'>{item.icon2}</div>
+                                    <div>{item.icon2}</div>
                                     <div>{item.icon1}</div>
                                 </div>
                                 <div>
@@ -47,10 +47,6 @@ const CardCarousel: React.FC = () => {
                         // slidesPerView={2.1}
                         spaceBetween={40}
                         breakpoints={{
-                            // 768: {
-                            //     slidesPerView: 2,
-                            //     spaceBetween: 16,
-                            // },
                             1025: {
                                 slidesPerView: 2.1,  // Adjust the number of visible slides
                                 spaceBetween: 30,   // Adjust the space between slides
@@ -71,26 +67,19 @@ const CardCarousel: React.FC = () => {
                         {deliveryOptions.map((item, index) => (
                             <SwiperSlide
                                 key={index}
-                                // className='relative rounded-2xl h-full bg-white hover:bg-primaryColorDarker hover:text-white transition-colors duration-300'
-                                // style={{
-                                //     backgroundRepeat: 'no-repeat',
-                                //     backgroundPosition: 'center',
-                                //     backgroundSize: 'cover',
-                                //     width: '2rem'
-                                // }}
                             >
-                                <div className='relative rounded-2xl h-full bg-white hover:bg-primaryColorDarker hover:text-white transition-colors duration-300'
+                                <div className='relative rounded-2xl h-full bg-white hover:bg-primaryColor900 hover:text-white transition-colors duration-300'
                                     style={{
                                         backgroundRepeat: 'no-repeat',
                                         backgroundPosition: 'center',
                                         backgroundSize: 'cover',
-                                        
+
                                     }}
                                 >
                                     <div className='p-8 bg-accent-0 lg:flex lg:flex-col space-y-12'>
                                         <div className='flex flex-row justify-between'>
-                                            <div className='hover:text-white transition-colors duration-300'>{item.icon2}</div>
-                                            <div>{item.icon1}</div>
+                                            {item.icon2}
+                                            {item.icon1}
                                         </div>
                                         <div>
                                             <h3 className='text-2xl font-semibold pb-6'>{item.title}</h3>

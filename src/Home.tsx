@@ -23,99 +23,95 @@ type FormValues = {
 
 
 const Home = () => {
-  
+
   const { handleSubmit, control, formState: { errors } } = useForm<FormValues>();
 
   const onSubmit = (data: FormValues) => {
     console.log("submit", data);
     console.log("errors", errors); // If you want to log the errors
-  };  
+  };
 
   return (
     <>
       <div className=' flex flex-col gap-8 lg:gap-16 justify-center'>
         <div className="flex flex-col gap-8 px-4 md:px-16 lg:px-32">
-          <div className="grid grid-cols-3">
-            <div className="col-span-2 flex text-left">
-              <h1 className="font-bold text-[5.9vw] sm:text-[6.2vw] md:text-[5.4vw] lg:text-[4.8vw] xl:text-[5.2vw]">Delivery made easy</h1>
+          <div className="">
+            <div className=" flex justify-between items-center text-left">
+              <h1 className=" text-xl md:text-[22px] lg:text-7xl font-medium ">Delivery made easy</h1>
+              <div className=" font-medium text-[9px] lg:text-lg shrink-0">
+                <p>Establishing new standards</p>
+                <p>logistics with eco-friendly</p>
+                <p>and effecient delivery.</p>
+              </div>
             </div>
-
-            <div className="col-span-1 text-[2vw] sm:text-[1.9vw] md:text-[1.8vw] lg:text-[1.7ch] xl:text-[1.85vw] font-bold text-primaryColorDarker flex flex-col items-start justify-self-end">
-              <p>Establishing new standards</p>
-              <p>logistics with eco-friendly</p>
-              <p>and effecient delivery.</p>
-            </div>
-
-            <div className="col-span-3 ">
-              <h1 className="font-bold text-[7.7vw] sm:text-[8.1vw] md:text-[7vw] lg:text-[6.39vw] text-end lg:justify-self-end xl:text-[6.8vw]">with real time tracking </h1>
-            </div>
+            <h1 className="text-xl md:text-[22px] lg:text-7xl font-medium ml-auto w-fit">with real time tracking </h1>
           </div>
 
           <div className="w-full md:h-[calc(85vh-30px)] lg:h-[calc(95vh-40px)]">
-            <img 
-              src={home1} 
-              alt="bike" 
-              className="w-full h-full rounded-lg"  
+            <img
+              src={home1}
+              alt="bike"
+              className="w-full h-full rounded-lg"
             />
           </div>
         </div>
 
         <div className='px-4 md:px-16 lg:px-0'>
-          <div className='bg-primaryActiveColorLight p-4  md:p-12 lg:p-28 grid grid-cols-1 md:items-center lg:grid-cols-2 gap-8 rounded-b-lg lg:rounded-none '>
-              <div>
-                <h1 className='text-xl md:text-[3.5vw] font-bold lg:font-medium pb-4'>Who We are</h1>
-                <p className='text-md md:text-[1.2vw] pb-4 md:pb-6 lg:pb-8'>We excels in fast and reliable deliveries, offering top-notch services to their clients. Their real-time tracking system ensures transparency and peace of mind throughout the shipping process. Trusted by businesses and individuals alike, We are the go-to choice for efficient logistics solutions.
-                </p>
-                <Link to={routes.REGISTER_PAGE}>
-                  <Button>
-                    GET STARTED
-                  </Button>
-                </Link>
+          <div className='bg-[#DDBCDC] p-4  md:p-12 lg:p-28 grid grid-cols-1 md:items-center lg:grid-cols-2 gap-8 rounded-b-lg lg:rounded-none '>
+            <div>
+              <h1 className='text-xl md:text-[3.5vw] font-bold lg:font-medium pb-4'>Who We are</h1>
+              <p className='text-md md:text-[1.2vw] pb-4 md:pb-6 lg:pb-8'>We excels in fast and reliable deliveries, offering top-notch services to their clients. Their real-time tracking system ensures transparency and peace of mind throughout the shipping process. Trusted by businesses and individuals alike, We are the go-to choice for efficient logistics solutions.
+              </p>
+              <Link to={routes.REGISTER_PAGE}>
+                <Button>
+                  GET STARTED
+                </Button>
+              </Link>
+            </div>
+
+            <div className='grid grid-cols-2 items-center rounded-b-lg'>
+              <div className='flex flex-col justify-center border-r border-b border-black border-dashed p-4 md:p-6 lg:p-8 text-center'>
+                <h1 className='text-3xl md:text-5xl lg:text-7xl font-semibold md:font-medium '> 100%</h1>
+                <p className='text-xs md:text-base lg:text-xl text-nowrap font-semibold'>Customer satisfaction</p>
               </div>
 
-              <div className='grid grid-cols-2 items-center rounded-b-lg'>
-                <div className='flex flex-col justify-center border-r border-b border-black border-dashed p-4 md:p-6 lg:p-8 text-center'>
-                  <h1 className='text-3xl md:text-5xl lg:text-7xl font-semibold md:font-medium '> 100%</h1>
-                  <p className='text-xs md:text-base lg:text-xl text-nowrap font-semibold'>Customer satisfaction</p>
-                </div>
-
-                <div className='flex flex-col justify-center border-b border-black border-dashed p-4 text-center md:p-6 lg:p-8'>
-                  <h1  className='text-3xl md:text-5xl lg:text-7xl font-semibold md:font-medium'> 500+</h1>
-                  <p className='text-xs md:text-base lg:text-xl  font-semibold'>Delivered packages</p>
-                </div>
-
-                <div className='flex flex-col justify-center border-r border-black border-dashed p-4 text-center md:p-6 lg:p-8'>
-                  <h1  className='text-3xl md:text-5xl lg:text-7xl font-semibold md:font-medium'> 24/7</h1>
-                  <p className='text-xs md:text-base lg:text-xl  font-semibold'>Round the clock support</p>
-                </div>
-
-                <div className='flex flex-col justify-center border-black border-dashed p-4 text-center md:p-6 lg:p-8'>
-                  <h1  className='text-3xl md:text-5xl lg:text-7xl font-semibold md:font-medium'> 100%</h1>
-                  <p className='text-xs md:text-base lg:text-xl  font-semibold'>Real time tracker</p>
-                </div>
-
+              <div className='flex flex-col justify-center border-b border-black border-dashed p-4 text-center md:p-6 lg:p-8'>
+                <h1 className='text-3xl md:text-5xl lg:text-7xl font-semibold md:font-medium'> 500+</h1>
+                <p className='text-xs md:text-base lg:text-xl  font-semibold'>Delivered packages</p>
               </div>
+
+              <div className='flex flex-col justify-center border-r border-black border-dashed p-4 text-center md:p-6 lg:p-8'>
+                <h1 className='text-3xl md:text-5xl lg:text-7xl font-semibold md:font-medium'> 24/7</h1>
+                <p className='text-xs md:text-base lg:text-xl  font-semibold'>Round the clock support</p>
+              </div>
+
+              <div className='flex flex-col justify-center border-black border-dashed p-4 text-center md:p-6 lg:p-8'>
+                <h1 className='text-3xl md:text-5xl lg:text-7xl font-semibold md:font-medium'> 100%</h1>
+                <p className='text-xs md:text-base lg:text-xl  font-semibold'>Real time tracker</p>
+              </div>
+
+            </div>
           </div>
         </div>
 
-      
+
       </div>
       <div className=' flex flex-col justify-center pt-8 md:pt-16 lg:py-0'>
-        <div className='bg-primaryColorLight  border-b border-black border-dashed'>
+        <div className='bg-[#F4E9F4]  border-b-[3px]  border-black  border-dashed'>
           <CardCarousel />
         </div>
-        
 
-        <div className='bg-primaryColorLight px-4 py-8 md:p-8 lg:grid lg:grid-cols-5 gap-8'>
+
+        <div className='bg-[#F4E9F4] px-4 py-8 md:p-8 lg:grid lg:grid-cols-5 gap-8'>
           <div className='flex flex-col justify-center  items-center text-center lg:text-left gap-6 md:gap-8 px-1 md:px-16 lg:col-span-3'>
-            <div className='border-b border-dashed border-black py-4 lg:p-4'>
+            <div className='border-b-[3px] border-dashed border-black py-4 lg:p-4'>
               <h1 className='font-bold text-lg lg:text-[1.8vw] pb-3 '>01 Booking</h1>
               <p className='text-md lg:text-[1.25vw]'>To initiate a delivery, visit our website or contact our customer service. Provide us with necessary details, including pick up location, delivery address and package weight. A unique package and tracking number will be generated, enabling you to monitor its progress.</p>
             </div>
 
-            <div className='border-b border-dashed border-black py-4 lg:p-4'>
+            <div className='border-b-[3px] border-dashed border-black py-4 lg:p-4'>
               <h1 className='font-bold text-lg lg:text-[1.8vw] pb-3'>02 Pickup & Packaging</h1>
-              <p className='text-md lg:text-[1.25vw]'>Our professional delivery personnel will arrive at the designated pick up location to collect your package. They will ensure that the package is properly packaged and secures for safe transportation. At this stage you will recieve the <span className='text-primaryColorDarker'>TRACKING NUMBER</span>, which can be used to track the package journey.</p>
+              <p className='text-md lg:text-[1.25vw]'>Our professional delivery personnel will arrive at the designated pick up location to collect your package. They will ensure that the package is properly packaged and secures for safe transportation. At this stage you will recieve the <span className='text-primaryColor900'>TRACKING NUMBER</span>, which can be used to track the package journey.</p>
             </div>
 
             <div className='py-4 lg:p-4'>
@@ -125,11 +121,11 @@ const Home = () => {
 
           </div>
           <div className='hidden lg:block relative lg:col-span-2 h-full w-full content-center overflow-hidden'>
-            
+
             <div className=' w-full flex items-center justify-center absolute top-[2%]'>
               <div className="w-[30vw] h-[30vw]">
-                <div 
-                  className="w-full h-full bg-no-repeat bg-contain bg-center rounded-lg" 
+                <div
+                  className="w-full h-full bg-no-repeat bg-contain bg-center rounded-lg"
                   style={{ backgroundImage: `url(${home2})` }}
                 >
                 </div>
@@ -138,20 +134,20 @@ const Home = () => {
 
             <div className='w-full flex items-center justify-center mt-[10.5rem]'>
               <div className="w-[53vw] h-[53vw]">
-                <div 
-                  className="w-full h-full bg-no-repeat bg-contain bg-center rounded-lg" 
+                <div
+                  className="w-full h-full bg-no-repeat bg-contain bg-center rounded-lg"
                   style={{ backgroundImage: `url(${home3})` }}
                 >
                 </div>
               </div>
             </div>
-            
+
           </div>
         </div>
 
         <div style={{ backgroundImage: `url(${home4})` }} className="flex justify-center md:justify-end items-center bg-cover bg-center bg-no-repeat relative h-[calc(80vh-30px)] md:h-[calc(90vh-30px)] lg:h-[calc(98vh-40px)]">
           {/* Content goes here */}
-          <div 
+          <div
             className="w-[90%] md:w-[50%] bg-white lg:w-[40%] bg-opacity-64 rounded-[16px] shadow-md border border-white/66 p-6 lg:p-12 md:mr-16 lg:mr-24 space-y-8"
             style={{
               backdropFilter: 'blur(11.6px)',
@@ -159,19 +155,19 @@ const Home = () => {
               boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
             }}
           >
-            <div className='border-b-2 border-dashed border-black py-6'> 
-              <p className='text-xl lg:text-4xl font-bold'>Calculate your delivery fee based on weight</p>                         
+            <div className='border-b-2 border-dashed border-black py-6'>
+              <p className='text-xl lg:text-4xl font-bold'>Calculate your delivery fee based on weight</p>
             </div>
 
             <div>
-                <AppTextField
-                  fullWidth
-                  control={control as any}
-                  name="firstName"
-                  label={<div className="text-[#52525C]">Weight (Kg)</div>}
-                  size="small"
-                  placeholder="Input Weight"
-                />
+              <AppTextField
+                fullWidth
+                control={control as any}
+                name="firstName"
+                label={<div className="text-[#52525C]">Weight (Kg)</div>}
+                size="small"
+                placeholder="Input Weight"
+              />
             </div>
 
             <div onClick={handleSubmit(onSubmit)}>
@@ -180,7 +176,7 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="relative  bg-primaryColorDarker">
+        <div className="relative  bg-primaryColor900">
           <div className='md:flex md:items-center md:justify-between w-full'>
             {/* Image */}
             <div className="md:w-1/2 w-full h-[75vh] bg-cover bg-center bg-no-repeat md:order-last md:mt-8" style={{ backgroundImage: `url(${home5})` }}>
@@ -189,7 +185,7 @@ const Home = () => {
                 <div className='space-y-20'>
                   <p className='text-3xl text-center'>Track your package now</p>
                   <div><SearchInput type='outline' placeholder='help' /></div>
-                  <div className='text-center'> <Button sx={{backgroundColor: 'white', color: 'black', width: '50%'}}  >Estimate</Button></div>
+                  <div className='text-center'> <Button sx={{ backgroundColor: 'white', color: 'black', width: '50%' }}  >Estimate</Button></div>
                 </div>
               </div>
             </div>
@@ -200,15 +196,15 @@ const Home = () => {
               <p className="text-6xl font-bold text-white">package now</p>
               <div className='flex gap-8'>
                 <div className='w-[60%]'><SearchInput type='outline' placeholder='Input Order ID' /></div>
-                <div> <Button sx={{backgroundColor: 'white', color: 'black', width: '100%'}} fullWidth size='small' >Track</Button></div>
+                <div> <Button sx={{ backgroundColor: 'white', color: 'black', width: '100%' }} fullWidth size='small' >Track</Button></div>
               </div>
-              
+
             </div>
           </div>
 
           <div className='text-white p-8 flex gap-2 md:ml-16'>
             <div>
-              <ViewIcon className='h-26 w-26 '  stroke='#ffffff'/>
+              <ViewIcon className='h-26 w-26 ' stroke='#ffffff' />
             </div>
 
             <div className='md:hidden'>
@@ -221,17 +217,17 @@ const Home = () => {
           </div>
         </div>
 
-        <div className='flex flex-col lg:flex-row justify-center items-center bg-primaryColorDarker lg:bg-inherit lg:mx-28 lg:my-14'>
+        <div className='flex flex-col lg:flex-row justify-center items-center bg-primaryColor900 lg:bg-inherit lg:mx-28 lg:my-14'>
           <div className="relative w-[90%] lg:w-[70%] h-auto text-center p-4 lg:order-last lg:flex-1">
             <img src={home6} alt="" className="object-cover w-full h-auto" />
-            
+
             {/* Vertical Line */}
             <div className="hidden lg:block absolute inset-0">
               <div className="absolute top-0 bottom-0 left-1/2 transform -translate-x-1/2 w-[8px] bg-white"></div>
             </div>
           </div>
 
-          <div className='text-center lg:text-left text-white mt-6 lg:mt-0 mx-8 lg:bg-primaryColorDarker lg:flex-1'>
+          <div className='text-center lg:text-left text-white mt-6 lg:mt-0 mx-8 lg:bg-primaryColor900 lg:flex-1'>
             <div className='space-y-6 lg:space-y-16 lg:p-12 mb-16 lg:mb-0'>
               <p className='text-3xl lg:text-4xl font-bold'>We are here to serve and support you</p>
               <p className='text-xl'>Reach out to us today and let's start a conversation about how we can help you. Our team is here to answer any questions and provide the support you need. Contact us now for personalized assistance tailored to your requirements. Your satisfaction is our priority."</p>
@@ -252,24 +248,24 @@ const Home = () => {
           </div>
         </div>
 
-        <div style={{ backgroundImage: `url(${image8})` }} className="flex justify-center opacity-90 items-center bg-cover bg-center bg-no-repeat relative h-screen"> 
+        <div style={{ backgroundImage: `url(${image8})` }} className="flex justify-center opacity-90 items-center bg-cover bg-center bg-no-repeat relative h-screen">
           {/* Content goes here */}
           <div className='border-2 border-dashed border-white p-2 lg:p-6 rounded-lg mx-8 lg:mx-auto lg:w-[35%]'>
-            <div 
-              className="bg-gradient-to-b from-primaryColor  to-successActiveColor rounded-xl shadow-md border border-white/66 p-6 lg:p-4  space-y-8 text-white"
+            <div
+              className="bg-gradient-to-b from-[#92278FE5]  to-[#9165B099] rounded-xl shadow-md border border-white/66 p-6 lg:p-4  space-y-8 text-white"
             >
               <div className='p-4 lg:p-4'>
                 <div className='flex mb-6 items-center gap-2'>
-                  <div className='w-14 h-14 rounded-full bg-successActiveColor flex justify-center items-center'> <ScheduledIcon stroke='#ffffff' className='lg:h-7 lg:w-7'/> </div>
+                  <div className='w-14 h-14 rounded-full bg-successActiveColor flex justify-center items-center'> <ScheduledIcon stroke='#ffffff' className='lg:h-7 lg:w-7' /> </div>
                   <p className='text-2xl font-bold'>Seamless Delivery</p>
                 </div>
-                
+
                 <p className='text-lg'>Effortlessly manage and track your logistics with our user friendly platform, ensuring timely and secure transportation of your package.</p>
               </div>
             </div>
           </div>
         </div>
-        
+
       </div>
     </>
   )
