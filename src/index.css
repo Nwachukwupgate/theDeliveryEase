@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 html{
-  @apply bg-[#F4E9F4CC]
+  @apply bg-[#F4E9F4] 
 }
 
 

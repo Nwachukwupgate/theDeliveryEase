@@ -10,7 +10,7 @@ const HomeHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className={`${isOpen ? 'bg-primaryHoverColorDark' : 'bg-white'} shadow-sm  opacity-100  fixed top-0 w-full z-50`}>
+    <nav className={`${isOpen ? 'bg-primaryHoverColorDark' : 'bg-primaryColor100'} shadow-sm  opacity-100  fixed top-0 w-full z-50`}>
       <div className="container px-6 py-4 mx-auto md:flex md:justify-between md:items-center">
         <div className="flex items-center justify-between">
           <a href="#">

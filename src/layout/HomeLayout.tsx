@@ -7,7 +7,7 @@ const HomeLayout = () => {
   return (
     <>
       <HomeHeader />
-      <main className="w-full pt-[80px] lg:pt-[180px]">
+      <main className="w-full pt-[80px] bg-[#F4E9F4] lg:pt-[180px]">
         <Outlet />
       </main>
       <HomeFooter />
