@@ -8,7 +8,7 @@ type DeliveryTypeButtonsProps = {
 
 const DeliveryTypeButtons: React.FC<DeliveryTypeButtonsProps> = ({ icon, label, borderClasses = "" }) => {
   return (
-    <div className={`min-w-[75px] flex items-center rounded-3xl shadow-sm justify-center flex-col gap-2 px-2 py-4 ${borderClasses}`}>
+    <div className={`min-w-[75px] flex items-center rounded-2xl shadow-sm justify-center flex-col gap-2 px-2 py-4 ${borderClasses}`}>
       <div className="bg-[#B57EDC] bg-opacity-30 h-[33px] w-[33px] grid place-items-center  rounded-full">
         {icon}
       </div>

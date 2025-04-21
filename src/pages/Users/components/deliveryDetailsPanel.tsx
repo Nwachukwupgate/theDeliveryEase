@@ -128,61 +128,63 @@ export const DeliveryDetailsPanel: React.FC<QuickAccessPanelProps> = ({ delivery
                     ? "Ongoing Delivery"
                     : delivery.delivery_status}
             </h2>
-            <div className="overflow-auto">
+            <div className=" grid gap-y-12 mb-12">
                 {/* tracking */}
-                <div className="bg-white rounded-3xl p-4 grid gap-y-2 mb-6">
-                    <h2 className="text-sm md:text-base font-medium">Tracking</h2>
-                    <div>
-                        {trackingFlowData.map(({ status, time, isCurrent }, index) => (
-                            <div key={`${status}-${index}`} className="flex items-baseline gap-x-2">
-                                {/* tracking points */}
-                                <div className="flex flex-col justify-center items-center">
-                                    <span
-                                        className={`h-[14px] w-[14px] rounded-full ${isCurrent ? "bg-primaryColor600" : "bg-gray-300"
-                                            }`}
-                                    ></span>
-                                    {index !== trackingFlowData.length - 1 && (
+                <div className="overflow-auto">
+                    <div className="bg-white rounded-2xl shadow-sm p-4 grid gap-y-2">
+                        <h2 className="text-sm md:text-base font-bold">Tracking</h2>
+                        <div>
+                            {trackingFlowData.map(({ status, time, isCurrent }, index) => (
+                                <div key={`${status}-${index}`} className="flex items-baseline gap-x-2">
+                                    {/* tracking points */}
+                                    <div className="flex flex-col justify-center items-center">
                                         <span
-                                            className={`h-[62px] w-[1px] ${isCurrent ? "bg-primaryColor600" : "bg-gray-300"
+                                            className={`h-[14px] w-[14px] rounded-full ${isCurrent ? "bg-primaryColor600" : "bg-gray-300"
                                                 }`}
                                         ></span>
-                                    )}
+                                        {index !== trackingFlowData.length - 1 && (
+                                            <span
+                                                className={`h-[62px] w-[1px] ${isCurrent ? "bg-primaryColor600" : "bg-gray-300"
+                                                    }`}
+                                            ></span>
+                                        )}
+                                    </div>
+                                    {/* tracking details */}
+                                    <div>
+                                        <p
+                                            className={`relative -top-1 text-xs md:text-sm ${isCurrent ? "font-medium text-black" : "text-gray-500"
+                                                }`}
+                                        >
+                                            {status}
+                                        </p>
+                                        <p className="text-gray-500 font-medium text-[10px]">{time}</p>
+                                    </div>
                                 </div>
-                                {/* tracking details */}
-                                <div>
-                                    <p
-                                        className={`relative -top-1 text-xs md:text-sm ${isCurrent ? "font-medium text-black" : "text-gray-500"
-                                            }`}
-                                    >
-                                        {status}
-                                    </p>
-                                    <p className="text-gray-500 font-medium text-[10px]">{time}</p>
-                                </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            {/* package summary */}
-            <div className="bg-white rounded-3xl p-4 grid gap-y-2 mb-6">
-                <h2 className="text-sm md:text-base font-medium">Product Overview</h2>
-                <ProductDetail detail={delivery.product_name} title="Product Name" />
-                <ProductDetail detail={delivery.product_description} title="Description" />
-                <ProductDetail detail={delivery.quantity} title="Quantity" />
-                <ProductDetail detail={delivery.weight} title="Weight" />
-                <ProductDetail detail={delivery.price} title="Price" />
-            </div>
+                {/* package summary */}
+                <div className="bg-white rounded-2xl shadow-sm p-4 grid gap-y-2">
+                    <h2 className="text-sm md:text-base font-bold">Product Overview</h2>
+                    <ProductDetail detail={delivery.product_name} title="Product Name" />
+                    <ProductDetail detail={delivery.product_description} title="Description" />
+                    <ProductDetail detail={delivery.quantity} title="Quantity" />
+                    <ProductDetail detail={delivery.weight} title="Weight" />
+                    <ProductDetail detail={delivery.price} title="Price" />
+                </div>
 
-            {/* package information */}
-            <div className="bg-white rounded-3xl p-4 grid gap-y-2">
-                <h2 className="text-sm md:text-base font-medium">Information</h2>
-                <ProductDetail detail={delivery.contact_name} title="Name" />
-                <ProductDetail detail={delivery.contact_phone} title="Phone" />
-                <ProductDetail detail={delivery.receiver_name} title="Receiver Name" />
-                <ProductDetail detail={delivery.receiver_phone} title="Receiver Phone" />
-                <ProductDetail detail={delivery.rider?.first_name || ""} title="Rider Name" />
-                <ProductDetail detail={delivery.rider?.phone || ""} title="Rider Phone" />
+                {/* package information */}
+                <div className="bg-white rounded-2xl shadow-sm p-4 grid gap-y-2">
+                    <h2 className="text-sm md:text-base font-bold">Information</h2>
+                    <ProductDetail detail={delivery.contact_name} title="Name" />
+                    <ProductDetail detail={delivery.contact_phone} title="Phone" />
+                    <ProductDetail detail={delivery.receiver_name} title="Receiver Name" />
+                    <ProductDetail detail={delivery.receiver_phone} title="Receiver Phone" />
+                    <ProductDetail detail={delivery.rider?.first_name || ""} title="Rider Name" />
+                    <ProductDetail detail={delivery.rider?.phone || ""} title="Rider Phone" />
+                </div>
             </div>
         </div>
     );

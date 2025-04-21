@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, CircularProgress } from "@mui/material";
+import {  CircularProgress } from "@mui/material";
 import { useRidersAcceptMutation, useRidersRejectMutation } from "@/api/apiSlice";
 import { ApiError } from "@/types/types";
 import { appToast } from "@/utilities/appToast";
@@ -63,17 +63,17 @@ const DeliveringCard: React.FC<DeliveryCardProps> = ({
   const showRejectButton = !isAvailableDelivery && showAction && status === DeliveryStatus.DISPATCHED;
 
   return (
-    <div className="border border-[#751F72] rounded-lg p-8 mb-4">
+    <div className="border border-[#751F72] rounded-2xl p-2 mb-4 text-xs capitalize">
       <Link to={`/rider/${id}`}>
         <div className="flex justify-between items-center mb-4">
-          <span className="text-sm">Tracking ID: <span className="font-bold">{trackingId}</span></span>
-          <span className="py-1 px-3 rounded-full text-sm bg-[#DDBCDC] text-[#330E32]">
+          <span className="">Tracking ID: <span className="font-semibold">{trackingId}</span></span>
+          <span className="py-1 px-2 rounded-full  font-semibold bg-[#DDBCDC] text-[#330E32]">
             {delivery}
           </span>
         </div>
 
         <div
-          className={`p-4 rounded-lg border cursor-pointer ${selected ? "bg-[#330E32] text-white" : "bg-gray-100"}`}>
+          className={`p-4 rounded-2xl  cursor-pointer ${selected ? "bg-[#330E32] text-white" : "bg-gray-100"}`}>
 
           {/* Progress and Address */}
           <div className="flex items-start">
@@ -87,18 +87,18 @@ const DeliveringCard: React.FC<DeliveryCardProps> = ({
 
             <div className="w-full">
               {/* Address and Date */}
-              <div className="ml-4 text-sm flex">
+              <div className="ml-4 flex">
                 <p className="font-bold basis-9/12">{delivery}</p>
-                <div>
-                  <p className="text-end">{moment(date).format("DD MMM YYYY")}</p>
+                <div className=" text-[10px]">
+                  <p className="text-end">{moment(date).format("DD MMM YY")}</p>
                   <p className="text-end">{moment(date).format("h:mm A")}</p>
                 </div>
               </div>
 
-              <div className="ml-4 text-sm mt-2 flex">
+              <div className="ml-4 mt-2 flex">
                 <p className="font-bold basis-9/12">{address}</p>
-                <div>
-                  <p className="text-end">{moment(date).format("DD MMM YYYY")}</p>
+                <div className=" text-[10px]">
+                  <p className="text-end">{moment(date).format("DD MMM YY")}</p>
                   <p className="text-end">{moment(date).format("h:mm A")}</p>
                 </div>
               </div>
@@ -107,7 +107,7 @@ const DeliveringCard: React.FC<DeliveryCardProps> = ({
 
           {/* Copy Link */}
           <div className="mt-4 flex items-center justify-between">
-            <button className={`${selected ? "text-white" : "text-[#751F72]"}  text-sm flex items-center`}>
+            {/* <button className={`${selected ? "text-white" : "text-[#751F72]"}  text-sm flex items-center`}>
               Copy Link
               <svg className="ml-1 w-4 h-4"
                 fill="none"
@@ -118,10 +118,10 @@ const DeliveringCard: React.FC<DeliveryCardProps> = ({
                 <rect x="3" y="3" width="13" height="13" rx="2" stroke="white" stroke-width="2" fill="transparent" />
               </svg>
 
-            </button>
+            </button> */}
 
             <span
-              className={`py-1 px-3 rounded-full text-sm ${status === "On the way"
+              className={`py-1 px-2 rounded-full text-sm font-semibold ${status === DeliveryStatus.DELIVERED
                 ? "bg-green-200 text-green-800"
                 : "bg-yellow-200 text-yellow-800"
                 }`}
@@ -134,27 +134,24 @@ const DeliveringCard: React.FC<DeliveryCardProps> = ({
 
       {showAcceptButton && (
         <div className="flex justify-center gap-x-2 mt-4">
-          <Button
-            variant="contained"
-            sx={{ backgroundColor: "#9DEA9B", width: "120px", color: "black" }}
+          <button
             onClick={submitAccept}
             disabled={acceptLoading}
-          >
+            className=" bg-[#9DEA9B] rounded-2xl shadow-sm px-3 py-2 font-bold hover:bg-primaryColor100">
             {acceptLoading ? <CircularProgress size={24} /> : "Accept"}
-          </Button>
+          </button>
         </div>
       )}
 
       {showRejectButton && (
         <div className="flex justify-center gap-x-2 mt-4">
-          <Button
-            variant="contained"
-            sx={{ backgroundColor: "#F37F7F", width: "120px", color: "black" }}
+          <button
             onClick={submitReject}
             disabled={isLoading}
+            className=" bg-[#F37F7F] rounded-2xl shadow-sm px-3 py-2 font-bold hover:bg-primaryColor100"
           >
             {isLoading ? <CircularProgress size={24} /> : "Reject"}
-          </Button>
+          </button>
         </div>
       )}
     </div>

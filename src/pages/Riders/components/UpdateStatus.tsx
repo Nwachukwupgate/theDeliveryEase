@@ -48,8 +48,9 @@ const UpdateStatus: React.FC = () => {
   });
   
   return (
-    <div className="bg-white p-4 rounded shadow-md">
-      <h2 className="text-lg font-bold mb-4">Update Delivery Status</h2>
+    <div className="bg-white p-4 rounded-2xl shadow-sm">
+      <h2 className="mb-4 text-sm md:text-lg font-bold">Update Delivery Status</h2>
+      
       <form onSubmit={onSubmit}>
         <div className="mb-4">
           <label className="block text-sm font-medium mb-1">Status</label>

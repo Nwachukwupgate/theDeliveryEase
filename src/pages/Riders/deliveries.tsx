@@ -3,8 +3,8 @@ import {
   useGetDeliveriesQuery,
   useRiderAssignedDeliveriesQuery,
 } from "@/api/apiSlice";
-import { CircularProgress, Button, Typography } from "@mui/material";
-import {  useLocation } from 'react-router-dom';
+import { CircularProgress, Typography } from "@mui/material";
+import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import routes from '@/navigation/routes';
 import { DeliveryStatus } from "@/utilities/constants";
@@ -31,7 +31,7 @@ const DeliveriesPage = () => {
     <div className="p-3 lg:p-6">
       <div className="flex justify-between border-b border-gray-400 mb-12 pb-4">
         <div className="font-bold text-lg">
-          {isAvailableDeliveries ? 'Available Deliveries' : 'My Assigned Deliveries'}
+          {isAvailableDeliveries ? 'New Deliveries' : 'Assigned Deliveries'}
         </div>
       </div>
 
@@ -42,46 +42,41 @@ const DeliveriesPage = () => {
           </div>
         ) : deliveries?.data?.items?.length ? (
           <>
-            {deliveries.data.items.map((delivery) => (
-              <DeliveringCard
-                key={delivery.id}
-                id={`${delivery.id}`}
-                trackingId={delivery.code}
-                delivery={delivery.product_name}
-                address={delivery.pickup_address}
-                status={delivery.delivery_status}
-                date={delivery.created_at}
-                selected={!isAvailableDeliveries} 
-                showAction={true}
-                isAvailableDelivery={isAvailableDeliveries}
-              />
-
-            ))}
-
+            <article className=" grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+              {deliveries.data.items.map((delivery) => (
+                <DeliveringCard
+                  key={delivery.id}
+                  id={`${delivery.id}`}
+                  trackingId={delivery.code}
+                  delivery={delivery.product_name}
+                  address={delivery.pickup_address}
+                  status={delivery.delivery_status}
+                  date={delivery.created_at}
+                  selected={!isAvailableDeliveries}
+                  showAction={true}
+                  isAvailableDelivery={isAvailableDeliveries}
+                />
+              ))}
+            </article>
             {/* Pagination Controls */}
-            <div className="flex justify-between items-center mt-4">
-              <Button
-                variant="outlined"
+            <div className="flex justify-center gap-x-3 items-center mt-6">
+              <button
                 onClick={handlePrevPage}
                 disabled={page === 1 || isFetching}
+                className="rounded bg-[#581756] px-4 py-1 text-white disabled:opacity-50"
               >
-                Previous
-              </Button>
-
+                Prev
+              </button>
               <Typography>
                 Page {page} of {deliveries.data.meta?.pagination?.total_pages || 1}
               </Typography>
-
-              <Button
-                variant="outlined"
+              <button
                 onClick={handleNextPage}
-                disabled={
-                  page >= (deliveries.data.meta?.pagination?.total_pages || 1) ||
-                  isFetching
-                }
+                disabled={!deliveries.data.meta?.pagination.links.next}
+                className="rounded bg-[#581756] px-4 py-1 text-white disabled:opacity-50"
               >
                 Next
-              </Button>
+              </button>
             </div>
           </>
         ) : (

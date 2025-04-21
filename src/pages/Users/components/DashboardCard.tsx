@@ -12,7 +12,7 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
   color,
 }) => {
   return (
-    <div className="flex gap-x-2 max-w-[161px] rounded-3xl bg-white p-2 shadow-sm">
+    <div className="flex gap-x-2 max-w-[161px] rounded-2xl bg-white p-2 shadow-sm">
       <div
         className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-bold text-black text-sm  "
         style={{ backgroundColor: color }}

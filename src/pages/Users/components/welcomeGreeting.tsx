@@ -26,11 +26,11 @@ const WelcomeGreeting = () => {
     const formattedUserType = userType.charAt(0).toUpperCase() + userType.slice(1);
 
     return (
-        <div className="welcome-greeting font-medium text-xs">
+        <div className="welcome-greeting font-medium text-xs md:text-sm">
             <p>{greeting}, {user.name}</p>
-            <p>
-                {!userStore.isRegularUser && `Role:${formattedUserType}`}
-            </p>
+            {!userStore.isRegularUser && <p className=" mt-1">
+                <span className=" font-semibold">Role:</span> {formattedUserType}
+            </p>}
         </div>
     );
 };
